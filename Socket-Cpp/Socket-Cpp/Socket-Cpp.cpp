@@ -2,8 +2,6 @@
 //
 
 #include "stdafx.h"
-#include <Windows.h>
-#include <conio.h>
 
 #using <System.dll>
 
@@ -14,13 +12,11 @@ using namespace System::Net;
 using namespace System::Net::Sockets;
 using namespace System::Collections;
 
-
 void Connect(String^ server, String^ message);
 
-int main(){
-
-
-    Connect("192.168.178.23", "Hello");
+int main()
+{
+    Connect("192.168.178.24", "Helle, Test");
     return 0;
 }
 
@@ -75,5 +71,5 @@ void Connect(String^ server, String^ message)
 
     Console::WriteLine("\n Press Enter to continue...");
     Console::Read();
-    getch();
 }
+
