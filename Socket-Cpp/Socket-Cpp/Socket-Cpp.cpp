@@ -16,7 +16,7 @@ void Connect(String^ server, String^ message);
 
 int main()
 {
-    Connect("192.168.178.24", "Helle, Test");
+    Connect("192.168.178.20", "Hello, Test");
     return 0;
 }
 
@@ -28,7 +28,7 @@ void Connect(String^ server, String^ message)
         // Note, for this client to work you need to have a TcpServer 
         // connected to the same address as specified by the server, port
         // combination.
-        Int32 port = 13000;
+        Int32 port = 13337;
         TcpClient^ client = gcnew TcpClient(server, port);
 
         // Translate the passed message into ASCII and store it as a Byte array.
