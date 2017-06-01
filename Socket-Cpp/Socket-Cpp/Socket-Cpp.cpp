@@ -16,7 +16,7 @@ void Connect(String^ server, String^ message);
 
 int main()
 {
-    Connect("192.168.178.20", "Hello, Test");
+    Connect("192.168.178.33", "Hello, Test");
     return 0;
 }
 

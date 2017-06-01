@@ -1,3 +1,4 @@
 ﻿  Socket-Cpp.cpp
-  Socket-Cpp.vcxproj -> D:\Projekte\EEG-Project\Socket-Cpp\x64\Debug\Socket-Cpp.exe
-  Socket-Cpp.vcxproj -> D:\Projekte\EEG-Project\Socket-Cpp\x64\Debug\Socket-Cpp.pdb (Full PDB)
+  Socket-Cpp.obj : /DEBUG:FASTLINK wird nicht unterstützt, wenn verwalteter Code vorhanden ist; Link wird mit /DEBUG:FULL neu gestartet
+  Socket-Cpp.vcxproj -> C:\Users\Marcel\Documents\EEG-Project\Socket-Cpp\x64\Debug\Socket-Cpp.exe
+  Socket-Cpp.vcxproj -> C:\Users\Marcel\Documents\EEG-Project\Socket-Cpp\x64\Debug\Socket-Cpp.pdb (Partial PDB)
