@@ -16,3 +16,6 @@ C:\Users\Marcel\Documents\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsA
 C:\Users\Marcel\Documents\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
 C:\Users\Marcel\Documents\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
 C:\Users\Marcel\Documents\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
+C:\Users\Stefan\Documents\GitHub\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+C:\Users\Stefan\Documents\GitHub\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
+C:\Users\Stefan\Documents\GitHub\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb

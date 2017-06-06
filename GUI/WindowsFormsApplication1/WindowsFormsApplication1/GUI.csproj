@@ -79,6 +79,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\examples_basic\C#\DotNetEmotivSDK\DotNetEmotivSDK.csproj">
+      <Project>{d3337309-9682-425e-8edc-2ecfacf79565}</Project>
+      <Name>DotNetEmotivSDK</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
