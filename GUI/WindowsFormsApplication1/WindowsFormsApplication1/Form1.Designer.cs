@@ -34,11 +34,12 @@
             this.trainActionSelectionComboBox = new System.Windows.Forms.ComboBox();
             this.trainActionButton = new System.Windows.Forms.Button();
             this.driveButton = new System.Windows.Forms.Button();
+            this.ctBotStatusLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // loadProfileButton
             // 
-            this.loadProfileButton.Location = new System.Drawing.Point(138, 15);
+            this.loadProfileButton.Location = new System.Drawing.Point(138, 51);
             this.loadProfileButton.Name = "loadProfileButton";
             this.loadProfileButton.Size = new System.Drawing.Size(68, 21);
             this.loadProfileButton.TabIndex = 0;
@@ -53,14 +54,14 @@
             this.profileSelectionComboBox.Items.AddRange(new object[] {
             "Testprofil 1",
             "Testprofil 2"});
-            this.profileSelectionComboBox.Location = new System.Drawing.Point(11, 15);
+            this.profileSelectionComboBox.Location = new System.Drawing.Point(11, 51);
             this.profileSelectionComboBox.Name = "profileSelectionComboBox";
             this.profileSelectionComboBox.Size = new System.Drawing.Size(121, 21);
             this.profileSelectionComboBox.TabIndex = 1;
             // 
             // resetProfileButton
             // 
-            this.resetProfileButton.Location = new System.Drawing.Point(212, 15);
+            this.resetProfileButton.Location = new System.Drawing.Point(212, 51);
             this.resetProfileButton.Name = "resetProfileButton";
             this.resetProfileButton.Size = new System.Drawing.Size(68, 21);
             this.resetProfileButton.TabIndex = 2;
@@ -77,34 +78,46 @@
             "Left",
             "Backward",
             "Right"});
-            this.trainActionSelectionComboBox.Location = new System.Drawing.Point(11, 42);
+            this.trainActionSelectionComboBox.Location = new System.Drawing.Point(11, 78);
             this.trainActionSelectionComboBox.Name = "trainActionSelectionComboBox";
             this.trainActionSelectionComboBox.Size = new System.Drawing.Size(121, 21);
             this.trainActionSelectionComboBox.TabIndex = 3;
             // 
             // trainActionButton
             // 
-            this.trainActionButton.Location = new System.Drawing.Point(138, 42);
+            this.trainActionButton.Location = new System.Drawing.Point(138, 78);
             this.trainActionButton.Name = "trainActionButton";
             this.trainActionButton.Size = new System.Drawing.Size(139, 21);
             this.trainActionButton.TabIndex = 4;
             this.trainActionButton.Text = "Train";
             this.trainActionButton.UseVisualStyleBackColor = true;
+            this.trainActionButton.Click += new System.EventHandler(this.trainActionButton_Click);
             // 
             // driveButton
             // 
-            this.driveButton.Location = new System.Drawing.Point(11, 69);
+            this.driveButton.Location = new System.Drawing.Point(11, 105);
             this.driveButton.Name = "driveButton";
             this.driveButton.Size = new System.Drawing.Size(266, 51);
             this.driveButton.TabIndex = 5;
             this.driveButton.Text = "Start Driving";
             this.driveButton.UseVisualStyleBackColor = true;
+            this.driveButton.Click += new System.EventHandler(this.driveButton_Click);
+            // 
+            // ctBotStatusLabel
+            // 
+            this.ctBotStatusLabel.AutoSize = true;
+            this.ctBotStatusLabel.Location = new System.Drawing.Point(12, 9);
+            this.ctBotStatusLabel.Name = "ctBotStatusLabel";
+            this.ctBotStatusLabel.Size = new System.Drawing.Size(35, 13);
+            this.ctBotStatusLabel.TabIndex = 6;
+            this.ctBotStatusLabel.Text = "label1";
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(289, 128);
+            this.ClientSize = new System.Drawing.Size(289, 168);
+            this.Controls.Add(this.ctBotStatusLabel);
             this.Controls.Add(this.driveButton);
             this.Controls.Add(this.trainActionButton);
             this.Controls.Add(this.trainActionSelectionComboBox);
@@ -115,6 +128,7 @@
             this.Text = "Emotiv";
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -126,6 +140,7 @@
         private System.Windows.Forms.ComboBox trainActionSelectionComboBox;
         private System.Windows.Forms.Button trainActionButton;
         private System.Windows.Forms.Button driveButton;
+        private System.Windows.Forms.Label ctBotStatusLabel;
     }
 }
 
