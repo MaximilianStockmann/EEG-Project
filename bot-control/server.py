@@ -10,9 +10,10 @@ BUFFER_SIZE = 20  # Normally 1024, but we want fast response
 C_CLIENT_LOST = -2
 C_NO_COMMAND = -1
 C_STOP = 0
-C_STRAIGHT = 1
+C_FORWARD = 1
 C_LEFT = 2
 C_RIGHT = 3
+C_BACKWARD = 4
 
 def default(arg):
     print arg
@@ -36,6 +37,7 @@ def searchForClient():
 
 def closeServer():
     global conn
+    conn.sendall("Connection lost: Error occurred!")
     conn.close()
 
 def waitForCommand():
@@ -56,15 +58,16 @@ def waitForCommand():
 
     cmd = {
         "stop" : C_STOP,
-        "straight" : C_STRAIGHT,
+        "forward" : C_FORWARD,
         "left" : C_LEFT,
-        "right" : C_RIGHT
+        "right" : C_RIGHT,
+        "backward" : C_BACKWARD
     }
     return cmd.get(data, C_NO_COMMAND)
 
 
 def setSpeedCallback(f):
-    speedCallback = f;
+    speedCallback = f
 
 def setClientLostCallback(f):
     clientLostCallback = f
