@@ -40,9 +40,19 @@ def closeServer():
     conn.sendall("Connection lost: Error occurred!")
     conn.close()
 
+def okStatus():
+    global conn
+    conn.sendall("ok")
+
 def waitForCommand():
     global conn
-    data = conn.recv(BUFFER_SIZE)
+    global clientLostCallback
+    global speedCallback
+    try:
+        data = conn.recv(BUFFER_SIZE)
+    except:
+        clientLostCallback()
+        return C_CLIENT_LOST
     #data = raw_input()
 
     if not data:
@@ -52,8 +62,10 @@ def waitForCommand():
     if "speed" in data and len(data) > 6:
         try:
             speedCallback(float(data[6:]))
+            okStatus()
             return C_NO_COMMAND
         except ValueError:
+            okStatus()
             return C_NO_COMMAND
 
     cmd = {
@@ -63,13 +75,17 @@ def waitForCommand():
         "right" : C_RIGHT,
         "backward" : C_BACKWARD
     }
+    okStatus()
     return cmd.get(data, C_NO_COMMAND)
 
 
 def setSpeedCallback(f):
+    global speedCallback
     speedCallback = f
 
 def setClientLostCallback(f):
+    #print "Set Lost Callback"
+    global clientLostCallback
     clientLostCallback = f
 
 

@@ -14,8 +14,8 @@ try:
         print c
 except KeyboardInterrupt:
     S.closeServer()
-except:
-    S.closeServer()
+# except:
+#     S.closeServer()
 
 
 # TODO
