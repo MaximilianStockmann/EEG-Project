@@ -17,7 +17,9 @@ try:
     s.connect((HOST, PORT))
     while 1:
         s.sendall(raw_input())
+        print "Status: " + s.recv(20)
 except KeyboardInterrupt:
     s.close()
 except:
+    print "No Server"
     s.close()
