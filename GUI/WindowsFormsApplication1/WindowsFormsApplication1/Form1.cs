@@ -13,6 +13,7 @@ namespace WindowsFormsApplication1
 {
     public partial class MainWindow : Form
     {
+        // Marcel
         static Int32 port = 13337;
         static TcpClient client;
         static NetworkStream clientStream;
