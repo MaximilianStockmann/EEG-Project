@@ -99,6 +99,7 @@
             this.driveButton.TabIndex = 5;
             this.driveButton.Text = "Start Driving";
             this.driveButton.UseVisualStyleBackColor = true;
+            this.driveButton.Click += new System.EventHandler(this.driveButton_Click);
             // 
             // MainWindow
             // 
