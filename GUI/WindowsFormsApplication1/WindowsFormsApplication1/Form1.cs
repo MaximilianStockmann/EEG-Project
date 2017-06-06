@@ -37,22 +37,16 @@ namespace WindowsFormsApplication1
             ctBotStatusLabel.Text = "Test";
             if (driveButton.Text == "Start Driving")
             {
-
+                driveButton.Text = "Stop Driving";
                 try
                 {
 
-                    String message = "speed 900000";
 
                     // Initalisierung
                     client = new TcpClient("192.168.178.33", port);
                     clientStream = client.GetStream();
 
-                    // Translate the passed message into ASCII and store it as a Byte array.
-                    Byte[] data = System.Text.Encoding.ASCII.GetBytes(message);
-
-                    clientStream.Write(data, 0, data.Length);
-
-                    getStatusResponse();
+                    sendCommand("speed 9000");
                     
 
 
@@ -60,29 +54,31 @@ namespace WindowsFormsApplication1
                 catch (ArgumentNullException ex)
                 {
                     Console.WriteLine("ArgumentNullException: {0}", ex);
+                    ctBotStatusLabel.Text = "ArgumentNullException";
                 }
                 catch (SocketException ex)
                 {
                     Console.WriteLine("SocketException: {0}", ex);
+                    ctBotStatusLabel.Text = "SocketException";
                 }
 
 
-                driveButton.Text = "Stop Driving";
+               
             }
             else
             {
-
+                driveButton.Text = "Start Driving";
+                if (clientStream == null) return;
                 // Close everything.
                 clientStream.Close();
                 client.Close();
-
-                driveButton.Text = "Start Driving";
             }
            
         }
 
         private void getStatusResponse()
         {
+
             // Buffer to store the response bytes.
             Byte[] data = new Byte[256];
 
@@ -95,13 +91,26 @@ namespace WindowsFormsApplication1
 
         }
 
-        private void trainActionButton_Click(object sender, EventArgs e)
+        private void sendCommand(String cmd)
         {
-            Byte[] data = System.Text.Encoding.ASCII.GetBytes("left");
+
+            if (clientStream == null)
+            {
+                ctBotStatusLabel.Text = "No Server to connect";
+                return;
+            }
+
+            Byte[] data = System.Text.Encoding.ASCII.GetBytes(cmd);
 
             clientStream.Write(data, 0, data.Length);
 
             getStatusResponse();
+        }
+
+        private void trainActionButton_Click(object sender, EventArgs e)
+        {
+
+            sendCommand("left");
         }
     }
 
