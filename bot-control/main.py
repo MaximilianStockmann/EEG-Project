@@ -5,9 +5,10 @@ import server as S
 
 
 
-S.openServer()
-setClientLostCallback(S.searchForClient)
+
 try:
+    S.openServer()
+    S.setClientLostCallback(S.searchForClient)
     while 1:
         c = S.waitForCommand()
         print c
