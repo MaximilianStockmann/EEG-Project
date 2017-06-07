@@ -20,6 +20,8 @@ def default(arg):
 speedCallback = default
 clientLostCallback = default
 
+conn = False
+
 
 
 def openServer():
@@ -37,7 +39,11 @@ def searchForClient():
 
 def closeServer():
     global conn
-    conn.sendall("Connection lost: Error occurred!")
+    if not conn: return
+    try:
+        conn.sendall("Connection lost: Error occurred!")
+    except:
+        pass
     conn.close()
 
 def okStatus():
