@@ -20,6 +20,7 @@ namespace WindowsFormsApplication1
         static NetworkStream clientStream;
 
         static EmoEngine engine = EmoEngine.Instance;
+        static String currentCommand;
 
         public MainWindow()
         {
