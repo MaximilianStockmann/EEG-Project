@@ -15,7 +15,7 @@ namespace GUI_Namespace
     public partial class MainWindow : Form
     {
         // Creating SDK-Instance
-        static EmoEngine engine = EmoEngine.Instance;
+        //static EmoEngine engine = EmoEngine.Instance;
 
         // TCP-Connection to Pi
         static TcpClient client;
@@ -36,6 +36,7 @@ namespace GUI_Namespace
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
+            /*
             // Connection to Engine (from the SDK-project)
             engine.EmoEngineConnected +=
                 new EmoEngine.EmoEngineConnectedEventHandler(engine_EmoEngineConnected);
@@ -70,6 +71,7 @@ namespace GUI_Namespace
 
             // Connect the Engine
             engine.Connect();
+            */
         }
 
         private void DefaultButton_Click(object sender, EventArgs e)
