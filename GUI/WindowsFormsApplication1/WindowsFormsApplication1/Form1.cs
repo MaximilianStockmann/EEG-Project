@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Emotiv;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,15 +10,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WindowsFormsApplication1
+namespace GUI_Namespace
 {
     public partial class MainWindow : Form
     {
-        // Marcel
-        static Int32 port = 13337;
+        // Creating SDK-Instance
+        static EmoEngine engine = EmoEngine.Instance;
+
+        // TCP-Connection to Pi
         static TcpClient client;
         static NetworkStream clientStream;
+        static Int32 port = 13337;
 
+        // Cloud-Profile related information
+        static int userCloudID = 0;
+        static string userName = "";
+        static string password = "";
+        static string profileName = "Stefan Doing Stuff";
+        static int version = -1; // Lastest version
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -25,7 +36,40 @@ namespace WindowsFormsApplication1
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
+            // Connection to Engine (from the SDK-project)
+            engine.EmoEngineConnected +=
+                new EmoEngine.EmoEngineConnectedEventHandler(engine_EmoEngineConnected);
+            engine.EmoEngineDisconnected +=
+                new EmoEngine.EmoEngineDisconnectedEventHandler(engine_EmoEngineDisconnected);
+            
+            // What happens, if a Dongle is connected or disconnected.
+            engine.UserAdded +=
+                new EmoEngine.UserAddedEventHandler(engine_UserAdded);
+            engine.UserRemoved +=
+                new EmoEngine.UserRemovedEventHandler(engine_UserRemoved);
 
+            // Called in the Background
+            engine.EmoStateUpdated +=
+                new EmoEngine.EmoStateUpdatedEventHandler(engine_EmoStateUpdated);
+            engine.EmoEngineEmoStateUpdated +=
+                new EmoEngine.EmoEngineEmoStateUpdatedEventHandler(engine_EmoEngineEmoStateUpdated);
+
+            // What happens when a Mental Command is recognized. (Bound to static drive var)
+            engine.MentalCommandEmoStateUpdated +=
+                new EmoEngine.MentalCommandEmoStateUpdatedEventHandler(engine_MentalCommandEmoStateUpdated);
+
+            // Training the Mental Commands
+            engine.MentalCommandTrainingStarted += // starts the process (block)
+                new EmoEngine.MentalCommandTrainingStartedEventEventHandler(engine_MentalCommandTrainingStarted);
+            engine.MentalCommandTrainingSucceeded += // asks for accept/reject
+                new EmoEngine.MentalCommandTrainingSucceededEventHandler(engine_MentalCommandTrainingSucceeded);
+            engine.MentalCommandTrainingCompleted += // closes Block, when accepted
+                new EmoEngine.MentalCommandTrainingCompletedEventHandler(engine_MentalCommandTrainingCompleted);
+            engine.MentalCommandTrainingRejected += // closes Block, when rejected
+                new EmoEngine.MentalCommandTrainingRejectedEventHandler(engine_MentalCommandTrainingRejected);
+
+            // Connect the Engine
+            engine.Connect();
         }
 
         private void DefaultButton_Click(object sender, EventArgs e)

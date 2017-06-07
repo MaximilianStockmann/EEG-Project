@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1
+﻿namespace GUI_Namespace
 {
     partial class MainWindow
     {
