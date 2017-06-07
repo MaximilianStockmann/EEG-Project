@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Emotiv
 
 namespace WindowsFormsApplication1
 {
@@ -18,6 +19,8 @@ namespace WindowsFormsApplication1
         static TcpClient client;
         static NetworkStream clientStream;
 
+        static EmoEngine engine = EmoEngine.Instance;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -25,7 +28,14 @@ namespace WindowsFormsApplication1
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-
+            //passing the event handlers to the engine
+            engine.EmoEngineConnected += engine_EmoEngineConnectedEventHandler;
+            engine.EmoEngineDisconnected += engine_EmoEngineDisconnectedEventHandler;
+            engine.MentalCommandTrainingStarted += engine_MentalCommandTrainingStartedEventEventHandler;
+            engine.MentalCommandTrainingSucceeded += engine_MentalCommandTrainingSucceededEventHandler;
+            engine.MentalCommandTrainingFailed += engine_MentalCommandTrainingFailedEventHandler;
+            engine.MentalCommandTrainingCompleted += engine_MentalCommandTrainingCompletedEventHandler;
+            engine.MentalCommandEmoStateUpdated += engine_MentalCommandEmoStateUpdatedEventHandler;
         }
 
         private void DefaultButton_Click(object sender, EventArgs e)
@@ -48,7 +58,7 @@ namespace WindowsFormsApplication1
                     clientStream = client.GetStream();
 
                     sendCommand("speed 9000");
-                    
+
 
 
                 }
@@ -64,7 +74,7 @@ namespace WindowsFormsApplication1
                 }
 
 
-               
+
             }
             else
             {
@@ -74,7 +84,7 @@ namespace WindowsFormsApplication1
                 clientStream.Close();
                 client.Close();
             }
-           
+
         }
 
         private void getStatusResponse()
@@ -113,6 +123,43 @@ namespace WindowsFormsApplication1
 
             sendCommand("left");
         }
-    }
 
+
+        //event handlers for the engine
+        public void engine_EmoEngineConnectedEventHandler(object sender, EmoEngineEventArgs e)
+        {
+            //todo...
+        }
+
+        public void engine_EmoEngineDisconnectedEventHandler(object sender, EmoEngineEventArgs e)
+        {
+            //todo...
+        }
+
+        public void engine_MentalCommandTrainingStartedEventEventHandler(object sender, EmoEngineEventArgs e)
+        {
+            //todo...
+        }
+
+        public void engine_MentalCommandTrainingSucceededEventHandler(object sender, EmoEngineEventArgs e)
+        {
+            //todo...
+        }
+
+        public void engine_MentalCommandTrainingFailedEventHandler(object sender, EmoEngineEventArgs e)
+        {
+            //todo...
+        }
+
+        public void engine_MentalCommandTrainingCompletedEventHandler(object sender, EmoEngineEventArgs e)
+        {
+            //todo...
+        }
+
+        //note the different param
+        public void engine_MentalCommandEmoStateUpdatedEventHandler(object sender, EmoStateUpdatedEventArgs e)
+        {
+            //todo...
+        }
+    }
 }
