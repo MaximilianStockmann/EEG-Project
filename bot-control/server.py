@@ -34,6 +34,7 @@ def openServer():
 
 def searchForClient():
     global conn
+    global s
     conn, addr = s.accept()
     print 'Connection address:', addr
 
