@@ -107,8 +107,12 @@ if __name__ == '__main__':
             if c == S.C_RIGHT:
                 driveRight()
                 continue
+            if c == -99:
+                break
 
     except KeyboardInterrupt:
+        exit()
+    except:
         exit()
 
 

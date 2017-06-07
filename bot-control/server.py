@@ -40,7 +40,7 @@ def searchForClient():
 
 def closeServer():
     global conn
-    if not conn: return
+    if not conn: return;
     try:
         conn.sendall("Connection lost: Error occurred!")
     except:
@@ -57,6 +57,8 @@ def waitForCommand():
     global speedCallback
     try:
         data = conn.recv(BUFFER_SIZE)
+    except SystemExit:
+        return -99
     except:
         clientLostCallback()
         return C_CLIENT_LOST
