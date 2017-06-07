@@ -28,6 +28,11 @@ namespace GUI_Namespace
         static string password = "";
         static string profileName = "Stefan Doing Stuff";
         static int version = -1; // Lastest version
+
+        static bool leftActive = false;
+        static bool rightActive = false;
+        static bool forwardActive = false;
+        static bool backwardActive = false;
         
         public MainWindow()
         {
@@ -72,11 +77,6 @@ namespace GUI_Namespace
             // Connect the Engine
             engine.Connect();
             */
-        }
-
-        private void DefaultButton_Click(object sender, EventArgs e)
-        {
-            loadProfileButton.Text = "Hallo";
         }
 
         private void driveButton_Click(object sender, EventArgs e)
@@ -138,7 +138,7 @@ namespace GUI_Namespace
 
         }
 
-        private void sendCommand(String cmd)
+        private void sendCommand(String cmd)    //Eingaben: "forward", "backward", "left", "right", "stop"
         {
 
             if (clientStream == null)
@@ -154,11 +154,36 @@ namespace GUI_Namespace
             getStatusResponse();
         }
 
-        private void trainActionButton_Click(object sender, EventArgs e)
+        private void leftButton_Click(object sender, EventArgs e)
         {
-
+            leftActive = !leftActive;
             sendCommand("left");
+            ctBotStatusLabel.Text = "left";
         }
+
+        private void rightButton_Click(object sender, EventArgs e)
+        {
+            rightActive = !rightActive;
+            sendCommand("right");
+            ctBotStatusLabel.Text = "right";
+        }
+
+        private void backwardButton_Click(object sender, EventArgs e)
+        {
+            backwardActive = !backwardActive;
+            sendCommand("backward");
+            ctBotStatusLabel.Text = "backward";
+        }
+
+        private void forwardButton_Click(object sender, EventArgs e)
+        {
+            forwardActive = !forwardActive;
+            sendCommand("forward");
+            ctBotStatusLabel.Text = "forward";
+        }
+
+
+
     }
 
 }

@@ -20,3 +20,14 @@ C:\Users\Marcel\Documents\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsA
 C:\Users\Marcel\Documents\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\GUI.csproj.GenerateResource.Cache
 C:\Users\Marcel\Documents\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
 C:\Users\Marcel\Documents\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
+D:\Users\MaximilianStockmann\Desktop\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+D:\Users\MaximilianStockmann\Desktop\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
+D:\Users\MaximilianStockmann\Desktop\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
+D:\Users\MaximilianStockmann\Desktop\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+D:\Users\MaximilianStockmann\Desktop\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+D:\Users\MaximilianStockmann\Desktop\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\DotNetEmotivSDK.dll
+D:\Users\MaximilianStockmann\Desktop\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\DotNetEmotivSDK.pdb
+D:\Users\MaximilianStockmann\Desktop\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\GUI.csprojResolveAssemblyReference.cache
+D:\Users\MaximilianStockmann\Desktop\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\GUI_Namespace.MainWindow.resources
+D:\Users\MaximilianStockmann\Desktop\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+D:\Users\MaximilianStockmann\Desktop\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\GUI.csproj.GenerateResource.Cache
