@@ -80,7 +80,7 @@ namespace MentalCommandWithCloudProfile
             Single timeFromStart = es.GetTimeFromStart();
 
             EdkDll.IEE_MentalCommandAction_t cogAction = es.MentalCommandGetCurrentAction(); // static EdkDll.IEE_MentalCommandAction_t currentAction ...
-            Single power = es.MentalCommandGetCurrentActionPower();
+            Single power = es.MentalCommandGetCurrentActionPower(); // not necc., we only use one speed
             Boolean isActive = es.MentalCommandIsActive(); // not necc., due to static currentAction attribute
 
             // own logic, TCP-signal and stuff.

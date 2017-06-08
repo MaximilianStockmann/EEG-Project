@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1
+﻿namespace GUI_Namespace
 {
     partial class MainWindow
     {
@@ -35,6 +35,10 @@
             this.trainActionButton = new System.Windows.Forms.Button();
             this.driveButton = new System.Windows.Forms.Button();
             this.ctBotStatusLabel = new System.Windows.Forms.Label();
+            this.forwardButton = new System.Windows.Forms.Button();
+            this.leftButton = new System.Windows.Forms.Button();
+            this.rightButton = new System.Windows.Forms.Button();
+            this.backwardButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // loadProfileButton
@@ -45,7 +49,6 @@
             this.loadProfileButton.TabIndex = 0;
             this.loadProfileButton.Text = "Load";
             this.loadProfileButton.UseVisualStyleBackColor = true;
-            this.loadProfileButton.Click += new System.EventHandler(this.DefaultButton_Click);
             // 
             // profileSelectionComboBox
             // 
@@ -91,7 +94,6 @@
             this.trainActionButton.TabIndex = 4;
             this.trainActionButton.Text = "Train";
             this.trainActionButton.UseVisualStyleBackColor = true;
-            this.trainActionButton.Click += new System.EventHandler(this.trainActionButton_Click);
             // 
             // driveButton
             // 
@@ -108,15 +110,55 @@
             this.ctBotStatusLabel.AutoSize = true;
             this.ctBotStatusLabel.Location = new System.Drawing.Point(12, 9);
             this.ctBotStatusLabel.Name = "ctBotStatusLabel";
-            this.ctBotStatusLabel.Size = new System.Drawing.Size(35, 13);
+            this.ctBotStatusLabel.Size = new System.Drawing.Size(37, 13);
             this.ctBotStatusLabel.TabIndex = 6;
-            this.ctBotStatusLabel.Text = "label1";
+            this.ctBotStatusLabel.Text = "Status";
+            // 
+            // forwardButton
+            // 
+            this.forwardButton.Location = new System.Drawing.Point(184, 4);
+            this.forwardButton.Name = "forwardButton";
+            this.forwardButton.Size = new System.Drawing.Size(22, 18);
+            this.forwardButton.TabIndex = 7;
+            this.forwardButton.Text = "˄";
+            this.forwardButton.UseVisualStyleBackColor = true;
+            // 
+            // leftButton
+            // 
+            this.leftButton.Location = new System.Drawing.Point(156, 12);
+            this.leftButton.Name = "leftButton";
+            this.leftButton.Size = new System.Drawing.Size(22, 18);
+            this.leftButton.TabIndex = 8;
+            this.leftButton.Text = "˂";
+            this.leftButton.UseVisualStyleBackColor = true;
+            // 
+            // rightButton
+            // 
+            this.rightButton.Location = new System.Drawing.Point(212, 12);
+            this.rightButton.Name = "rightButton";
+            this.rightButton.Size = new System.Drawing.Size(22, 18);
+            this.rightButton.TabIndex = 9;
+            this.rightButton.Text = "˃";
+            this.rightButton.UseVisualStyleBackColor = true;
+            // 
+            // backwardButton
+            // 
+            this.backwardButton.Location = new System.Drawing.Point(184, 28);
+            this.backwardButton.Name = "backwardButton";
+            this.backwardButton.Size = new System.Drawing.Size(22, 18);
+            this.backwardButton.TabIndex = 10;
+            this.backwardButton.Text = "˅";
+            this.backwardButton.UseVisualStyleBackColor = true;
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(289, 168);
+            this.Controls.Add(this.backwardButton);
+            this.Controls.Add(this.rightButton);
+            this.Controls.Add(this.leftButton);
+            this.Controls.Add(this.forwardButton);
             this.Controls.Add(this.ctBotStatusLabel);
             this.Controls.Add(this.driveButton);
             this.Controls.Add(this.trainActionButton);
@@ -141,6 +183,10 @@
         private System.Windows.Forms.Button trainActionButton;
         private System.Windows.Forms.Button driveButton;
         private System.Windows.Forms.Label ctBotStatusLabel;
+        private System.Windows.Forms.Button forwardButton;
+        private System.Windows.Forms.Button leftButton;
+        private System.Windows.Forms.Button rightButton;
+        private System.Windows.Forms.Button backwardButton;
     }
 }
 
