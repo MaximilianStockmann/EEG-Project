@@ -10,14 +10,17 @@ BUFFER_SIZE = 20  # Normally 1024, but we want fast response
 C_CLIENT_LOST = -2
 C_NO_COMMAND = -1
 C_STOP = 0
-C_STRAIGHT = 1
+C_FORWARD = 1
 C_LEFT = 2
 C_RIGHT = 3
+C_BACKWARD = 4
 
 def default(arg):
     print arg
 speedCallback = default
 clientLostCallback = default
+
+conn = False
 
 
 
@@ -31,16 +34,32 @@ def openServer():
 
 def searchForClient():
     global conn
+    global s
     conn, addr = s.accept()
     print 'Connection address:', addr
 
 def closeServer():
     global conn
+    if not conn: return
+    try:
+        conn.sendall("Connection lost: Error occurred!")
+    except:
+        pass
     conn.close()
+
+def okStatus():
+    global conn
+    conn.sendall("ok")
 
 def waitForCommand():
     global conn
-    data = conn.recv(BUFFER_SIZE)
+    global clientLostCallback
+    global speedCallback
+    try:
+        data = conn.recv(BUFFER_SIZE)
+    except:
+        clientLostCallback()
+        return C_CLIENT_LOST
     #data = raw_input()
 
     if not data:
@@ -50,23 +69,30 @@ def waitForCommand():
     if "speed" in data and len(data) > 6:
         try:
             speedCallback(float(data[6:]))
+            okStatus()
             return C_NO_COMMAND
         except ValueError:
+            okStatus()
             return C_NO_COMMAND
 
     cmd = {
         "stop" : C_STOP,
-        "straight" : C_STRAIGHT,
+        "forward" : C_FORWARD,
         "left" : C_LEFT,
-        "right" : C_RIGHT
+        "right" : C_RIGHT,
+        "backward" : C_BACKWARD
     }
+    okStatus()
     return cmd.get(data, C_NO_COMMAND)
 
 
 def setSpeedCallback(f):
-    speedCallback = f;
+    global speedCallback
+    speedCallback = f
 
 def setClientLostCallback(f):
+    #print "Set Lost Callback"
+    global clientLostCallback
     clientLostCallback = f
 
 

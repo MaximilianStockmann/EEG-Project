@@ -5,11 +5,11 @@
 import socket
 import sys
 
-
 HOST = '127.0.0.1'    # The remote host
 if len(sys.argv) > 1:
     print "Custom connection: " + sys.argv[1]
     HOST = sys.argv[1]
+
 
 PORT = 13337              # The same port as used by the server
 
