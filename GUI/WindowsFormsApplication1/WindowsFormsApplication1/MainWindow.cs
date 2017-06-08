@@ -14,16 +14,20 @@ namespace GUI_Namespace
 {
     public partial class MainWindow : Form
     {
+        // Creating SDK-Instance
+        static EmoEngine engine = EmoEngine.Instance;
+
         // TCP-Connection to Pi
         static TcpClient client;
         static NetworkStream clientStream;
         static Int32 port = 13337;
 
-        // engine and driving related information
-        static EmoEngine engine = EmoEngine.Instance;
+        // driving related information
         static EdkDll.IEE_MentalCommandAction_t currentAction;
         static bool drivingAllowed = false;  //always check, before sending a command
         static String currentCommand;
+
+        //static bool drivingAllowed = false;
 
         // Cloud-Profile related information
         static int userCloudID = 0;
@@ -106,11 +110,10 @@ namespace GUI_Namespace
                 drivingAllowed = true;
                 try
                 {
-
-
                     // Initalisierung
                     client = new TcpClient("192.168.178.33", port);
                     clientStream = client.GetStream();
+
 
                     sendCommand("stop");
 
@@ -127,9 +130,6 @@ namespace GUI_Namespace
                     Console.WriteLine("SocketException: {0}", ex);
                     ctBotStatusLabel.Text = "SocketException";
                 }
-
-
-
             }
             else
             {
