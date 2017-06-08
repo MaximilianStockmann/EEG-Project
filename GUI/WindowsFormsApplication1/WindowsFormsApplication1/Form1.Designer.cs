@@ -76,7 +76,7 @@
             this.trainActionSelectionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.trainActionSelectionComboBox.FormattingEnabled = true;
             this.trainActionSelectionComboBox.Items.AddRange(new object[] {
-            "Neutral",
+            "Stop",
             "Forward",
             "Left",
             "Backward",
@@ -94,6 +94,7 @@
             this.trainActionButton.TabIndex = 4;
             this.trainActionButton.Text = "Train";
             this.trainActionButton.UseVisualStyleBackColor = true;
+            this.trainActionButton.Click += new System.EventHandler(this.trainActionButton_Click);
             // 
             // driveButton
             // 

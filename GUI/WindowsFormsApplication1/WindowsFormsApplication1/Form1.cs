@@ -14,17 +14,16 @@ namespace GUI_Namespace
 {
     public partial class MainWindow : Form
     {
-        // Creating SDK-Instance
-        //static EmoEngine engine = EmoEngine.Instance;
-
         // TCP-Connection to Pi
         static TcpClient client;
         static NetworkStream clientStream;
         static Int32 port = 13337;
 
+        // engine and driving related information
         static EmoEngine engine = EmoEngine.Instance;
         static EdkDll.IEE_MentalCommandAction_t currentAction;
-        static bool drivingAllowed = false;
+        static bool drivingAllowed = false;  //always check, before sending a command
+        static String currentCommand;
 
         // Cloud-Profile related information
         static int userCloudID = 0;
@@ -40,7 +39,7 @@ namespace GUI_Namespace
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            //passing the event handlers to the engine
+            //passing event handlers to the engine
             engine.EmoEngineConnected += 
                 new EmoEngine.EmoEngineConnectedEventHandler(engine_EmoEngineConnected);
             engine.EmoEngineDisconnected += 
@@ -104,6 +103,7 @@ namespace GUI_Namespace
             if (driveButton.Text == "Start Driving")
             {
                 driveButton.Text = "Stop Driving";
+                drivingAllowed = true;
                 try
                 {
 
@@ -112,7 +112,7 @@ namespace GUI_Namespace
                     client = new TcpClient("192.168.178.33", port);
                     clientStream = client.GetStream();
 
-                    sendCommand("speed 9000");
+                    sendCommand("stop");
 
 
 
@@ -134,6 +134,7 @@ namespace GUI_Namespace
             else
             {
                 driveButton.Text = "Start Driving";
+                drivingAllowed = false;
                 if (clientStream == null) return;
                 // Close everything.
                 clientStream.Close();
@@ -204,12 +205,34 @@ namespace GUI_Namespace
             //todo...
         }
 
-        //note the different param
         public void engine_MentalCommandEmoStateUpdated(object sender, EmoStateUpdatedEventArgs e)
         {
-            //todo...
             EmoState es = e.emoState;
             currentAction = es.MentalCommandGetCurrentAction();
+            currentCommand = currentActionToString();
+            if (drivingAllowed)
+            {
+                sendCommand(currentCommand);
+            }
+        }
+
+        //returns the command to send to the bot
+        private String currentActionToString()
+        {
+            switch(currentAction)
+            {
+                case EdkDll.IEE_MentalCommandAction_t.MC_NEUTRAL: return "stop";
+                case EdkDll.IEE_MentalCommandAction_t.MC_LEFT: return "left";
+                case EdkDll.IEE_MentalCommandAction_t.MC_RIGHT: return "right";
+                case EdkDll.IEE_MentalCommandAction_t.MC_PUSH: return "forward";
+                case EdkDll.IEE_MentalCommandAction_t.MC_PULL: return "backward";
+                default: return ""; //the empty string means that there is no valid command (this should never happen)
+            }
+        }
+
+        private void trainActionButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
