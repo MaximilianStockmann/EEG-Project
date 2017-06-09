@@ -15,8 +15,8 @@ C_LEFT = 2
 C_RIGHT = 3
 C_BACKWARD = 4
 
-def default(arg):
-    print arg
+def default():
+    pass
 speedCallback = default
 clientLostCallback = default
 
@@ -103,6 +103,7 @@ if __name__ == '__main__':
     openServer()
     try:
         while 1:
+            #print "waitForCommand"
             c = waitForCommand()
             if c == C_CLIENT_LOST:
                 print "C_CLIENT_LOST"
@@ -110,7 +111,7 @@ if __name__ == '__main__':
             print c
     except KeyboardInterrupt:
         closeServer()
-    except socket.error as msg:
-        closeServer()
+    # except socket.error as msg:
+    #     closeServer()
     except:
         closeServer()
