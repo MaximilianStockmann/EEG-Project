@@ -43,6 +43,14 @@ namespace GUI_Namespace
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
+            // setting mentalCommandActive actions for user
+            ulong action1 = (ulong)EdkDll.IEE_MentalCommandAction_t.MC_LEFT;
+            ulong action2 = (ulong)EdkDll.IEE_MentalCommandAction_t.MC_RIGHT;
+            ulong action3 = (ulong)EdkDll.IEE_MentalCommandAction_t.MC_PUSH;
+            ulong action4 = (ulong)EdkDll.IEE_MentalCommandAction_t.MC_PULL;
+            ulong listAction = action1 | action2 | action3 | action4;
+            EmoEngine.Instance.MentalCommandSetActiveActions(0, listAction);
+
             //passing event handlers to the engine
             engine.EmoEngineConnected += 
                 new EmoEngine.EmoEngineConnectedEventHandler(engine_EmoEngineConnected);
@@ -63,42 +71,7 @@ namespace GUI_Namespace
         private void DefaultButton_Click(object sender, EventArgs e)
         {
             loadProfileButton.Text = "Hallo";
-            /*
-            // Connection to Engine (from the SDK-project)
-            engine.EmoEngineConnected +=
-                new EmoEngine.EmoEngineConnectedEventHandler(engine_EmoEngineConnected);
-            engine.EmoEngineDisconnected +=
-                new EmoEngine.EmoEngineDisconnectedEventHandler(engine_EmoEngineDisconnected);
             
-            // What happens, if a Dongle is connected or disconnected.
-            engine.UserAdded +=
-                new EmoEngine.UserAddedEventHandler(engine_UserAdded);
-            engine.UserRemoved +=
-                new EmoEngine.UserRemovedEventHandler(engine_UserRemoved);
-
-            // Called in the Background
-            engine.EmoStateUpdated +=
-                new EmoEngine.EmoStateUpdatedEventHandler(engine_EmoStateUpdated);
-            engine.EmoEngineEmoStateUpdated +=
-                new EmoEngine.EmoEngineEmoStateUpdatedEventHandler(engine_EmoEngineEmoStateUpdated);
-
-            // What happens when a Mental Command is recognized. (Bound to static drive var)
-            engine.MentalCommandEmoStateUpdated +=
-                new EmoEngine.MentalCommandEmoStateUpdatedEventHandler(engine_MentalCommandEmoStateUpdated);
-
-            // Training the Mental Commands
-            engine.MentalCommandTrainingStarted += // starts the process (block)
-                new EmoEngine.MentalCommandTrainingStartedEventEventHandler(engine_MentalCommandTrainingStarted);
-            engine.MentalCommandTrainingSucceeded += // asks for accept/reject
-                new EmoEngine.MentalCommandTrainingSucceededEventHandler(engine_MentalCommandTrainingSucceeded);
-            engine.MentalCommandTrainingCompleted += // closes Block, when accepted
-                new EmoEngine.MentalCommandTrainingCompletedEventHandler(engine_MentalCommandTrainingCompleted);
-            engine.MentalCommandTrainingRejected += // closes Block, when rejected
-                new EmoEngine.MentalCommandTrainingRejectedEventHandler(engine_MentalCommandTrainingRejected);
-
-            // Connect the Engine
-            engine.Connect();
-            */
         }
 
         private void driveButton_Click(object sender, EventArgs e)
@@ -173,7 +146,55 @@ namespace GUI_Namespace
 
             getStatusResponse();
         }
-        
+
+        static void save()
+        {
+            int getNumberProfile = EmotivCloudClient.EC_GetAllProfileName(userCloudID);
+
+            int profileID = -1;
+            EmotivCloudClient.EC_GetProfileId(userCloudID, profileName, ref profileID);
+
+            if (profileID >= 0)
+            {
+                // Profile with +profileName+ exists already, updating...
+                if (EmotivCloudClient.EC_UpdateUserProfile(userCloudID, 0, profileID) == EdkDll.EDK_OK)
+                    ;// Update finished
+                else
+                    ;// Update failed
+            }
+            else
+            {
+                // Saving...
+
+                if (EmotivCloudClient.EC_SaveUserProfile(userCloudID, (int)0, profileName,
+                EmotivCloudClient.profileFileType.TRAINING) == EdkDll.EDK_OK)
+                    ;// Saving finished
+                else
+                    ;// Saving failed
+            }
+
+            return;
+        }
+
+        static void load()
+        {
+            int getNumberProfile = EmotivCloudClient.EC_GetAllProfileName(userCloudID);
+
+            if (getNumberProfile > 0)
+            {
+                // Loading...
+
+                int profileID = -1;
+                EmotivCloudClient.EC_GetProfileId(userCloudID, profileName, ref profileID);
+
+                if (EmotivCloudClient.EC_LoadUserProfile(userCloudID, 0, profileID, version) == EdkDll.EDK_OK)
+                    ;// Loading finished
+                else
+                    ;// Loading failed
+            }
+            return;
+        }
+
         //event handlers for the engine
         public void engine_EmoEngineConnected(object sender, EmoEngineEventArgs e)
         {
@@ -197,7 +218,7 @@ namespace GUI_Namespace
 
         public void engine_MentalCommandTrainingFailed(object sender, EmoEngineEventArgs e)
         {
-            //todo...
+            ctBotStatusLabel.Text = "Training failed!";
         }
 
         public void engine_MentalCommandTrainingCompleted(object sender, EmoEngineEventArgs e)
@@ -226,13 +247,51 @@ namespace GUI_Namespace
                 case EdkDll.IEE_MentalCommandAction_t.MC_RIGHT: return "right";
                 case EdkDll.IEE_MentalCommandAction_t.MC_PUSH: return "forward";
                 case EdkDll.IEE_MentalCommandAction_t.MC_PULL: return "backward";
-                default: return ""; //the empty string means that there is no valid command (this should never happen)
+                default: return ""; // there is no active command (this should never happen (neutral is a command), so we don't handle it)
             }
         }
 
-        private void trainActionButton_Click(object sender, EventArgs e)
+        private void resetProfileButton_Click(object sender, EventArgs e)
         {
+            EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_NEUTRAL);
+            EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_ERASE);
+            EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_PUSH);
+            EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_ERASE);
+            EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_PULL);
+            EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_ERASE);
+            EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_LEFT);
+            EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_ERASE);
+            EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_RIGHT);
+            EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_ERASE);
+        }
 
+        private void trainActionButton_Click(object sender, EventArgs e)
+        {             
+            switch (trainActionSelectionComboBox.Text)
+            {
+                case "Stop":
+                    EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_NEUTRAL);
+                    EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START);
+                    break;
+                case "Forward":
+                    EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_PUSH);
+                    EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START);
+                    break;
+                case "backward":
+                    EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_PULL);
+                    EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START);
+                    break;
+                case "Left":
+                    EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_LEFT);
+                    EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START);
+                    break;
+                case "Right":
+                    EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_RIGHT);
+                    EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

@@ -189,7 +189,7 @@ namespace MentalCommandWithCloudProfile
                     }
                 case ConsoleKey.F2:
                     EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_NEUTRAL);
-                    EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START); // NC_ERASE for clearing Training Data on a special move (prob. same Code)
+                    EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START); // MC_ERASE for clearing Training Data on a special move (prob. same Code)
                     break;
                 case ConsoleKey.F3:
                     EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_RIGHT);
