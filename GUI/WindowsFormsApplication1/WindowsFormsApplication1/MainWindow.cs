@@ -1,14 +1,7 @@
 ﻿using Emotiv;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+
 
 namespace GUI_Namespace
 {
@@ -16,11 +9,6 @@ namespace GUI_Namespace
     {
         // Creating SDK-Instance
         static EmoEngine engine = EmoEngine.Instance;
-
-        // TCP-Connection to Pi
-        static TcpClient client;
-        static NetworkStream clientStream;
-        static Int32 port = 13337;
 
         // driving related information
         static EdkDll.IEE_MentalCommandAction_t currentAction;
@@ -36,7 +24,10 @@ namespace GUI_Namespace
         static string profileName = "Stefan Doing Stuff";
         static int version = -1; // Lastest version
 
-        
+        //TCP infos
+        static Int32 port = 13337;
+        static String host = "127.0.0.1";
+
         public MainWindow()
         {
             InitializeComponent();
@@ -69,10 +60,12 @@ namespace GUI_Namespace
                 new EmoEngine.MentalCommandEmoStateUpdatedEventHandler(engine_MentalCommandEmoStateUpdated);
         }
 
-        private void DefaultButton_Click(object sender, EventArgs e)
+        private void sendCommand(String str)
         {
-            loadProfileButton.Text = "Hallo";
-            
+            if(TCP.sendCommand(str))
+                ctBotStatusLabel.Text = "Connection good!";
+            else
+                ctBotStatusLabel.Text = "Connection failed!";
         }
 
         private void driveButton_Click(object sender, EventArgs e)
@@ -80,93 +73,29 @@ namespace GUI_Namespace
             //ctBotStatusLabel.Text = "Test";
             if (driveButton.Text == "Start Driving")
             {
-
                 //driveButton.Text = "Connect to c't Bot..."; //aktualisiert nicht ???
-                if (TCPinit())
+                if (TCP.init(host, port))
+                {
+                    ctBotStatusLabel.Text = "Connected!";
                     driveButton.Text = "Stop Driving";
-           
+                    drivingAllowed = true;
+                }
+                else
+                {
+                    ctBotStatusLabel.Text = "No server found!";
+                    drivingAllowed = false;
+                }
+                
             }
             else
             {
                 driveButton.Text = "Start Driving";
+                ctBotStatusLabel.Text = "No connection";
                 drivingAllowed = false;
-                TCPcloseConnection();
+                TCP.closeConnection();
             }
 
         }
-
-//------TCP Funktionen -------------------------------------------------------------------------------
-        private bool TCPinit()
-        {
-            try
-            {
-                // Initalisierung
-                client = new TcpClient("192.168.178.33", port);
-                clientStream = client.GetStream();
-
-                drivingAllowed = true;
-                TCPsendCommand("stop");
-                return true;
-            }
-            catch (ArgumentNullException ex)
-            {
-                Console.WriteLine("ArgumentNullException: {0}", ex);
-                ctBotStatusLabel.Text = "ArgumentNullException";
-                drivingAllowed = false;
-                return false;
-            }
-            catch (SocketException ex)
-            {
-                Console.WriteLine("SocketException: {0}", ex);
-                ctBotStatusLabel.Text = "No Server to connect";
-                drivingAllowed = false;
-                return false;
-            }
-        }
-
-        private void TCPgetStatusResponse()
-        {
-
-            // Buffer to store the response bytes.
-            Byte[] data = new Byte[256];
-
-            // String to store the response ASCII representation.
-            String responseData = String.Empty;
-
-            // Read the first batch of the TcpServer response bytes.
-            Int32 bytes = clientStream.Read(data, 0, data.Length);
-            ctBotStatusLabel.Text = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-
-            //TODO: response auslesen und Flag stellen wenn server abschmiert
-            //      Rückgabewert
-
-        }
-
-        private void TCPsendCommand(String cmd)    //Eingaben: "forward", "backward", "left", "right", "stop"
-        {
-
-            if (clientStream == null)
-            {
-                ctBotStatusLabel.Text = "No Server to comunicate";
-                return;
-            }
-
-            Byte[] data = System.Text.Encoding.ASCII.GetBytes(cmd);
-
-            clientStream.Write(data, 0, data.Length);
-
-            TCPgetStatusResponse();
-        }
-
-        private void TCPcloseConnection()
-        {
-            if (clientStream == null) return;
-            // Close everything.
-            clientStream.Close();
-            client.Close();
-        }
-
-        //-------------------------------------------------------------------------------------------------------
 
         //save cloud profile
         static void save()
@@ -256,7 +185,7 @@ namespace GUI_Namespace
             currentCommand = currentActionToString();
             if (drivingAllowed)
             {
-                TCPsendCommand(currentCommand);
+                sendCommand(currentCommand);
             }
         }
 
