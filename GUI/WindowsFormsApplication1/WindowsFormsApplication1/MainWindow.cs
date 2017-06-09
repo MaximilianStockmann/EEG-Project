@@ -35,6 +35,7 @@ namespace GUI_Namespace
         static string password = "";
         static string profileName = "Stefan Doing Stuff";
         static int version = -1; // Lastest version
+
         
         public MainWindow()
         {
@@ -76,47 +77,54 @@ namespace GUI_Namespace
 
         private void driveButton_Click(object sender, EventArgs e)
         {
-            ctBotStatusLabel.Text = "Test";
+            //ctBotStatusLabel.Text = "Test";
             if (driveButton.Text == "Start Driving")
             {
-                driveButton.Text = "Stop Driving";
-                drivingAllowed = true;
-                try
-                {
-                    // Initalisierung
-                    client = new TcpClient("192.168.178.33", port);
-                    clientStream = client.GetStream();
 
-
-                    sendCommand("stop");
-
-
-
-                }
-                catch (ArgumentNullException ex)
-                {
-                    Console.WriteLine("ArgumentNullException: {0}", ex);
-                    ctBotStatusLabel.Text = "ArgumentNullException";
-                }
-                catch (SocketException ex)
-                {
-                    Console.WriteLine("SocketException: {0}", ex);
-                    ctBotStatusLabel.Text = "SocketException";
-                }
+                //driveButton.Text = "Connect to c't Bot..."; //aktualisiert nicht ???
+                if (TCPinit())
+                    driveButton.Text = "Stop Driving";
+           
             }
             else
             {
                 driveButton.Text = "Start Driving";
                 drivingAllowed = false;
-                if (clientStream == null) return;
-                // Close everything.
-                clientStream.Close();
-                client.Close();
+                TCPcloseConnection();
             }
 
         }
 
-        private void getStatusResponse()
+//------TCP Funktionen -------------------------------------------------------------------------------
+        private bool TCPinit()
+        {
+            try
+            {
+                // Initalisierung
+                client = new TcpClient("192.168.178.33", port);
+                clientStream = client.GetStream();
+
+                drivingAllowed = true;
+                TCPsendCommand("stop");
+                return true;
+            }
+            catch (ArgumentNullException ex)
+            {
+                Console.WriteLine("ArgumentNullException: {0}", ex);
+                ctBotStatusLabel.Text = "ArgumentNullException";
+                drivingAllowed = false;
+                return false;
+            }
+            catch (SocketException ex)
+            {
+                Console.WriteLine("SocketException: {0}", ex);
+                ctBotStatusLabel.Text = "No Server to connect";
+                drivingAllowed = false;
+                return false;
+            }
+        }
+
+        private void TCPgetStatusResponse()
         {
 
             // Buffer to store the response bytes.
@@ -129,14 +137,17 @@ namespace GUI_Namespace
             Int32 bytes = clientStream.Read(data, 0, data.Length);
             ctBotStatusLabel.Text = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
 
+            //TODO: response auslesen und Flag stellen wenn server abschmiert
+            //      Rückgabewert
+
         }
 
-        private void sendCommand(String cmd)    //Eingaben: "forward", "backward", "left", "right", "stop"
+        private void TCPsendCommand(String cmd)    //Eingaben: "forward", "backward", "left", "right", "stop"
         {
 
             if (clientStream == null)
             {
-                ctBotStatusLabel.Text = "No Server to connect";
+                ctBotStatusLabel.Text = "No Server to comunicate";
                 return;
             }
 
@@ -144,9 +155,20 @@ namespace GUI_Namespace
 
             clientStream.Write(data, 0, data.Length);
 
-            getStatusResponse();
+            TCPgetStatusResponse();
         }
 
+        private void TCPcloseConnection()
+        {
+            if (clientStream == null) return;
+            // Close everything.
+            clientStream.Close();
+            client.Close();
+        }
+
+        //-------------------------------------------------------------------------------------------------------
+
+        //save cloud profile
         static void save()
         {
             int getNumberProfile = EmotivCloudClient.EC_GetAllProfileName(userCloudID);
@@ -176,6 +198,7 @@ namespace GUI_Namespace
             return;
         }
 
+        //load cloud profile
         static void load()
         {
             int getNumberProfile = EmotivCloudClient.EC_GetAllProfileName(userCloudID);
@@ -233,7 +256,7 @@ namespace GUI_Namespace
             currentCommand = currentActionToString();
             if (drivingAllowed)
             {
-                sendCommand(currentCommand);
+                TCPsendCommand(currentCommand);
             }
         }
 
