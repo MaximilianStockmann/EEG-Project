@@ -1,3 +1,5 @@
 doc/html/
 .DS_Store
 *.db
+*.cache
+*.Cache
