@@ -35,11 +35,8 @@ public class TCP
         String responseData = String.Empty;
         // Read the first batch of the TcpServer response bytes.
         Int32 bytes = clientStream.Read(data, 0, data.Length);
+
         return System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-
-        //TODO: response auslesen und Flag stellen wenn server abschmiert
-        //      Rückgabewert
-
     }
 
     static public bool sendCommand(String cmd)    //Eingaben: "forward", "backward", "left", "right", "stop"
