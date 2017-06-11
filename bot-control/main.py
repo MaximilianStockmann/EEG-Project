@@ -16,6 +16,7 @@ Pins = (PinRF, PinRB, PinLF, PinLB)
 PWMs = []
 
 SPEED = 20.0
+ROTATE_FACTOR = 0.5
 
 def init():
 
@@ -71,13 +72,13 @@ def driveForward():
 
 def driveLeft():
     driveStop()
-    PWMs[RF].ChangeDutyCycle(SPEED)
-    PWMs[LB].ChangeDutyCycle(SPEED)
+    PWMs[RF].ChangeDutyCycle(SPEED*ROTATE_FACTOR)
+    PWMs[LB].ChangeDutyCycle(SPEED*ROTATE_FACTOR)
 
 def driveRight():
     driveStop()
-    PWMs[LF].ChangeDutyCycle(SPEED)
-    PWMs[RB].ChangeDutyCycle(SPEED)
+    PWMs[LF].ChangeDutyCycle(SPEED*ROTATE_FACTOR)
+    PWMs[RB].ChangeDutyCycle(SPEED*ROTATE_FACTOR)
 
 def driveBackward():
     driveStop()
@@ -111,9 +112,11 @@ if __name__ == '__main__':
                 break
 
     except KeyboardInterrupt:
-        exit()
+        #exit()
+        pass
     except:
-        exit()
+        #exit()
+        pass
 
 
 # TODO

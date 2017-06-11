@@ -27,9 +27,12 @@ conn = False
 def openServer():
     global s
     global conn
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind((TCP_IP, TCP_PORT))
-    s.listen(1)
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.bind((TCP_IP, TCP_PORT))
+        s.listen(1)
+    except Exception as e:
+        print e
     searchForClient()
 
 def searchForClient():
