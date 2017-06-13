@@ -163,7 +163,10 @@ namespace GUI_Namespace
 
         public void engine_MentalCommandTrainingSucceeded(object sender, EmoEngineEventArgs e)
         {
-            engineStatusLabel.Text = "Training successful, click here to accept this training";
+            //todo...
+            //open new dialog to accept or decline training
+            //EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_ACCEPT);
+            //EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_REJECT);
         }
 
         public void engine_MentalCommandTrainingFailed(object sender, EmoEngineEventArgs e)
@@ -173,7 +176,7 @@ namespace GUI_Namespace
 
         public void engine_MentalCommandTrainingCompleted(object sender, EmoEngineEventArgs e)
         {
-            //todo...
+            engineStatusLabel.Text = "Training completed";
         }
 
         public void engine_MentalCommandEmoStateUpdated(object sender, EmoStateUpdatedEventArgs e)
@@ -242,19 +245,6 @@ namespace GUI_Namespace
                     break;
                 default:
                     break;
-            }
-        }
-
-        private void ctBotStatusLabel_Click(object sender, EventArgs e)
-        {
-            // do nothing
-        }
-
-        private void engineStatus_Click(object sender, EventArgs e)
-        {
-            if(engineStatusLabel.Text == "Training successful, click here to accept training")
-            {
-                // accept training
             }
         }
     }
