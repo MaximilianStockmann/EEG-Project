@@ -147,11 +147,12 @@
             // ipLabel
             // 
             this.ipLabel.AutoSize = true;
-            this.ipLabel.Location = new System.Drawing.Point(160, 32);
+            this.ipLabel.Location = new System.Drawing.Point(157, 33);
             this.ipLabel.Name = "ipLabel";
-            this.ipLabel.Size = new System.Drawing.Size(35, 13);
+            this.ipLabel.Size = new System.Drawing.Size(68, 13);
             this.ipLabel.TabIndex = 14;
-            this.ipLabel.Text = "label1";
+            this.ipLabel.Text = "IP: 127.0.0.1";
+            this.ipLabel.Click += new System.EventHandler(this.ipLabel_Click);
             // 
             // MainWindow
             // 

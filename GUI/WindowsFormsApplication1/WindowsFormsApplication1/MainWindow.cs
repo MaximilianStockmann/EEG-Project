@@ -26,7 +26,7 @@ namespace GUI_Namespace
 
         //TCP infos
         static Int32 port = 13337;
-        static String host = "192.168.178.33";
+        static public String host = "192.168.1.1";
 
         static startRunningWindow runWin;
 
@@ -268,7 +268,19 @@ namespace GUI_Namespace
                 default:
                     break;
             }
+
+
         }
 
+        private void ipLabel_Click(object sender, EventArgs e)
+        {
+            new changeIPWindow.startChangeIPWindow().ShowDialog();
+
+        }
+
+        public void setIPLabel(String s)
+        {
+            ipLabel.Text = s;
+        }
     }
 }

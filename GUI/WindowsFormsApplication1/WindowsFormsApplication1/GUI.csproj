@@ -51,6 +51,12 @@
     <Compile Include="AcceptTrainingDialog.Designer.cs">
       <DependentUpon>AcceptTrainingDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="ChangeIPWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangeIPWindow.Designer.cs">
+      <DependentUpon>ChangeIPWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="RunningWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -74,6 +80,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AcceptTrainingDialog.resx">
       <DependentUpon>AcceptTrainingDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChangeIPWindow.resx">
+      <DependentUpon>ChangeIPWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
