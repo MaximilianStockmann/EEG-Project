@@ -62,7 +62,7 @@ namespace GUI_Namespace
 
         private void sendCommand(String str)
         {
-            if(TCP.sendCommand(str))
+            if (TCP.sendCommand(str))
                 ctBotStatusLabel.Text = "Connection good!";
             else
                 ctBotStatusLabel.Text = "Connection failed!";
@@ -205,6 +205,7 @@ namespace GUI_Namespace
 
         private void resetProfileButton_Click(object sender, EventArgs e)
         {
+            // reset
             EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_NEUTRAL);
             EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_ERASE);
             EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_PUSH);

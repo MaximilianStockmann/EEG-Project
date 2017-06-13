@@ -45,6 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NewProfileDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewProfileDialog.Designer.cs">
+      <DependentUpon>NewProfileDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="TCP.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
@@ -56,6 +62,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewProfileDialog.resx">
+      <DependentUpon>NewProfileDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
