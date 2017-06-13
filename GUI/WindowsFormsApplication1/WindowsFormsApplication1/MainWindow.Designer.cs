@@ -53,7 +53,7 @@
             this.loadProfileButton.TabIndex = 0;
             this.loadProfileButton.Text = "Load";
             this.loadProfileButton.UseVisualStyleBackColor = true;
-            this.loadProfileButton.Click += new System.EventHandler(this.LoadProfileButton_Click);
+            this.loadProfileButton.Click += new System.EventHandler(this.loadProfileButton_Click);
             // 
             // profileSelectionComboBox
             // 
