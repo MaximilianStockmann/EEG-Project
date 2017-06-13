@@ -113,6 +113,18 @@
       <Name>DotNetEmotivSDK</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="img\down.png" />
+    <Content Include="img\downO.png" />
+    <Content Include="img\left.png" />
+    <Content Include="img\leftO.png" />
+    <Content Include="img\mid.png" />
+    <Content Include="img\midO.png" />
+    <Content Include="img\right.png" />
+    <Content Include="img\rightO.png" />
+    <Content Include="img\up.png" />
+    <Content Include="img\upO.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

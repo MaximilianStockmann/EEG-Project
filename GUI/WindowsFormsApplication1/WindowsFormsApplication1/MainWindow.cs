@@ -79,12 +79,12 @@ namespace GUI_Namespace
                     ctBotStatusLabel.Text = "Connected!";
                     driveButton.Text = "Stop Driving";
                     drivingAllowed = true;
-                    new startRunningWindow().ShowDialog();
                 }
                 else
                 {
                     ctBotStatusLabel.Text = "No server found!";
                     drivingAllowed = false;
+                    new startRunningWindow().ShowDialog(); // has to be in the if-branch
                 }
                 
             }
