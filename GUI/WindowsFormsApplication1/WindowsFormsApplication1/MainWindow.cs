@@ -22,6 +22,9 @@ namespace GUI_Namespace
         static string profileName = "Stefan Doing Stuff";
         static int version = -1; // Lastest version
 
+        // Local-Profile related information
+        static uint userID = 0;
+
         //TCP infos
         static Int32 port = 13337;
         static String host = "127.0.0.1";
@@ -139,6 +142,14 @@ namespace GUI_Namespace
                 else
                     engineStatusLabel.Text = "Loading failed"; // Loading failed
             }
+        }
+
+        private void loadLocal()
+        {
+            if (IEE_LoadUserProfile(userID, profileSelectionComboBox.Text) == EDK_OK)
+                
+            else
+                throw std::runtime_error("Can't load profile.");
         }
 
         // event handlers for the engine

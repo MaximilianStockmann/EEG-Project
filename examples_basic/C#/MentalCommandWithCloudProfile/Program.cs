@@ -19,10 +19,10 @@ namespace MentalCommandWithCloudProfile
     {
         static System.IO.StreamWriter cogLog = new System.IO.StreamWriter("MentalCommand.log"); // sinnloser Log
 
-        static int userCloudID = 0;
-        static string userName = "Your account name";
-        static string password = "Your password";        
-        static string profileName = "Profile_1";
+        static uint userCloudID = 0;
+        static string userName = "dhbw";
+        static string password = "tinf12itns";        
+        static string profileName = "Profile_0";
         static int version = -1; // Lastest version
         // static EdkDll.IEE_MentalCommandAction_t currentAction = "MC_neutral....";
         // static EmoEngine engine = EmoEngine.Instance;
@@ -82,7 +82,7 @@ namespace MentalCommandWithCloudProfile
             EdkDll.IEE_MentalCommandAction_t cogAction = es.MentalCommandGetCurrentAction(); // static EdkDll.IEE_MentalCommandAction_t currentAction ...
             Single power = es.MentalCommandGetCurrentActionPower(); // not necc., we only use one speed
             Boolean isActive = es.MentalCommandIsActive(); // not necc., due to static currentAction attribute
-
+            Console.WriteLine("{0},{1},{2},{3}", timeFromStart, cogAction, power, isActive);
             // own logic, TCP-signal and stuff.
 
             cogLog.WriteLine( "{0},{1},{2},{3}", timeFromStart, cogAction, power, isActive);
@@ -123,54 +123,13 @@ namespace MentalCommandWithCloudProfile
 
         static void SavingLoadingFunction(int mode) // Split up, if possible, but not necc.
         {
-            int getNumberProfile = EmotivCloudClient.EC_GetAllProfileName(userCloudID);
-
             if (mode == 0)
             {
-                int profileID = -1;
-                EmotivCloudClient.EC_GetProfileId(userCloudID, profileName, ref profileID);
-
-                if (profileID >= 0)
-                {
-                    Console.WriteLine("Profile with " + profileName + " is existed");
-                    Console.WriteLine("Updating....");
-                    if (EmotivCloudClient.EC_UpdateUserProfile(userCloudID, 0, profileID) == EdkDll.EDK_OK)
-                    {
-                        Console.WriteLine("Updating finished");
-                    }
-                    else Console.WriteLine("Updating failed");
-                }
-                else
-                {
-                    Console.WriteLine("Saving...");
-
-                    if (EmotivCloudClient.EC_SaveUserProfile(userCloudID, (int)0, profileName,
-                    EmotivCloudClient.profileFileType.TRAINING) == EdkDll.EDK_OK)
-                    {
-                        Console.WriteLine("Saving finished");
-                    }
-                    else Console.WriteLine("Saving failed");
-                }
-
-                return;
+                EdkDll.IEE_SaveUserProfile(userCloudID, profileName);
             }
             if (mode == 1)
-            {                
-                if (getNumberProfile > 0)
-                {
-                    Console.WriteLine("Loading...");
-
-                    int profileID = -1;
-                    EmotivCloudClient.EC_GetProfileId(userCloudID, profileName, ref profileID);
-
-                    if (EmotivCloudClient.EC_LoadUserProfile(userCloudID, 0, profileID, version) == EdkDll.EDK_OK)
-                        Console.WriteLine("Loading finished");
-                    else
-                        Console.WriteLine("Loading failed");
-
-                }
-
-                return;
+            {
+                EdkDll.IEE_LoadUserProfile(userCloudID, profileName);
             }
         }
 
@@ -184,7 +143,7 @@ namespace MentalCommandWithCloudProfile
                         ulong action2 = (ulong)EdkDll.IEE_MentalCommandAction_t.MC_RIGHT;
                         ulong listAction = action1 | action2;
                         EmoEngine.Instance.MentalCommandSetActiveActions(0, listAction);
-                        Console.WriteLine("Setting MentalCommand active actions for user");
+                        Console.WriteLine("Setting MentalCommand active actions for user" + profileName);
                         break;
                     }
                 case ConsoleKey.F2:
@@ -261,24 +220,7 @@ namespace MentalCommandWithCloudProfile
 
             ConsoleKeyInfo cki = new ConsoleKeyInfo();
                        
-            if (EmotivCloudClient.EC_Connect() != EdkDll.EDK_OK)
-            {
-                Console.WriteLine("Cannot connect to Emotiv Cloud.");
-                Thread.Sleep(2000);
-                return;
-            }
-
-            if (EmotivCloudClient.EC_Login(userName, password) != EdkDll.EDK_OK)
-            {
-                Console.WriteLine("Your login attempt has failed. The username or password may be incorrect");
-                Thread.Sleep(2000);
-                return;
-            }
-
             Console.WriteLine("Logged in as " + userName);
-
-            if (EmotivCloudClient.EC_GetUserDetail(ref userCloudID) != EdkDll.EDK_OK)
-                return;            
 
             while (true)
             {

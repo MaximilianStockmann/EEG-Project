@@ -1,0 +1,6 @@
+C:\Users\jonat\workspace\ProjektAI\EEG-Project\bin\win32\MentalCommandWithCloudProfile.exe.config
+C:\Users\jonat\workspace\ProjektAI\EEG-Project\bin\win32\MentalCommandWithCloudProfile.exe
+C:\Users\jonat\workspace\ProjektAI\EEG-Project\bin\win32\MentalCommandWithCloudProfile.pdb
+C:\Users\jonat\workspace\ProjektAI\EEG-Project\examples_basic\C#\MentalCommandWithCloudProfile\obj\x86\Debug\MentalCommandWithCloudProfile.csprojResolveAssemblyReference.cache
+C:\Users\jonat\workspace\ProjektAI\EEG-Project\examples_basic\C#\MentalCommandWithCloudProfile\obj\x86\Debug\MentalCommandWithCloudProfile.exe
+C:\Users\jonat\workspace\ProjektAI\EEG-Project\examples_basic\C#\MentalCommandWithCloudProfile\obj\x86\Debug\MentalCommandWithCloudProfile.pdb
