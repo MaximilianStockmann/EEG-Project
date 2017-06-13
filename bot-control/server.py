@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 import socket
 
-# TCP_IP = '192.168.178.20'
+# constans
 TCP_IP = ''
 TCP_PORT = 13337
 BUFFER_SIZE = 20  # Normally 1024, but we want fast response
-
+# command enums
 C_CLIENT_LOST = -2
 C_NO_COMMAND = -1
 C_STOP = 0
@@ -15,14 +15,14 @@ C_LEFT = 2
 C_RIGHT = 3
 C_BACKWARD = 4
 
+# callbacks
 def default():
     pass
 speedCallback = default
 clientLostCallback = default
 
+# connection element
 conn = False
-
-
 
 def openServer():
     global s
@@ -50,6 +50,7 @@ def closeServer():
         pass
     conn.close()
 
+# response to client
 def okStatus():
     global conn
     conn.sendall("ok")
@@ -58,6 +59,8 @@ def waitForCommand():
     global conn
     global clientLostCallback
     global speedCallback
+
+    # wait for data form client
     try:
         data = conn.recv(BUFFER_SIZE)
     except SystemExit:
@@ -65,12 +68,12 @@ def waitForCommand():
     except:
         clientLostCallback()
         return C_CLIENT_LOST
-    #data = raw_input()
 
     if not data:
         clientLostCallback()
         return C_CLIENT_LOST
 
+    # check for speed command
     if "speed" in data and len(data) > 6:
         try:
             speedCallback(float(data[6:]))
@@ -80,6 +83,7 @@ def waitForCommand():
             okStatus()
             return C_NO_COMMAND
 
+    # check for other commands
     cmd = {
         "stop" : C_STOP,
         "forward" : C_FORWARD,
@@ -90,23 +94,23 @@ def waitForCommand():
     okStatus()
     return cmd.get(data, C_NO_COMMAND)
 
-
+# execute if speed command is detected
 def setSpeedCallback(f):
     global speedCallback
     speedCallback = f
 
+# execute if client is lost
 def setClientLostCallback(f):
-    #print "Set Lost Callback"
     global clientLostCallback
     clientLostCallback = f
 
 
+# only for testing
 if __name__ == '__main__':
     print "Server main"
     openServer()
     try:
         while 1:
-            #print "waitForCommand"
             c = waitForCommand()
             if c == C_CLIENT_LOST:
                 print "C_CLIENT_LOST"
