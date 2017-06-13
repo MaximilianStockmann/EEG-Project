@@ -198,6 +198,16 @@ namespace GUI_Namespace
             }
         }
 
+        private void saveProfileButton_Click(object sender, EventArgs e)
+        {
+            save();
+        }
+
+        private void loadProfileButton_Click()
+        {
+            load();
+        }
+
         private void resetProfileButton_Click(object sender, EventArgs e)
         {
             // reset
@@ -247,9 +257,9 @@ namespace GUI_Namespace
             new acceptTraining.acceptTrainingDialog().Show(); // opens dialog
         }
 
-        private void saveButton_Click(object sender, EventArgs e)
+        private void loadProfileButton_Click(object sender, EventArgs e)
         {
-            save();
+
         }
     }
 }

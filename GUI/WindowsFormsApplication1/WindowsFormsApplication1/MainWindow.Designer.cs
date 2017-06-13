@@ -42,17 +42,18 @@
             this.engineStatusLabel = new System.Windows.Forms.Label();
             this.currentActionLabel = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.saveButton = new System.Windows.Forms.Button();
+            this.saveProfileButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // loadProfileButton
             // 
             this.loadProfileButton.Location = new System.Drawing.Point(138, 51);
             this.loadProfileButton.Name = "loadProfileButton";
-            this.loadProfileButton.Size = new System.Drawing.Size(56, 21);
+            this.loadProfileButton.Size = new System.Drawing.Size(56, 20);
             this.loadProfileButton.TabIndex = 0;
             this.loadProfileButton.Text = "Load";
             this.loadProfileButton.UseVisualStyleBackColor = true;
+            this.loadProfileButton.Click += new System.EventHandler(this.loadProfileButton_Click);
             // 
             // profileSelectionComboBox
             // 
@@ -185,22 +186,21 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // saveButton
+            // saveProfileButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(200, 50);
-            this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(59, 21);
-            this.saveButton.TabIndex = 14;
-            this.saveButton.Text = "Save";
-            this.saveButton.UseVisualStyleBackColor = false;
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            this.saveProfileButton.Location = new System.Drawing.Point(200, 50);
+            this.saveProfileButton.Name = "saveProfileButton";
+            this.saveProfileButton.Size = new System.Drawing.Size(59, 21);
+            this.saveProfileButton.TabIndex = 14;
+            this.saveProfileButton.Text = "Save";
+            this.saveProfileButton.UseVisualStyleBackColor = false;
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(332, 198);
-            this.Controls.Add(this.saveButton);
+            this.Controls.Add(this.saveProfileButton);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.currentActionLabel);
             this.Controls.Add(this.engineStatusLabel);
@@ -239,7 +239,7 @@
         private System.Windows.Forms.Label engineStatusLabel;
         private System.Windows.Forms.Label currentActionLabel;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.Button saveProfileButton;
     }
 }
 
