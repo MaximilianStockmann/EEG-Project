@@ -39,6 +39,7 @@
             this.leftButton = new System.Windows.Forms.Button();
             this.rightButton = new System.Windows.Forms.Button();
             this.backwardButton = new System.Windows.Forms.Button();
+            this.engineStatusLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // loadProfileButton
@@ -111,9 +112,10 @@
             this.ctBotStatusLabel.AutoSize = true;
             this.ctBotStatusLabel.Location = new System.Drawing.Point(12, 9);
             this.ctBotStatusLabel.Name = "ctBotStatusLabel";
-            this.ctBotStatusLabel.Size = new System.Drawing.Size(37, 13);
+            this.ctBotStatusLabel.Size = new System.Drawing.Size(62, 13);
             this.ctBotStatusLabel.TabIndex = 6;
-            this.ctBotStatusLabel.Text = "Status";
+            this.ctBotStatusLabel.Text = "ctBotStatus";
+            this.ctBotStatusLabel.Click += new System.EventHandler(this.ctBotStatusLabel_Click);
             // 
             // forwardButton
             // 
@@ -151,11 +153,22 @@
             this.backwardButton.Text = "˅";
             this.backwardButton.UseVisualStyleBackColor = true;
             // 
+            // engineStatusLabel
+            // 
+            this.engineStatusLabel.AutoSize = true;
+            this.engineStatusLabel.Location = new System.Drawing.Point(12, 31);
+            this.engineStatusLabel.Name = "engineStatusLabel";
+            this.engineStatusLabel.Size = new System.Drawing.Size(69, 13);
+            this.engineStatusLabel.TabIndex = 11;
+            this.engineStatusLabel.Text = "engineStatus";
+            this.engineStatusLabel.Click += new System.EventHandler(this.engineStatus_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(289, 168);
+            this.ClientSize = new System.Drawing.Size(291, 170);
+            this.Controls.Add(this.engineStatusLabel);
             this.Controls.Add(this.backwardButton);
             this.Controls.Add(this.rightButton);
             this.Controls.Add(this.leftButton);
@@ -188,6 +201,7 @@
         private System.Windows.Forms.Button leftButton;
         private System.Windows.Forms.Button rightButton;
         private System.Windows.Forms.Button backwardButton;
+        private System.Windows.Forms.Label engineStatusLabel;
     }
 }
 

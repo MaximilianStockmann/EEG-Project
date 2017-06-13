@@ -15,8 +15,6 @@ namespace GUI_Namespace
         static bool drivingAllowed = false;  //always check, before sending a command
         static String currentCommand;
 
-        //static bool drivingAllowed = false;
-
         // Cloud-Profile related information
         static int userCloudID = 0;
         static string userName = "";
@@ -35,7 +33,7 @@ namespace GUI_Namespace
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            // setting mentalCommandActive actions for user
+            // setting mentalCommandActive actions for new user profile
             ulong action1 = (ulong)EdkDll.IEE_MentalCommandAction_t.MC_LEFT;
             ulong action2 = (ulong)EdkDll.IEE_MentalCommandAction_t.MC_RIGHT;
             ulong action3 = (ulong)EdkDll.IEE_MentalCommandAction_t.MC_PUSH;
@@ -98,7 +96,7 @@ namespace GUI_Namespace
         }
 
         //save cloud profile
-        static void save()
+        private void save()
         {
             int getNumberProfile = EmotivCloudClient.EC_GetAllProfileName(userCloudID);
 
@@ -107,42 +105,42 @@ namespace GUI_Namespace
 
             if (profileID >= 0)
             {
-                // Profile with +profileName+ exists already, updating...
+                engineStatusLabel.Text = "Saving profile..."; // Saving...
                 if (EmotivCloudClient.EC_UpdateUserProfile(userCloudID, 0, profileID) == EdkDll.EDK_OK)
-                    ;// Update finished
+                    engineStatusLabel.Text = "Profile saved"; // Saving finished
                 else
-                    ;// Update failed
+                    engineStatusLabel.Text = "Saving failed"; // Saving failed
             }
             else
             {
-                // Saving...
+                engineStatusLabel.Text = "Saving profile..."; // Saving...
 
                 if (EmotivCloudClient.EC_SaveUserProfile(userCloudID, (int)0, profileName,
                 EmotivCloudClient.profileFileType.TRAINING) == EdkDll.EDK_OK)
-                    ;// Saving finished
+                    engineStatusLabel.Text = "Profile saved"; // Saving finished
                 else
-                    ;// Saving failed
+                    engineStatusLabel.Text = "Saving failed"; // Saving failed
             }
 
             return;
         }
 
         //load cloud profile
-        static void load()
+        private void load()
         {
             int getNumberProfile = EmotivCloudClient.EC_GetAllProfileName(userCloudID);
 
             if (getNumberProfile > 0)
             {
-                // Loading...
+                engineStatusLabel.Text = "Loading profile..."; // Loading...
 
                 int profileID = -1;
                 EmotivCloudClient.EC_GetProfileId(userCloudID, profileName, ref profileID);
 
                 if (EmotivCloudClient.EC_LoadUserProfile(userCloudID, 0, profileID, version) == EdkDll.EDK_OK)
-                    ;// Loading finished
+                    engineStatusLabel.Text = "Profile loaded"; // Loading finished
                 else
-                    ;// Loading failed
+                    engineStatusLabel.Text = "Loading failed"; // Loading failed
             }
             return;
         }
@@ -150,27 +148,27 @@ namespace GUI_Namespace
         //event handlers for the engine
         public void engine_EmoEngineConnected(object sender, EmoEngineEventArgs e)
         {
-            //todo...
+            engineStatusLabel.Text = "EEG connected";
         }
 
         public void engine_EmoEngineDisconnected(object sender, EmoEngineEventArgs e)
         {
-            //todo...
+            engineStatusLabel.Text = "EEG disconnected";
         }
 
         public void engine_MentalCommandTrainingStartedEvent(object sender, EmoEngineEventArgs e)
         {
-            //todo...
+            engineStatusLabel.Text = "Training started";
         }
 
         public void engine_MentalCommandTrainingSucceeded(object sender, EmoEngineEventArgs e)
         {
-            //todo...
+            engineStatusLabel.Text = "Training successful, click here to accept this training";
         }
 
         public void engine_MentalCommandTrainingFailed(object sender, EmoEngineEventArgs e)
         {
-            ctBotStatusLabel.Text = "Training failed!";
+            engineStatusLabel.Text = "Training failed";
         }
 
         public void engine_MentalCommandTrainingCompleted(object sender, EmoEngineEventArgs e)
@@ -243,6 +241,19 @@ namespace GUI_Namespace
                     break;
                 default:
                     break;
+            }
+        }
+
+        private void ctBotStatusLabel_Click(object sender, EventArgs e)
+        {
+            // do nothing
+        }
+
+        private void engineStatus_Click(object sender, EventArgs e)
+        {
+            if(engineStatusLabel.Text == "Training successful, click here to accept training")
+            {
+                // accept training
             }
         }
     }
