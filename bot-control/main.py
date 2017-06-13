@@ -17,6 +17,7 @@ PWMs = []
 
 SPEED = 20.0
 ROTATE_FACTOR = 0.5
+STRIAGHT_FACTOR = 0.95
 
 def init():
 
@@ -68,7 +69,7 @@ def driveStop():
 def driveForward():
     driveStop()
     PWMs[RF].ChangeDutyCycle(SPEED)
-    PWMs[LF].ChangeDutyCycle(SPEED)
+    PWMs[LF].ChangeDutyCycle(SPEED*STRIAGHT_FACTOR)
 
 def driveLeft():
     driveStop()
@@ -83,42 +84,29 @@ def driveRight():
 def driveBackward():
     driveStop()
     PWMs[RB].ChangeDutyCycle(SPEED)
-    PWMs[LB].ChangeDutyCycle(SPEED)
+    PWMs[LB].ChangeDutyCycle(SPEED*STRIAGHT_FACTOR)
 
 
 if __name__ == '__main__':
-    try:
-        init()
-        while 1:
-            c = S.waitForCommand()
 
-
-            if c == S.C_STOP:
-                driveStop()
-                continue
-            if c == S.C_FORWARD:
-                driveForward()
-                continue
-            if c == S.C_BACKWARD:
-                driveBackward()
-                continue
-            if c == S.C_LEFT:
-                driveLeft()
-                continue
-            if c == S.C_RIGHT:
-                driveRight()
-                continue
-            if c == -99:
-                break
-
-    except KeyboardInterrupt:
-        #exit()
-        pass
-    except:
-        #exit()
-        pass
-
-
-# TODO
-# erzwungenes abbrechen erfassen
-# button um programm zu starten/neustarten?
+    init()
+    while 1:
+        c = S.waitForCommand()
+        
+        if c == "stop":
+            driveStop()
+            continue
+        if c == "forward":
+            driveForward()
+            continue
+        if c == "backward":
+            driveBackward()
+            continue
+        if c == "left":
+            driveLeft()
+            continue
+        if c == "right":
+            driveRight()
+            continue
+        if c == "BREAK":
+            break

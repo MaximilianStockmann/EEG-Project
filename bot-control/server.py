@@ -7,13 +7,8 @@ TCP_IP = ''
 TCP_PORT = 13337
 BUFFER_SIZE = 20  # Normally 1024, but we want fast response
 # command enums
-C_CLIENT_LOST = -2
-C_NO_COMMAND = -1
-C_STOP = 0
-C_FORWARD = 1
-C_LEFT = 2
-C_RIGHT = 3
-C_BACKWARD = 4
+C_CLIENT_LOST = "LOST"
+C_NO_COMMAND = "NO_CMD"
 
 # callbacks
 def default():
@@ -64,7 +59,7 @@ def waitForCommand():
     try:
         data = conn.recv(BUFFER_SIZE)
     except SystemExit:
-        return -99
+        return "BREAK"
     except:
         clientLostCallback()
         return C_CLIENT_LOST
@@ -82,17 +77,8 @@ def waitForCommand():
         except ValueError:
             okStatus()
             return C_NO_COMMAND
-
-    # check for other commands
-    cmd = {
-        "stop" : C_STOP,
-        "forward" : C_FORWARD,
-        "left" : C_LEFT,
-        "right" : C_RIGHT,
-        "backward" : C_BACKWARD
-    }
-    okStatus()
-    return cmd.get(data, C_NO_COMMAND)
+    # return data
+    return data
 
 # execute if speed command is detected
 def setSpeedCallback(f):
