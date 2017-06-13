@@ -6,17 +6,21 @@ using System.Windows.Forms;
 
 namespace GUI_Namespace
 {
+    
     static class Program
     {
         /// <summary>
         /// Der Haupteinstiegspunkt für die Anwendung.
         /// </summary>
+
+        static public MainWindow mainWindow;
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainWindow());
+            mainWindow = new MainWindow();
+            Application.Run(mainWindow);
         }
     }
 }

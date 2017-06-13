@@ -3,8 +3,10 @@ using System.Net.Sockets;
 
 public class TCP
 {
-    static TcpClient client;
-    static NetworkStream clientStream;
+    static private TcpClient client;
+    static private NetworkStream clientStream;
+    public delegate void callBackServerLost();
+    static private callBackServerLost callback;
 
     static public bool init(String host, Int32 port)
     {
@@ -49,7 +51,15 @@ public class TCP
 
         Byte[] data = System.Text.Encoding.ASCII.GetBytes(cmd);
 
-        clientStream.Write(data, 0, data.Length);
+        try
+        {
+            clientStream.Write(data, 0, data.Length);
+        }
+        catch
+        {
+            callback();
+            return false;
+        }
 
         return getStatusResponse().Equals("ok");
     }
@@ -61,5 +71,10 @@ public class TCP
         clientStream.Close();
         clientStream = null;
         client.Close();
+    }
+
+    static public void setServerLostCallBack(callBackServerLost cb)
+    {
+        callback = cb;
     }
 }

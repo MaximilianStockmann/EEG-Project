@@ -124,9 +124,6 @@
   <data name="leftO" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\leftO.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="up" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\up.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="rightO" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\rightO.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -148,7 +145,7 @@
   <data name="right" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="up1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="up" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\up.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

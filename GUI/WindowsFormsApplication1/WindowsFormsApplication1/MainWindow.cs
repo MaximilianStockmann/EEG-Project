@@ -26,7 +26,9 @@ namespace GUI_Namespace
 
         //TCP infos
         static Int32 port = 13337;
-        static String host = "127.0.0.1";
+        static String host = "192.168.178.33";
+
+        static startRunningWindow runWin;
 
         public MainWindow()
         {
@@ -58,14 +60,30 @@ namespace GUI_Namespace
                 new EmoEngine.MentalCommandTrainingCompletedEventHandler(engine_MentalCommandTrainingCompleted);
             engine.MentalCommandEmoStateUpdated += 
                 new EmoEngine.MentalCommandEmoStateUpdatedEventHandler(engine_MentalCommandEmoStateUpdated);
+
+            TCP.setServerLostCallBack(serverLostCallBack);
+            ipLabel.Text = "IP: "+host;
         }
 
         private void sendCommand(String str)
         {
             if (TCP.sendCommand(str))
-                ctBotStatusLabel.Text = "Connection good!";
+                ctBotStatusLabel.Text = "YES";
             else
-                ctBotStatusLabel.Text = "Connection failed!";
+               ctBotStatusLabel.Text = "Connection failed!";
+        }
+
+        private void serverLostCallBack()
+        {
+            System.Windows.Forms.MessageBox.Show("c't Bot connection lost!");
+            runWin.Close();
+        }
+
+        public void closeRunning()
+        {
+            driveButton.Text = "Start Driving";
+            ctBotStatusLabel.Text = "NO";
+            TCP.closeConnection();
         }
 
         private void driveButton_Click(object sender, EventArgs e)
@@ -76,24 +94,27 @@ namespace GUI_Namespace
                 //driveButton.Text = "Connect to c't Bot..."; //aktualisiert nicht ???
                 if (TCP.init(host, port))
                 {
-                    ctBotStatusLabel.Text = "Connected!";
+                    ctBotStatusLabel.Text = "YES";
                     driveButton.Text = "Stop Driving";
                     drivingAllowed = true;
+                    runWin = new startRunningWindow();
+                    runWin.Show();
                 }
                 else
                 {
                     ctBotStatusLabel.Text = "No server found!";
                     drivingAllowed = false;
-                    new startRunningWindow().ShowDialog(); // has to be in the if-branch
+                     // has to be in the if-branch
                 }
                 
             }
             else
             {
                 driveButton.Text = "Start Driving";
-                ctBotStatusLabel.Text = "No connection";
+                ctBotStatusLabel.Text = "no";
                 drivingAllowed = false;
                 TCP.closeConnection();
+                runWin.Close();
             }
 
         }

@@ -35,11 +35,10 @@
             this.trainActionButton = new System.Windows.Forms.Button();
             this.driveButton = new System.Windows.Forms.Button();
             this.ctBotStatusLabel = new System.Windows.Forms.Label();
-            this.forwardButton = new System.Windows.Forms.Button();
-            this.leftButton = new System.Windows.Forms.Button();
-            this.rightButton = new System.Windows.Forms.Button();
-            this.backwardButton = new System.Windows.Forms.Button();
             this.engineStatusLabel = new System.Windows.Forms.Label();
+            this.Company = new System.Windows.Forms.Label();
+            this.connectionLabel = new System.Windows.Forms.Label();
+            this.ipLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // loadProfileButton
@@ -110,69 +109,60 @@
             // ctBotStatusLabel
             // 
             this.ctBotStatusLabel.AutoSize = true;
-            this.ctBotStatusLabel.Location = new System.Drawing.Point(12, 9);
+            this.ctBotStatusLabel.Location = new System.Drawing.Point(72, 9);
             this.ctBotStatusLabel.Name = "ctBotStatusLabel";
-            this.ctBotStatusLabel.Size = new System.Drawing.Size(62, 13);
+            this.ctBotStatusLabel.Size = new System.Drawing.Size(23, 13);
             this.ctBotStatusLabel.TabIndex = 6;
-            this.ctBotStatusLabel.Text = "ctBotStatus";
-            // 
-            // forwardButton
-            // 
-            this.forwardButton.Location = new System.Drawing.Point(184, 4);
-            this.forwardButton.Name = "forwardButton";
-            this.forwardButton.Size = new System.Drawing.Size(22, 18);
-            this.forwardButton.TabIndex = 7;
-            this.forwardButton.Text = "˄";
-            this.forwardButton.UseVisualStyleBackColor = true;
-            // 
-            // leftButton
-            // 
-            this.leftButton.Location = new System.Drawing.Point(156, 12);
-            this.leftButton.Name = "leftButton";
-            this.leftButton.Size = new System.Drawing.Size(22, 18);
-            this.leftButton.TabIndex = 8;
-            this.leftButton.Text = "˂";
-            this.leftButton.UseVisualStyleBackColor = true;
-            // 
-            // rightButton
-            // 
-            this.rightButton.Location = new System.Drawing.Point(212, 12);
-            this.rightButton.Name = "rightButton";
-            this.rightButton.Size = new System.Drawing.Size(22, 18);
-            this.rightButton.TabIndex = 9;
-            this.rightButton.Text = "˃";
-            this.rightButton.UseVisualStyleBackColor = true;
-            // 
-            // backwardButton
-            // 
-            this.backwardButton.Location = new System.Drawing.Point(184, 28);
-            this.backwardButton.Name = "backwardButton";
-            this.backwardButton.Size = new System.Drawing.Size(22, 18);
-            this.backwardButton.TabIndex = 10;
-            this.backwardButton.Text = "˅";
-            this.backwardButton.UseVisualStyleBackColor = true;
+            this.ctBotStatusLabel.Text = "NO";
             // 
             // engineStatusLabel
             // 
             this.engineStatusLabel.AutoSize = true;
-            this.engineStatusLabel.Location = new System.Drawing.Point(9, 25);
+            this.engineStatusLabel.Location = new System.Drawing.Point(12, 22);
             this.engineStatusLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.engineStatusLabel.Name = "engineStatusLabel";
             this.engineStatusLabel.Size = new System.Drawing.Size(69, 13);
             this.engineStatusLabel.TabIndex = 11;
             this.engineStatusLabel.Text = "engineStatus";
             // 
+            // Company
+            // 
+            this.Company.AutoSize = true;
+            this.Company.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Company.Location = new System.Drawing.Point(156, 9);
+            this.Company.Name = "Company";
+            this.Company.Size = new System.Drawing.Size(124, 24);
+            this.Company.TabIndex = 12;
+            this.Company.Text = "EEG-Projekt";
+            // 
+            // connectionLabel
+            // 
+            this.connectionLabel.AutoSize = true;
+            this.connectionLabel.Location = new System.Drawing.Point(11, 9);
+            this.connectionLabel.Name = "connectionLabel";
+            this.connectionLabel.Size = new System.Drawing.Size(64, 13);
+            this.connectionLabel.TabIndex = 13;
+            this.connectionLabel.Text = "Connection:";
+            // 
+            // ipLabel
+            // 
+            this.ipLabel.AutoSize = true;
+            this.ipLabel.Location = new System.Drawing.Point(160, 32);
+            this.ipLabel.Name = "ipLabel";
+            this.ipLabel.Size = new System.Drawing.Size(35, 13);
+            this.ipLabel.TabIndex = 14;
+            this.ipLabel.Text = "label1";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(288, 167);
-            this.Controls.Add(this.engineStatusLabel);
-            this.Controls.Add(this.backwardButton);
-            this.Controls.Add(this.rightButton);
-            this.Controls.Add(this.leftButton);
-            this.Controls.Add(this.forwardButton);
+            this.Controls.Add(this.ipLabel);
             this.Controls.Add(this.ctBotStatusLabel);
+            this.Controls.Add(this.connectionLabel);
+            this.Controls.Add(this.Company);
+            this.Controls.Add(this.engineStatusLabel);
             this.Controls.Add(this.driveButton);
             this.Controls.Add(this.trainActionButton);
             this.Controls.Add(this.trainActionSelectionComboBox);
@@ -196,11 +186,10 @@
         private System.Windows.Forms.Button trainActionButton;
         private System.Windows.Forms.Button driveButton;
         private System.Windows.Forms.Label ctBotStatusLabel;
-        private System.Windows.Forms.Button forwardButton;
-        private System.Windows.Forms.Button leftButton;
-        private System.Windows.Forms.Button rightButton;
-        private System.Windows.Forms.Button backwardButton;
         private System.Windows.Forms.Label engineStatusLabel;
+        private System.Windows.Forms.Label Company;
+        private System.Windows.Forms.Label connectionLabel;
+        private System.Windows.Forms.Label ipLabel;
     }
 }
 
