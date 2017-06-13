@@ -113,6 +113,7 @@ namespace GUI_Namespace
             }
             else
             {
+                // a new profile gets created
                 engineStatusLabel.Text = "Saving profile..."; // Saving...
 
                 if (EmotivCloudClient.EC_SaveUserProfile(userCloudID, (int)0, profileName,
