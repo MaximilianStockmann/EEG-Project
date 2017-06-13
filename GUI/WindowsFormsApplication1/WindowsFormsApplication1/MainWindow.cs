@@ -164,10 +164,7 @@ namespace GUI_Namespace
 
         public void engine_MentalCommandTrainingSucceeded(object sender, EmoEngineEventArgs e)
         {
-            //todo...
-            //open new dialog to accept or decline training
-            //EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_ACCEPT);
-            //EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_REJECT);
+            new acceptTraining.acceptTrainingDialog(); // opens dialog
         }
 
         public void engine_MentalCommandTrainingFailed(object sender, EmoEngineEventArgs e)
