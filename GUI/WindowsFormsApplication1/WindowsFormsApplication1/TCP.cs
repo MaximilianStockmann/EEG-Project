@@ -36,6 +36,7 @@ public class TCP
         // String to store the response ASCII representation.
         String responseData = String.Empty;
         // Read the first batch of the TcpServer response bytes.
+        // TODO: Try block rumdrum
         Int32 bytes = clientStream.Read(data, 0, data.Length);
 
         return System.Text.Encoding.ASCII.GetString(data, 0, bytes);
