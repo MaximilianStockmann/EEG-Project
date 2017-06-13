@@ -164,7 +164,8 @@ namespace GUI_Namespace
 
         public void engine_MentalCommandTrainingSucceeded(object sender, EmoEngineEventArgs e)
         {
-            new acceptTraining.acceptTrainingDialog(); // opens dialog
+            Form acceptTrainingDialog = new acceptTraining.acceptTrainingDialog(); // opens dialog
+            acceptTrainingDialog.Show();
         }
 
         public void engine_MentalCommandTrainingFailed(object sender, EmoEngineEventArgs e)
@@ -182,6 +183,7 @@ namespace GUI_Namespace
             EmoState es = e.emoState;
             currentAction = es.MentalCommandGetCurrentAction();
             currentCommand = currentActionToString();
+            currentActionLabel.Text = currentCommand;
             if (drivingAllowed)
             {
                 sendCommand(currentCommand);
@@ -244,6 +246,12 @@ namespace GUI_Namespace
                 default:
                     break;
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e) // for debugging only
+        {
+            Form acceptTrainingDialog = new acceptTraining.acceptTrainingDialog(); // opens dialog
+            acceptTrainingDialog.Show();
         }
     }
 }

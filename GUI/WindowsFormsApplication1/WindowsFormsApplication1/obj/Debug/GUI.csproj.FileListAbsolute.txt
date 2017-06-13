@@ -42,3 +42,5 @@ C:\Users\jonat\workspace\ProjektAI\EEG-Project\GUI\WindowsFormsApplication1\Wind
 C:\Users\jonat\workspace\ProjektAI\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
 C:\Users\jonat\workspace\ProjektAI\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\DotNetEmotivSDK.dll
 C:\Users\jonat\workspace\ProjektAI\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\DotNetEmotivSDK.pdb
+C:\Users\jonat\workspace\ProjektAI\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\acceptTraining.acceptTrainingDialog.resources
+C:\Users\jonat\workspace\ProjektAI\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.NewProfileDialog.resources

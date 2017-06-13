@@ -40,14 +40,15 @@
             this.rightButton = new System.Windows.Forms.Button();
             this.backwardButton = new System.Windows.Forms.Button();
             this.engineStatusLabel = new System.Windows.Forms.Label();
+            this.currentActionLabel = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // loadProfileButton
             // 
-            this.loadProfileButton.Location = new System.Drawing.Point(184, 63);
-            this.loadProfileButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.loadProfileButton.Location = new System.Drawing.Point(138, 51);
             this.loadProfileButton.Name = "loadProfileButton";
-            this.loadProfileButton.Size = new System.Drawing.Size(91, 26);
+            this.loadProfileButton.Size = new System.Drawing.Size(68, 21);
             this.loadProfileButton.TabIndex = 0;
             this.loadProfileButton.Text = "Load";
             this.loadProfileButton.UseVisualStyleBackColor = true;
@@ -59,18 +60,16 @@
             this.profileSelectionComboBox.Items.AddRange(new object[] {
             "Testprofil 1",
             "Testprofil 2"});
-            this.profileSelectionComboBox.Location = new System.Drawing.Point(15, 63);
-            this.profileSelectionComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.profileSelectionComboBox.Location = new System.Drawing.Point(11, 51);
             this.profileSelectionComboBox.Name = "profileSelectionComboBox";
-            this.profileSelectionComboBox.Size = new System.Drawing.Size(160, 24);
+            this.profileSelectionComboBox.Size = new System.Drawing.Size(121, 21);
             this.profileSelectionComboBox.TabIndex = 1;
             // 
             // resetProfileButton
             // 
-            this.resetProfileButton.Location = new System.Drawing.Point(283, 63);
-            this.resetProfileButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.resetProfileButton.Location = new System.Drawing.Point(212, 51);
             this.resetProfileButton.Name = "resetProfileButton";
-            this.resetProfileButton.Size = new System.Drawing.Size(91, 26);
+            this.resetProfileButton.Size = new System.Drawing.Size(68, 21);
             this.resetProfileButton.TabIndex = 2;
             this.resetProfileButton.Text = "Reset";
             this.resetProfileButton.UseVisualStyleBackColor = true;
@@ -85,18 +84,16 @@
             "Left",
             "Backward",
             "Right"});
-            this.trainActionSelectionComboBox.Location = new System.Drawing.Point(15, 96);
-            this.trainActionSelectionComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.trainActionSelectionComboBox.Location = new System.Drawing.Point(11, 78);
             this.trainActionSelectionComboBox.Name = "trainActionSelectionComboBox";
-            this.trainActionSelectionComboBox.Size = new System.Drawing.Size(160, 24);
+            this.trainActionSelectionComboBox.Size = new System.Drawing.Size(121, 21);
             this.trainActionSelectionComboBox.TabIndex = 3;
             // 
             // trainActionButton
             // 
-            this.trainActionButton.Location = new System.Drawing.Point(184, 96);
-            this.trainActionButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.trainActionButton.Location = new System.Drawing.Point(138, 78);
             this.trainActionButton.Name = "trainActionButton";
-            this.trainActionButton.Size = new System.Drawing.Size(185, 26);
+            this.trainActionButton.Size = new System.Drawing.Size(139, 21);
             this.trainActionButton.TabIndex = 4;
             this.trainActionButton.Text = "Train";
             this.trainActionButton.UseVisualStyleBackColor = true;
@@ -104,10 +101,9 @@
             // 
             // driveButton
             // 
-            this.driveButton.Location = new System.Drawing.Point(15, 129);
-            this.driveButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.driveButton.Location = new System.Drawing.Point(11, 105);
             this.driveButton.Name = "driveButton";
-            this.driveButton.Size = new System.Drawing.Size(355, 63);
+            this.driveButton.Size = new System.Drawing.Size(266, 51);
             this.driveButton.TabIndex = 5;
             this.driveButton.Text = "Start Driving";
             this.driveButton.UseVisualStyleBackColor = true;
@@ -116,51 +112,44 @@
             // ctBotStatusLabel
             // 
             this.ctBotStatusLabel.AutoSize = true;
-            this.ctBotStatusLabel.Location = new System.Drawing.Point(16, 11);
-            this.ctBotStatusLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.ctBotStatusLabel.Location = new System.Drawing.Point(12, 9);
             this.ctBotStatusLabel.Name = "ctBotStatusLabel";
             this.ctBotStatusLabel.Size = new System.Drawing.Size(62, 13);
-            this.ctBotStatusLabel.Size = new System.Drawing.Size(48, 17);
             this.ctBotStatusLabel.TabIndex = 6;
             this.ctBotStatusLabel.Text = "ctBotStatus";
-            this.ctBotStatusLabel.Click += new System.EventHandler(this.ctBotStatusLabel_Click);
             // 
             // forwardButton
             // 
-            this.forwardButton.Location = new System.Drawing.Point(245, 5);
-            this.forwardButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.forwardButton.Location = new System.Drawing.Point(184, 4);
             this.forwardButton.Name = "forwardButton";
-            this.forwardButton.Size = new System.Drawing.Size(29, 22);
+            this.forwardButton.Size = new System.Drawing.Size(22, 18);
             this.forwardButton.TabIndex = 7;
             this.forwardButton.Text = "˄";
             this.forwardButton.UseVisualStyleBackColor = true;
             // 
             // leftButton
             // 
-            this.leftButton.Location = new System.Drawing.Point(208, 15);
-            this.leftButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.leftButton.Location = new System.Drawing.Point(156, 12);
             this.leftButton.Name = "leftButton";
-            this.leftButton.Size = new System.Drawing.Size(29, 22);
+            this.leftButton.Size = new System.Drawing.Size(22, 18);
             this.leftButton.TabIndex = 8;
             this.leftButton.Text = "˂";
             this.leftButton.UseVisualStyleBackColor = true;
             // 
             // rightButton
             // 
-            this.rightButton.Location = new System.Drawing.Point(283, 15);
-            this.rightButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rightButton.Location = new System.Drawing.Point(212, 12);
             this.rightButton.Name = "rightButton";
-            this.rightButton.Size = new System.Drawing.Size(29, 22);
+            this.rightButton.Size = new System.Drawing.Size(22, 18);
             this.rightButton.TabIndex = 9;
             this.rightButton.Text = "˃";
             this.rightButton.UseVisualStyleBackColor = true;
             // 
             // backwardButton
             // 
-            this.backwardButton.Location = new System.Drawing.Point(245, 34);
-            this.backwardButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.backwardButton.Location = new System.Drawing.Point(184, 28);
             this.backwardButton.Name = "backwardButton";
-            this.backwardButton.Size = new System.Drawing.Size(29, 22);
+            this.backwardButton.Size = new System.Drawing.Size(22, 18);
             this.backwardButton.TabIndex = 10;
             this.backwardButton.Text = "˅";
             this.backwardButton.UseVisualStyleBackColor = true;
@@ -168,20 +157,41 @@
             // engineStatusLabel
             // 
             this.engineStatusLabel.AutoSize = true;
-            this.engineStatusLabel.Location = new System.Drawing.Point(12, 31);
+            this.engineStatusLabel.Location = new System.Drawing.Point(12, 28);
+            this.engineStatusLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.engineStatusLabel.Name = "engineStatusLabel";
             this.engineStatusLabel.Size = new System.Drawing.Size(69, 13);
             this.engineStatusLabel.TabIndex = 11;
             this.engineStatusLabel.Text = "engineStatus";
-            this.engineStatusLabel.Click += new System.EventHandler(this.engineStatus_Click);
+            // 
+            // currentActionLabel
+            // 
+            this.currentActionLabel.AutoSize = true;
+            this.currentActionLabel.Location = new System.Drawing.Point(12, 176);
+            this.currentActionLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.currentActionLabel.Name = "currentActionLabel";
+            this.currentActionLabel.Size = new System.Drawing.Size(70, 13);
+            this.currentActionLabel.TabIndex = 12;
+            this.currentActionLabel.Text = "currentAction";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(184, 171);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 13;
+            this.button1.Text = "testbutton";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // MainWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(291, 170);
+            this.ClientSize = new System.Drawing.Size(288, 198);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.currentActionLabel);
             this.Controls.Add(this.engineStatusLabel);
-            this.ClientSize = new System.Drawing.Size(384, 205);
             this.Controls.Add(this.backwardButton);
             this.Controls.Add(this.rightButton);
             this.Controls.Add(this.leftButton);
@@ -193,7 +203,6 @@
             this.Controls.Add(this.resetProfileButton);
             this.Controls.Add(this.profileSelectionComboBox);
             this.Controls.Add(this.loadProfileButton);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "MainWindow";
             this.Text = "Emotiv";
             this.Load += new System.EventHandler(this.MainWindow_Load);
@@ -216,6 +225,8 @@
         private System.Windows.Forms.Button rightButton;
         private System.Windows.Forms.Button backwardButton;
         private System.Windows.Forms.Label engineStatusLabel;
+        private System.Windows.Forms.Label currentActionLabel;
+        private System.Windows.Forms.Button button1;
     }
 }
 
