@@ -41,7 +41,7 @@ namespace GUI_Namespace
             ulong listAction = action1 | action2 | action3 | action4;
             EmoEngine.Instance.MentalCommandSetActiveActions(0, listAction);
 
-            //passing event handlers to the engine
+            // passing event handlers to the engine
             engine.EmoEngineConnected += 
                 new EmoEngine.EmoEngineConnectedEventHandler(engine_EmoEngineConnected);
             engine.EmoEngineDisconnected += 
@@ -93,7 +93,7 @@ namespace GUI_Namespace
             }
         }
 
-        //save cloud profile
+        // save cloud profile
         private void save()
         {
             int getNumberProfile = EmotivCloudClient.EC_GetAllProfileName(userCloudID);
@@ -122,7 +122,7 @@ namespace GUI_Namespace
             engineStatusLabel.Text = "Saving failed"; // Saving failed
         }
 
-        //load cloud profile
+        // load cloud profile
         private void load()
         {
             int getNumberProfile = EmotivCloudClient.EC_GetAllProfileName(userCloudID);
@@ -141,7 +141,7 @@ namespace GUI_Namespace
             }
         }
 
-        //event handlers for the engine
+        // event handlers for the engine
         public void engine_EmoEngineConnected(object sender, EmoEngineEventArgs e)
         {
             engineStatusLabel.Text = "EEG connected";
@@ -159,7 +159,7 @@ namespace GUI_Namespace
 
         public void engine_MentalCommandTrainingSucceeded(object sender, EmoEngineEventArgs e)
         {
-            new acceptTraining.acceptTrainingDialog().Show(); // opens dialog
+            new acceptTraining.acceptTrainingDialog().ShowDialog(); // opens dialog
         }
 
         public void engine_MentalCommandTrainingFailed(object sender, EmoEngineEventArgs e)
@@ -176,9 +176,10 @@ namespace GUI_Namespace
         {
             EmoState es = e.emoState;
             currentAction = es.MentalCommandGetCurrentAction();
+            String oldCommand = currentCommand;
             currentCommand = currentActionToString();
             currentActionLabel.Text = currentCommand;
-            if (drivingAllowed)
+            if (drivingAllowed && currentCommand != oldCommand)
             {
                 sendCommand(currentCommand);
             }
@@ -203,7 +204,7 @@ namespace GUI_Namespace
             save();
         }
 
-        private void loadProfileButton_Click()
+        private void loadProfileButton_Click(object sender, EventArgs e)
         {
             load();
         }
@@ -255,11 +256,6 @@ namespace GUI_Namespace
         private void button1_Click(object sender, EventArgs e) // for debugging only
         {
             new acceptTraining.acceptTrainingDialog().Show(); // opens dialog
-        }
-
-        private void loadProfileButton_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
