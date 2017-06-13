@@ -1,15 +1,23 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+'''
+main.py
 
-import server as S
+Controls the c't Bot over pwm signals.
+
+Author: Marcel Gehre
+'''
+
 import signal as SG
 import sys
 import RPi.GPIO as GPIO
+# own file
+import server as S
 
-PinRB = 19 #0 RB
-PinRF = 20 #1 RF
-PinLB = 21 #2 LB
-PinLF = 26 #3 LF
+PinRB = 19 #1 RB
+PinRF = 20 #0 RF
+PinLB = 21 #3 LB
+PinLF = 26 #2 LF
 RF, RB, LF, LB = 0, 1, 2, 3
 
 Pins = (PinRF, PinRB, PinLF, PinLB)
@@ -92,21 +100,16 @@ if __name__ == '__main__':
     init()
     while 1:
         c = S.waitForCommand()
-        
+        #print c
         if c == "stop":
             driveStop()
-            continue
-        if c == "forward":
+        elif c == "forward":
             driveForward()
-            continue
-        if c == "backward":
+        elif c == "backward":
             driveBackward()
-            continue
-        if c == "left":
+        elif c == "left":
             driveLeft()
-            continue
-        if c == "right":
+        elif c == "right":
             driveRight()
-            continue
-        if c == "BREAK":
+        elif c == "BREAK":
             break

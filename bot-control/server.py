@@ -1,5 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+'''
+server.py
+
+Creates an TCP connection and recives data.
+
+Author: Marcel Gehre
+'''
+
 import socket
 
 # constans
@@ -78,6 +86,7 @@ def waitForCommand():
             okStatus()
             return C_NO_COMMAND
     # return data
+    okStatus()
     return data
 
 # execute if speed command is detected

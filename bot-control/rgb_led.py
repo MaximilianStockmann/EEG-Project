@@ -1,4 +1,13 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+'''
+rgb_led.py
+
+Controls an RGB-LED.
+
+Author: Marcel Gehre
+'''
+
 import RPi.GPIO as GPIO
 
 R = 23
@@ -29,11 +38,11 @@ def setup(Rpin, Gpin, Bpin, pwm=False):
 def setupPWM(Rpin, Gpin, Bpin):
     global p_R, p_G, p_B
 
-    p_R = GPIO.PWM(pins['pin_R'], 5000)  # set Frequece to 2KHz
+    p_R = GPIO.PWM(pins['pin_R'], 5000)  # set Frequece to 5KHz
     p_G = GPIO.PWM(pins['pin_G'], 5000)
     p_B = GPIO.PWM(pins['pin_B'], 5000)
 
-    p_R.start(100)      # Initial duty Cycle = 0(leds off)
+    p_R.start(100)      # Initial duty Cycle = 100(leds off)
     p_G.start(100)
     p_B.start(100)
 

@@ -1,11 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+'''
+controlHub.py
+
+Controls wlan, server and shutdown manually
+with a button.
+
+Author: Marcel Gehre
+'''
 import signal as SG
 import sys
 import RPi.GPIO as GPIO
 import subprocess
 import time
 import os
+# own file
 import rgb_led as RGB
 
 TimeKeeper = 10.0
@@ -73,7 +82,6 @@ def detect(chn):
         elif TimeKeeper >= 1:
             # -- server ON --
             if Server_pid == 0:
-
                 p = subprocess.Popen(
                     "python /home/pi/Documents/EEG-Project/bot-control/main.py > /home/pi/Documents/EEG-Project/bot-control/server.log 2>&1", shell=True, preexec_fn=os.setsid)
                 Server_pid = p.pid
@@ -88,8 +96,6 @@ def detect(chn):
                     print e
                 Server_pid = 0
                 actColor = 0xff0000
-
-            #subprocess.Popen("python main.py > some.txt", shell=True)
 
 
 def exit(a=0, b=0):
@@ -107,25 +113,22 @@ def exit(a=0, b=0):
 
 if __name__ == '__main__':
     setup()
-    # print subprocess.Popen("echo Hello World", shell=True,
-    # stdout=subprocess.PIPE).stdout.read()
+
     while 1:
         time.sleep(0.1)
         if ButtonPressed:
             TimeKeeper = TimeKeeper + 0.1
             if TimeKeeper >= 5 and Color == 3:
                 RGB.setColor(0xffffff)
-                Color = 4
+                #print "white"
             if TimeKeeper >= 3 and Color == 2:
                 RGB.setColor(0x0000ff)
                 Color = 3
                 # print "orange"
-                pass
             elif TimeKeeper >= 1 and Color == 1:
-                RGB.setColor(0xffa500)
+                RGB.setColor(0xffff0)
                 Color = 2
                 # print "yellow"
-                pass
         elif Color != 1:
             Color = 1
             RGB.setColor(actColor)
