@@ -123,7 +123,6 @@
             this.ctBotStatusLabel.Size = new System.Drawing.Size(48, 17);
             this.ctBotStatusLabel.TabIndex = 6;
             this.ctBotStatusLabel.Text = "ctBotStatus";
-            this.ctBotStatusLabel.Click += new System.EventHandler(this.ctBotStatusLabel_Click);
             // 
             // forwardButton
             // 
@@ -173,7 +172,6 @@
             this.engineStatusLabel.Size = new System.Drawing.Size(69, 13);
             this.engineStatusLabel.TabIndex = 11;
             this.engineStatusLabel.Text = "engineStatus";
-            this.engineStatusLabel.Click += new System.EventHandler(this.engineStatus_Click);
             // 
             // MainWindow
             // 
