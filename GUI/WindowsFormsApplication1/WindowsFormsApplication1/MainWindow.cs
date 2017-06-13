@@ -83,7 +83,6 @@ namespace GUI_Namespace
                     ctBotStatusLabel.Text = "No server found!";
                     drivingAllowed = false;
                 }
-                
             }
             else
             {
@@ -92,7 +91,6 @@ namespace GUI_Namespace
                 drivingAllowed = false;
                 TCP.closeConnection();
             }
-
         }
 
         //save cloud profile
@@ -102,28 +100,26 @@ namespace GUI_Namespace
 
             int profileID = -1;
             EmotivCloudClient.EC_GetProfileId(userCloudID, profileName, ref profileID);
-
+            engineStatusLabel.Text = "Saving profile..."; // Saving...
             if (profileID >= 0)
             {
-                engineStatusLabel.Text = "Saving profile..."; // Saving...
                 if (EmotivCloudClient.EC_UpdateUserProfile(userCloudID, 0, profileID) == EdkDll.EDK_OK)
+                {
                     engineStatusLabel.Text = "Profile saved"; // Saving finished
-                else
-                    engineStatusLabel.Text = "Saving failed"; // Saving failed
+                    return;
+                }
             }
             else
             {
                 // a new profile gets created
-                engineStatusLabel.Text = "Saving profile..."; // Saving...
-
                 if (EmotivCloudClient.EC_SaveUserProfile(userCloudID, (int)0, profileName,
                 EmotivCloudClient.profileFileType.TRAINING) == EdkDll.EDK_OK)
+                {
                     engineStatusLabel.Text = "Profile saved"; // Saving finished
-                else
-                    engineStatusLabel.Text = "Saving failed"; // Saving failed
+                    return;
+                }
             }
-
-            return;
+            engineStatusLabel.Text = "Saving failed"; // Saving failed
         }
 
         //load cloud profile
@@ -143,7 +139,6 @@ namespace GUI_Namespace
                 else
                     engineStatusLabel.Text = "Loading failed"; // Loading failed
             }
-            return;
         }
 
         //event handlers for the engine
@@ -250,6 +245,11 @@ namespace GUI_Namespace
         private void button1_Click(object sender, EventArgs e) // for debugging only
         {
             new acceptTraining.acceptTrainingDialog().Show(); // opens dialog
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            save();
         }
     }
 }

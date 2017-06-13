@@ -42,13 +42,14 @@
             this.engineStatusLabel = new System.Windows.Forms.Label();
             this.currentActionLabel = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.saveButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // loadProfileButton
             // 
             this.loadProfileButton.Location = new System.Drawing.Point(138, 51);
             this.loadProfileButton.Name = "loadProfileButton";
-            this.loadProfileButton.Size = new System.Drawing.Size(68, 21);
+            this.loadProfileButton.Size = new System.Drawing.Size(56, 21);
             this.loadProfileButton.TabIndex = 0;
             this.loadProfileButton.Text = "Load";
             this.loadProfileButton.UseVisualStyleBackColor = true;
@@ -67,9 +68,9 @@
             // 
             // resetProfileButton
             // 
-            this.resetProfileButton.Location = new System.Drawing.Point(212, 51);
+            this.resetProfileButton.Location = new System.Drawing.Point(261, 50);
             this.resetProfileButton.Name = "resetProfileButton";
-            this.resetProfileButton.Size = new System.Drawing.Size(68, 21);
+            this.resetProfileButton.Size = new System.Drawing.Size(59, 21);
             this.resetProfileButton.TabIndex = 2;
             this.resetProfileButton.Text = "Reset";
             this.resetProfileButton.UseVisualStyleBackColor = true;
@@ -93,7 +94,7 @@
             // 
             this.trainActionButton.Location = new System.Drawing.Point(138, 78);
             this.trainActionButton.Name = "trainActionButton";
-            this.trainActionButton.Size = new System.Drawing.Size(139, 21);
+            this.trainActionButton.Size = new System.Drawing.Size(186, 21);
             this.trainActionButton.TabIndex = 4;
             this.trainActionButton.Text = "Train";
             this.trainActionButton.UseVisualStyleBackColor = true;
@@ -103,7 +104,7 @@
             // 
             this.driveButton.Location = new System.Drawing.Point(11, 105);
             this.driveButton.Name = "driveButton";
-            this.driveButton.Size = new System.Drawing.Size(266, 51);
+            this.driveButton.Size = new System.Drawing.Size(313, 51);
             this.driveButton.TabIndex = 5;
             this.driveButton.Text = "Start Driving";
             this.driveButton.UseVisualStyleBackColor = true;
@@ -184,11 +185,22 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // saveButton
+            // 
+            this.saveButton.Location = new System.Drawing.Point(200, 50);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(59, 21);
+            this.saveButton.TabIndex = 14;
+            this.saveButton.Text = "Save";
+            this.saveButton.UseVisualStyleBackColor = false;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(288, 198);
+            this.ClientSize = new System.Drawing.Size(332, 198);
+            this.Controls.Add(this.saveButton);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.currentActionLabel);
             this.Controls.Add(this.engineStatusLabel);
@@ -227,6 +239,7 @@
         private System.Windows.Forms.Label engineStatusLabel;
         private System.Windows.Forms.Label currentActionLabel;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button saveButton;
     }
 }
 
