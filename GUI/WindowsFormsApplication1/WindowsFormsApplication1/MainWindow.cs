@@ -164,8 +164,7 @@ namespace GUI_Namespace
 
         public void engine_MentalCommandTrainingSucceeded(object sender, EmoEngineEventArgs e)
         {
-            Form acceptTrainingDialog = new acceptTraining.acceptTrainingDialog(); // opens dialog
-            acceptTrainingDialog.Show();
+            new acceptTraining.acceptTrainingDialog().Show(); // opens dialog
         }
 
         public void engine_MentalCommandTrainingFailed(object sender, EmoEngineEventArgs e)
@@ -250,8 +249,7 @@ namespace GUI_Namespace
 
         private void button1_Click(object sender, EventArgs e) // for debugging only
         {
-            Form acceptTrainingDialog = new acceptTraining.acceptTrainingDialog(); // opens dialog
-            acceptTrainingDialog.Show();
+            new acceptTraining.acceptTrainingDialog().Show(); // opens dialog
         }
     }
 }
