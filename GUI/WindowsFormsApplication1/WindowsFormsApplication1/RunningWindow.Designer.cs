@@ -125,6 +125,7 @@
             this.Controls.Add(this.pictureBoxLeft);
             this.Controls.Add(this.pictureBoxMid);
             this.Controls.Add(this.pictureBoxUp);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "startRunningWindow";
             this.Text = "Steuerung";
             this.Load += new System.EventHandler(this.startRunningWindow_Load);

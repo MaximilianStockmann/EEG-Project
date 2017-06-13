@@ -68,41 +68,41 @@ namespace GUI_Namespace
         private void sendCommand(String str)
         {
             if (TCP.sendCommand(str))
-                ctBotStatusLabel.Text = "YES";
+                ctBotStatusLabel.Text = "JA";
             else
-               ctBotStatusLabel.Text = "Connection failed!";
+               ctBotStatusLabel.Text = "Keine Verbindung!";
         }
 
         private void serverLostCallBack()
         {
-            System.Windows.Forms.MessageBox.Show("c't Bot connection lost!");
+            System.Windows.Forms.MessageBox.Show("c't Bot Verbindung verloren!");
             runWin.Close();
         }
 
         public void closeRunning()
         {
-            driveButton.Text = "Start Driving";
-            ctBotStatusLabel.Text = "NO";
+            driveButton.Text = "Fahren";
+            ctBotStatusLabel.Text = "NEIN";
             TCP.closeConnection();
         }
 
         private void driveButton_Click(object sender, EventArgs e)
         {
             //ctBotStatusLabel.Text = "Test";
-            if (driveButton.Text == "Start Driving")
+            if (driveButton.Text == "Fahren")
             {
                 //driveButton.Text = "Connect to c't Bot..."; //aktualisiert nicht ???
                 if (TCP.init(host, port))
                 {
-                    ctBotStatusLabel.Text = "YES";
-                    driveButton.Text = "Stop Driving";
+                    ctBotStatusLabel.Text = "JA";
+                    driveButton.Text = "Fahren Beenden";
                     drivingAllowed = true;
                     runWin = new startRunningWindow();
                     runWin.Show();
                 }
                 else
                 {
-                    ctBotStatusLabel.Text = "No server found!";
+                    ctBotStatusLabel.Text = "Kein Server!";
                     drivingAllowed = false;
                      // has to be in the if-branch
                 }
@@ -110,8 +110,8 @@ namespace GUI_Namespace
             }
             else
             {
-                driveButton.Text = "Start Driving";
-                ctBotStatusLabel.Text = "no";
+                driveButton.Text = "Fahren";
+                ctBotStatusLabel.Text = "NEIN";
                 drivingAllowed = false;
                 TCP.closeConnection();
                 runWin.Close();
@@ -281,6 +281,33 @@ namespace GUI_Namespace
         public void setIPLabel(String s)
         {
             ipLabel.Text = s;
+        }
+
+        private void resetProfileButton_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void newProfileButton_Click(object sender, EventArgs e)
+        {
+            new NewProfileDialog.NewProfileDialog().ShowDialog();
+        }
+
+        public bool addNewProfile(String s)
+        {
+            if (!profileSelectionComboBox.Items.Contains(s) && (s != ""))
+            {
+                profileSelectionComboBox.Items.Add(s);
+                return true;
+            }
+            else
+                return false;
+
+        }
+
+        private void connectionLabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

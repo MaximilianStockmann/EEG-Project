@@ -38,16 +38,16 @@
             this.textBoxIP.Name = "textBoxIP";
             this.textBoxIP.Size = new System.Drawing.Size(100, 20);
             this.textBoxIP.TabIndex = 0;
-            this.textBoxIP.KeyDown += new System.Windows.Forms.KeyEventHandler(textBoxIP_KeyDown);
+            this.textBoxIP.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxIP_KeyDown);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(86, 13);
+            this.label1.Size = new System.Drawing.Size(49, 13);
             this.label1.TabIndex = 1;
-            this.label1.Text = "IP to connect to:";
+            this.label1.Text = "Neue IP:";
             // 
             // startChangeIPWindow
             // 
@@ -56,8 +56,9 @@
             this.ClientSize = new System.Drawing.Size(123, 62);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxIP);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "startChangeIPWindow";
-            this.Text = "Form1";
+            this.Text = "Neu IP";
             this.Load += new System.EventHandler(this.startChangeIPWindow_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
