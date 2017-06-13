@@ -51,6 +51,13 @@
     <Compile Include="AcceptTrainingDialog.Designer.cs">
       <DependentUpon>AcceptTrainingDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="DrivingOverlay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DrivingOverlay.Designer.cs">
+      <DependentUpon>DrivingOverlay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EEG.cs" />
     <Compile Include="NewProfileDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,6 +75,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AcceptTrainingDialog.resx">
       <DependentUpon>AcceptTrainingDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DrivingOverlay.resx">
+      <DependentUpon>DrivingOverlay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
