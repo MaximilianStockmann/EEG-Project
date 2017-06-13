@@ -1,0 +1,253 @@
+﻿using Emotiv;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using Emotiv
+
+namespace GUI_Namespace
+{
+    public partial class MainWindow : Form
+    {
+        // Creating SDK-Instance
+        //static EmoEngine engine = EmoEngine.Instance;
+
+        // TCP-Connection to Pi
+        static TcpClient client;
+        static NetworkStream clientStream;
+        static Int32 port = 13337;
+
+<<<<<<< HEAD
+        static EmoEngine engine = EmoEngine.Instance;
+        static String currentCommand;
+
+=======
+        // Cloud-Profile related information
+        static int userCloudID = 0;
+        static string userName = "";
+        static string password = "";
+        static string profileName = "Stefan Doing Stuff";
+        static int version = -1; // Lastest version
+
+        static bool leftActive = false;
+        static bool rightActive = false;
+        static bool forwardActive = false;
+        static bool backwardActive = false;
+        
+>>>>>>> 64b6d1a838ac0647f6f07140cdce8a5952f13bb4
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
+<<<<<<< HEAD
+            //passing the event handlers to the engine
+            engine.EmoEngineConnected += engine_EmoEngineConnectedEventHandler;
+            engine.EmoEngineDisconnected += engine_EmoEngineDisconnectedEventHandler;
+            engine.MentalCommandTrainingStarted += engine_MentalCommandTrainingStartedEventEventHandler;
+            engine.MentalCommandTrainingSucceeded += engine_MentalCommandTrainingSucceededEventHandler;
+            engine.MentalCommandTrainingFailed += engine_MentalCommandTrainingFailedEventHandler;
+            engine.MentalCommandTrainingCompleted += engine_MentalCommandTrainingCompletedEventHandler;
+            engine.MentalCommandEmoStateUpdated += engine_MentalCommandEmoStateUpdatedEventHandler;
+        }
+
+        private void DefaultButton_Click(object sender, EventArgs e)
+        {
+            loadProfileButton.Text = "Hallo";
+=======
+            /*
+            // Connection to Engine (from the SDK-project)
+            engine.EmoEngineConnected +=
+                new EmoEngine.EmoEngineConnectedEventHandler(engine_EmoEngineConnected);
+            engine.EmoEngineDisconnected +=
+                new EmoEngine.EmoEngineDisconnectedEventHandler(engine_EmoEngineDisconnected);
+            
+            // What happens, if a Dongle is connected or disconnected.
+            engine.UserAdded +=
+                new EmoEngine.UserAddedEventHandler(engine_UserAdded);
+            engine.UserRemoved +=
+                new EmoEngine.UserRemovedEventHandler(engine_UserRemoved);
+
+            // Called in the Background
+            engine.EmoStateUpdated +=
+                new EmoEngine.EmoStateUpdatedEventHandler(engine_EmoStateUpdated);
+            engine.EmoEngineEmoStateUpdated +=
+                new EmoEngine.EmoEngineEmoStateUpdatedEventHandler(engine_EmoEngineEmoStateUpdated);
+
+            // What happens when a Mental Command is recognized. (Bound to static drive var)
+            engine.MentalCommandEmoStateUpdated +=
+                new EmoEngine.MentalCommandEmoStateUpdatedEventHandler(engine_MentalCommandEmoStateUpdated);
+
+            // Training the Mental Commands
+            engine.MentalCommandTrainingStarted += // starts the process (block)
+                new EmoEngine.MentalCommandTrainingStartedEventEventHandler(engine_MentalCommandTrainingStarted);
+            engine.MentalCommandTrainingSucceeded += // asks for accept/reject
+                new EmoEngine.MentalCommandTrainingSucceededEventHandler(engine_MentalCommandTrainingSucceeded);
+            engine.MentalCommandTrainingCompleted += // closes Block, when accepted
+                new EmoEngine.MentalCommandTrainingCompletedEventHandler(engine_MentalCommandTrainingCompleted);
+            engine.MentalCommandTrainingRejected += // closes Block, when rejected
+                new EmoEngine.MentalCommandTrainingRejectedEventHandler(engine_MentalCommandTrainingRejected);
+
+            // Connect the Engine
+            engine.Connect();
+            */
+>>>>>>> 64b6d1a838ac0647f6f07140cdce8a5952f13bb4
+        }
+
+        private void driveButton_Click(object sender, EventArgs e)
+        {
+            ctBotStatusLabel.Text = "Test";
+            if (driveButton.Text == "Start Driving")
+            {
+                driveButton.Text = "Stop Driving";
+                try
+                {
+
+
+                    // Initalisierung
+                    client = new TcpClient("192.168.178.33", port);
+                    clientStream = client.GetStream();
+
+                    sendCommand("speed 9000");
+
+
+
+                }
+                catch (ArgumentNullException ex)
+                {
+                    Console.WriteLine("ArgumentNullException: {0}", ex);
+                    ctBotStatusLabel.Text = "ArgumentNullException";
+                }
+                catch (SocketException ex)
+                {
+                    Console.WriteLine("SocketException: {0}", ex);
+                    ctBotStatusLabel.Text = "SocketException";
+                }
+
+
+
+            }
+            else
+            {
+                driveButton.Text = "Start Driving";
+                if (clientStream == null) return;
+                // Close everything.
+                clientStream.Close();
+                client.Close();
+            }
+
+        }
+
+        private void getStatusResponse()
+        {
+
+            // Buffer to store the response bytes.
+            Byte[] data = new Byte[256];
+
+            // String to store the response ASCII representation.
+            String responseData = String.Empty;
+
+            // Read the first batch of the TcpServer response bytes.
+            Int32 bytes = clientStream.Read(data, 0, data.Length);
+            ctBotStatusLabel.Text = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+
+        }
+
+        private void sendCommand(String cmd)    //Eingaben: "forward", "backward", "left", "right", "stop"
+        {
+
+            if (clientStream == null)
+            {
+                ctBotStatusLabel.Text = "No Server to connect";
+                return;
+            }
+
+            Byte[] data = System.Text.Encoding.ASCII.GetBytes(cmd);
+
+            clientStream.Write(data, 0, data.Length);
+
+            getStatusResponse();
+        }
+
+        private void leftButton_Click(object sender, EventArgs e)
+        {
+            leftActive = !leftActive;
+            sendCommand("left");
+            ctBotStatusLabel.Text = "left";
+        }
+
+        private void rightButton_Click(object sender, EventArgs e)
+        {
+            rightActive = !rightActive;
+            sendCommand("right");
+            ctBotStatusLabel.Text = "right";
+        }
+
+        private void backwardButton_Click(object sender, EventArgs e)
+        {
+            backwardActive = !backwardActive;
+            sendCommand("backward");
+            ctBotStatusLabel.Text = "backward";
+        }
+
+        private void forwardButton_Click(object sender, EventArgs e)
+        {
+            forwardActive = !forwardActive;
+            sendCommand("forward");
+            ctBotStatusLabel.Text = "forward";
+        }
+<<<<<<< HEAD
+=======
+
+
+
+    }
+>>>>>>> 64b6d1a838ac0647f6f07140cdce8a5952f13bb4
+
+
+        //event handlers for the engine
+        public void engine_EmoEngineConnectedEventHandler(object sender, EmoEngineEventArgs e)
+        {
+            //todo...
+        }
+
+        public void engine_EmoEngineDisconnectedEventHandler(object sender, EmoEngineEventArgs e)
+        {
+            //todo...
+        }
+
+        public void engine_MentalCommandTrainingStartedEventEventHandler(object sender, EmoEngineEventArgs e)
+        {
+            //todo...
+        }
+
+        public void engine_MentalCommandTrainingSucceededEventHandler(object sender, EmoEngineEventArgs e)
+        {
+            //todo...
+        }
+
+        public void engine_MentalCommandTrainingFailedEventHandler(object sender, EmoEngineEventArgs e)
+        {
+            //todo...
+        }
+
+        public void engine_MentalCommandTrainingCompletedEventHandler(object sender, EmoEngineEventArgs e)
+        {
+            //todo...
+        }
+
+        //note the different param
+        public void engine_MentalCommandEmoStateUpdatedEventHandler(object sender, EmoStateUpdatedEventArgs e)
+        {
+            //todo...
+        }
+    }
+}

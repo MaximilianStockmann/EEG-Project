@@ -1,0 +1,10 @@
+C:\Users\Stefan\Documents\GitHub\EEG-Project\examples_basic\C#\build\Debug\DotNetEmotivSDK.dll
+C:\Users\Stefan\Documents\GitHub\EEG-Project\examples_basic\C#\build\Debug\DotNetEmotivSDK.pdb
+C:\Users\Stefan\Documents\GitHub\EEG-Project\examples_basic\C#\DotNetEmotivSDK\DotNetEmotivSDK\Debug\DotNetEmotivSDK.csprojResolveAssemblyReference.cache
+C:\Users\Stefan\Documents\GitHub\EEG-Project\examples_basic\C#\DotNetEmotivSDK\DotNetEmotivSDK\Debug\DotNetEmotivSDK.dll
+C:\Users\Stefan\Documents\GitHub\EEG-Project\examples_basic\C#\DotNetEmotivSDK\DotNetEmotivSDK\Debug\DotNetEmotivSDK.pdb
+C:\Users\jonat\workspace\ProjektAI\EEG-Project\examples_basic\C#\build\Debug\DotNetEmotivSDK.dll
+C:\Users\jonat\workspace\ProjektAI\EEG-Project\examples_basic\C#\build\Debug\DotNetEmotivSDK.pdb
+C:\Users\jonat\workspace\ProjektAI\EEG-Project\examples_basic\C#\DotNetEmotivSDK\DotNetEmotivSDK\Debug\DotNetEmotivSDK.csprojResolveAssemblyReference.cache
+C:\Users\jonat\workspace\ProjektAI\EEG-Project\examples_basic\C#\DotNetEmotivSDK\DotNetEmotivSDK\Debug\DotNetEmotivSDK.dll
+C:\Users\jonat\workspace\ProjektAI\EEG-Project\examples_basic\C#\DotNetEmotivSDK\DotNetEmotivSDK\Debug\DotNetEmotivSDK.pdb

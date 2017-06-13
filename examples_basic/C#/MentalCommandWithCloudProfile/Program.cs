@@ -17,15 +17,21 @@ namespace MentalCommandWithCloudProfile
 {
     class Program
     {
-        static System.IO.StreamWriter cogLog = new System.IO.StreamWriter("MentalCommand.log");
+        static System.IO.StreamWriter cogLog = new System.IO.StreamWriter("MentalCommand.log"); // sinnloser Log
 
         static int userCloudID = 0;
         static string userName = "Your account name";
         static string password = "Your password";        
         static string profileName = "Profile_1";
         static int version = -1; // Lastest version
+        // static EdkDll.IEE_MentalCommandAction_t currentAction = "MC_neutral....";
+        // static EmoEngine engine = EmoEngine.Instance;
+        // static boolean drivingAllowed = false;
+
 
         static Boolean enableLoger = false;
+
+        // next 4 -> useful for debugging, etc. #BASIC
 
         static void engine_EmoEngineConnected(object sender, EmoEngineEventArgs e)
         {
@@ -45,6 +51,7 @@ namespace MentalCommandWithCloudProfile
             Console.WriteLine("user removed");
         }
 
+        
         static void engine_EmoStateUpdated(object sender, EmoStateUpdatedEventArgs e)
         {
             EmoState es = e.emoState;
@@ -72,9 +79,11 @@ namespace MentalCommandWithCloudProfile
 
             Single timeFromStart = es.GetTimeFromStart();
 
-            EdkDll.IEE_MentalCommandAction_t cogAction = es.MentalCommandGetCurrentAction();
-            Single power = es.MentalCommandGetCurrentActionPower();
-            Boolean isActive = es.MentalCommandIsActive();
+            EdkDll.IEE_MentalCommandAction_t cogAction = es.MentalCommandGetCurrentAction(); // static EdkDll.IEE_MentalCommandAction_t currentAction ...
+            Single power = es.MentalCommandGetCurrentActionPower(); // not necc., we only use one speed
+            Boolean isActive = es.MentalCommandIsActive(); // not necc., due to static currentAction attribute
+
+            // own logic, TCP-signal and stuff.
 
             cogLog.WriteLine( "{0},{1},{2},{3}", timeFromStart, cogAction, power, isActive);
             cogLog.Flush();
@@ -112,7 +121,7 @@ namespace MentalCommandWithCloudProfile
             Console.WriteLine("MentalCommand Training Rejected.");
         }
 
-        static void SavingLoadingFunction(int mode)
+        static void SavingLoadingFunction(int mode) // Split up, if possible, but not necc.
         {
             int getNumberProfile = EmotivCloudClient.EC_GetAllProfileName(userCloudID);
 
@@ -180,7 +189,7 @@ namespace MentalCommandWithCloudProfile
                     }
                 case ConsoleKey.F2:
                     EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_NEUTRAL);
-                    EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START);
+                    EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START); // MC_ERASE for clearing Training Data on a special move (prob. same Code)
                     break;
                 case ConsoleKey.F3:
                     EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_RIGHT);
