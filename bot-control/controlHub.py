@@ -45,7 +45,7 @@ def setup():
     GPIO.add_event_detect(BtnPin, GPIO.BOTH, callback=detect)
     RGB.setup(23, 24, 25)
     RGB.setColor(actColor)
-    os.system("mv /home/pi/Documents/EEG-Project/bot-control/server.log /home/pi/Documents/EEG-Project/bot-control/server2.log")
+    os.system("sudo mv /home/pi/Documents/EEG-Project/bot-control/server.log /home/pi/Documents/EEG-Project/bot-control/server2.log")
 
 
 def detect(chn):
@@ -126,7 +126,7 @@ if __name__ == '__main__':
                 Color = 3
                 # print "orange"
             elif TimeKeeper >= 1 and Color == 1:
-                RGB.setColor(0xffff0)
+                RGB.setColor(0xffff00)
                 Color = 2
                 # print "yellow"
         elif Color != 1:

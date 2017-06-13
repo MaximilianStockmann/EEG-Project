@@ -64,15 +64,13 @@ def setColorPWM(col, debug=False):   # For example : col = 0x112233
     B_val = (col & 0x0000ff) >> 0
 
     if debug:
-        print("R_val {0:3d}, G_val {1:3d}, B_val {2:3d}".format(
-            R_val, G_val, B_val))
+        print("R_val {0:3d}, G_val {1:3d}, B_val {2:3d}".format(R_val, G_val, B_val))
     R_val = map(R_val, 0, 255, 0, 100)
     G_val = map(G_val, 0, 255, 0, 100)
     B_val = map(B_val, 0, 255, 0, 100)
 
     if debug:
-        print("R_val {0:3d}, G_val {1:3d}, B_val {2:3d}".format(
-            R_val, G_val, B_val))
+        print("R_val {0:3d}, G_val {1:3d}, B_val {2:3d}".format(R_val, G_val, B_val))
     p_R.ChangeDutyCycle(100 - R_val)     # Change duty cycle
     p_G.ChangeDutyCycle(100 - G_val)
     p_B.ChangeDutyCycle(100 - B_val)
@@ -86,8 +84,7 @@ def setColorRGB(col, debug=False):
     B_val = (col & 0x0000ff) >> 0
 
     if debug:
-        print("R_val {0:3d}, G_val {1:3d}, B_val {2:3d}".format(
-            R_val, G_val, B_val))
+        print("R_val {0:3d}, G_val {1:3d}, B_val {2:3d}".format(R_val, G_val, B_val))
 
     if R_val > 0:
         GPIO.output(pins['pin_R'], GPIO.LOW)
@@ -121,7 +118,7 @@ def destroy():
 
 if __name__ == "__main__":
     try:
-        setup(R, G, B)
+        setup(R, G, B,True)
         loop()
     except KeyboardInterrupt:
         destroy()

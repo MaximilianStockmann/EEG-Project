@@ -25,7 +25,7 @@ PWMs = []
 
 SPEED = 20.0
 ROTATE_FACTOR = 0.5
-STRIAGHT_FACTOR = 0.95
+STRIAGHT_FACTOR = 0.92
 
 def init():
 
