@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WindowsFormsApplication1</RootNamespace>
     <AssemblyName>WindowsFormsApplication1</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -51,6 +51,12 @@
     <Compile Include="AcceptTrainingDialog.Designer.cs">
       <DependentUpon>AcceptTrainingDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="RunningWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RunningWindow.Designer.cs">
+      <DependentUpon>RunningWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="NewProfileDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,6 +91,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="RunningWindow.resx">
+      <DependentUpon>RunningWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -1,6 +1,8 @@
 ﻿using Emotiv;
 using System;
 using System.Windows.Forms;
+using acceptTraining;
+using runningWindow;
 
 
 namespace GUI_Namespace
@@ -82,6 +84,7 @@ namespace GUI_Namespace
                 {
                     ctBotStatusLabel.Text = "No server found!";
                     drivingAllowed = false;
+                    new startRunningWindow().ShowDialog();
                 }
                 
             }
@@ -245,5 +248,6 @@ namespace GUI_Namespace
                     break;
             }
         }
+
     }
 }
