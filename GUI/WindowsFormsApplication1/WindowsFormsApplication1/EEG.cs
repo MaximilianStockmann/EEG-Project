@@ -6,37 +6,67 @@ using System.Threading;
 
 class EEG
 {
-    static EmoEngine engine = EmoEngine.Instance;
-    static int userCloudID = 0;
-    static string userName = "";
-    static string password = "";
-    static string profileName = "";
-    static int version = -1;
-    static int allowedTime = 50;
-    static EdkDll.IEE_MentalCommandAction_t currentAction;
-    
-    // TODO: ENUM MentalCommandAction_t to String;
+    private static EmoEngine engine = EmoEngine.Instance;
 
-    static bool init()
+    #region Stuff related to Cloud-Profile-Management
+    private static string userName = "";
+    private static string password = "";
+    private static int userCloudID = 0;
+    private static int version = -1;
+    #endregion
+
+    private static string profileName = ""; // name of the current-Profile
+    private static int allowedTime = 50; // max number of ms for processing EmoengineEvents
+    private static bool initialized = false;
+    private static bool drivingAllowed = false;
+
+    private static string currentAction;
+    private static Dictionary<string, EdkDll.IEE_MentalCommandAction_t> skillDictionary =
+        new Dictionary<string, EdkDll.IEE_MentalCommandAction_t>()
     {
-        engine.Connect();
+        { "neutral", EdkDll.IEE_MentalCommandAction_t.MC_NEUTRAL },
+        { "backward", EdkDll.IEE_MentalCommandAction_t.MC_PULL },
+        { "forward", EdkDll.IEE_MentalCommandAction_t.MC_PUSH },
+        { "right", EdkDll.IEE_MentalCommandAction_t.MC_RIGHT },
+        { "left", EdkDll.IEE_MentalCommandAction_t.MC_LEFT }
+    };
+
+    static void build(int mode)
+    {
+        if (!initialized)
+        {
+            engine.Connect();
+            switch (mode)
+            {
+                case 0: initialized = true; break;
+                case 1: initialized = cloudConnectWorked(); break;
+                default: break;
+            }
+            assignHandlers();
+        }
+        else
+        {
+            close();
+            build(mode);
+        }
+    }
+
+    static bool cloudConnectWorked()
+    {
 
         if (EmotivCloudClient.EC_Connect() != EdkDll.EDK_OK)
         {
-            //Console.WriteLine("Cannot connect to Emotiv Cloud.");
-            return false;
+            return false; // cannot connect to Emotiv Cloud
         }
 
         if (EmotivCloudClient.EC_Login(userName, password) != EdkDll.EDK_OK)
         {
-            //Console.WriteLine("Your login attempt has failed. The username or password may be incorrect");
-            return false;
+            return false; // login failed - username or password incorrect
         }
 
         if (EmotivCloudClient.EC_GetUserDetail(ref userCloudID) != EdkDll.EDK_OK)
-            return false;
+            return false; // used in Emotiv Example, seems redundant though
 
-        setActions();
         return true;
     }
 
@@ -53,6 +83,7 @@ class EEG
     static void close()
     {
         engine.Disconnect();
+        initialized = false;
     }
 
     static void execute()
@@ -106,7 +137,6 @@ class EEG
     {
         EmoState es = e.emoState;
         Single timeFromStart = es.GetTimeFromStart();
-
         EdkDll.IEE_MentalCommandAction_t cogAction = es.MentalCommandGetCurrentAction();
         Single power = es.MentalCommandGetCurrentActionPower();
         Boolean isActive = es.MentalCommandIsActive();
@@ -144,6 +174,9 @@ class EEG
 
 
     static void SavingLoadingFunction(int mode)
+    /** Source: Emotiv Community SDK
+     *  Path:   Examples-Basic > C# > MentalcommandWithCloudProfile > Program.cs
+     *  URL:    http://bit.ly/2szE9FP */
     {
         int getNumberProfile = EmotivCloudClient.EC_GetAllProfileName(userCloudID);
         if (mode == 0)
@@ -207,26 +240,12 @@ class EEG
 
     static void trainSkill(string skillString)
     {
-        getSkillEngineCommands(EdkDll.IEE_MentalCommandAction_t.MC_LEFT);
-        /** TODO: CALL WITH DICTIONARY via skillString
-         * EdkDll.IEE_MentalCommandAction_t.MC_LEFT 
-         * EdkDll.IEE_MentalCommandAction_t.MC_RIGHT
-         * EdkDll.IEE_MentalCommandAction_t.MC_PUSH
-         * EdkDll.IEE_MentalCommandAction_t.MC_PULL 
-         * EdkDll.IEE_MentalCommandAction_t.MC_NEUTRAL */
-        execute();
-
-
-
-    }
-
-    static void getSkillEngineCommands(EdkDll.IEE_MentalCommandAction_t action)
-    {
-        EmoEngine.Instance.MentalCommandSetTrainingAction(0, action);
+        EmoEngine.Instance.MentalCommandSetTrainingAction(0, skillDictionary[skillString]);
         EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START);
+        execute();
     }
 
-    static int getSens()
+    static int getSensitivity()
     {
         return EmoEngine.Instance.MentalCommandGetActivationLevel(0);
     }
@@ -243,6 +262,11 @@ class EEG
             EmoEngine.Instance.MentalCommandSetActivationLevel(0, dest);
             execute();
         }
+    }
+
+    static void setDrivingStatus(bool whatItIsSupposedToBe)
+    {
+        drivingAllowed = whatItIsSupposedToBe;
     }
 
     static void assignHandlers()
@@ -270,29 +294,4 @@ class EEG
         engine.MentalCommandTrainingRejected +=
             new EmoEngine.MentalCommandTrainingRejectedEventHandler(engine_MentalCommandTrainingRejected);
     }
-
-    /*static void Main(string[] args)
-    {
-        if (!init())
-        {
-            return;
-        }
-        //BS
-        try
-        {
-            engine.ProcessEvents(5);
-        }
-        catch (EmoEngineException e)
-        {
-            Console.WriteLine("{0}", e.ToString());
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine("{0}", e.ToString());
-        }
-
-
-        close();
-
-    }*/
 }
