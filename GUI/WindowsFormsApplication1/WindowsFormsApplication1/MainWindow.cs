@@ -7,20 +7,10 @@ namespace GUI_Namespace
 {
     public partial class MainWindow : Form
     {
-        // Creating SDK-Instance
-        static EmoEngine engine = EmoEngine.Instance;
-
         // driving related information
-        static EdkDll.IEE_MentalCommandAction_t currentAction;
         static bool drivingAllowed = false;  //always check, before sending a command
-        static String currentCommand;
 
-        // Cloud-Profile related information
-        static int userCloudID = 0;
-        static string userName = "";
-        static string password = "";
-        static string profileName = "Stefan Doing Stuff";
-        static int version = -1; // Lastest version
+        static EEG_EventSubscriber EEGListener = new EEG_EventSubscriber();
 
         //TCP infos
         static Int32 port = 13337;
@@ -33,29 +23,35 @@ namespace GUI_Namespace
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            // setting mentalCommandActive actions for new user profile
-            ulong action1 = (ulong)EdkDll.IEE_MentalCommandAction_t.MC_LEFT;
-            ulong action2 = (ulong)EdkDll.IEE_MentalCommandAction_t.MC_RIGHT;
-            ulong action3 = (ulong)EdkDll.IEE_MentalCommandAction_t.MC_PUSH;
-            ulong action4 = (ulong)EdkDll.IEE_MentalCommandAction_t.MC_PULL;
-            ulong listAction = action1 | action2 | action3 | action4;
-            EmoEngine.Instance.MentalCommandSetActiveActions(0, listAction);
+            /*public event EventHandler TrainingStarted = delegate { };
+        public event EventHandler TrainingSucceeded = delegate { };
+        public event EventHandler TrainingCompleted = delegate { };
+        public event EventHandler TrainingRejected = delegate { };
+        public event EventHandler CommandNeutral = delegate { };
+        public event EventHandler CommandLeft = delegate { };
+        public event EventHandler CommandRight = delegate { };
+        public event EventHandler CommandForward = delegate { };
+        public event EventHandler CommandBackward = delegate { };
+        public event EventHandler DongleConnected = delegate { };
+        public event EventHandler DongleDisconnected = delegate { };
+        public event EventHandler EngineConnected = delegate { };
+        public event EventHandler EngineDisconnected = delegate { };
+        */
 
-            //passing event handlers to the engine
-            engine.EmoEngineConnected += 
-                new EmoEngine.EmoEngineConnectedEventHandler(engine_EmoEngineConnected);
-            engine.EmoEngineDisconnected += 
-                new EmoEngine.EmoEngineDisconnectedEventHandler(engine_EmoEngineDisconnected);
-            engine.MentalCommandTrainingStarted += 
-                new EmoEngine.MentalCommandTrainingStartedEventEventHandler(engine_MentalCommandTrainingStartedEvent);
-            engine.MentalCommandTrainingSucceeded += 
-                new EmoEngine.MentalCommandTrainingSucceededEventHandler(engine_MentalCommandTrainingSucceeded);
-            engine.MentalCommandTrainingFailed += 
-                new EmoEngine.MentalCommandTrainingFailedEventHandler(engine_MentalCommandTrainingFailed);
-            engine.MentalCommandTrainingCompleted += 
-                new EmoEngine.MentalCommandTrainingCompletedEventHandler(engine_MentalCommandTrainingCompleted);
-            engine.MentalCommandEmoStateUpdated += 
-                new EmoEngine.MentalCommandEmoStateUpdatedEventHandler(engine_MentalCommandEmoStateUpdated);
+            mainLB.Items.Add("Stuff is starting.");
+            EEGListener.AssignTrainingStarted(new Action(TrainingStarted));
+            EEGListener.AssignTrainingSucceeded(new Action(TrainingSucceeded));
+            EEGListener.AssignTrainingCompleted(new Action(TrainingCompleted));
+            EEGListener.AssignTrainingRejected(new Action(TrainingRejected));
+            EEGListener.AssignCommandNeutral(new Action(CommandNeutral));
+            EEGListener.AssignCommandLeft(new Action(CommandLeft));
+            EEGListener.AssignCommandRight(new Action(CommandRight));
+            EEGListener.AssignCommandForward(new Action(CommandForward));
+            EEGListener.AssignCommandBackward(new Action(CommandBackward));
+            EEGListener.AssignDongleConnected(new Action(DongleConnected));
+            EEGListener.AssignDongleDisconnected(new Action(DongleDisconnected));
+            EEGListener.AssignEngineDisconnected(new Action(EngineDisconnected));
+            EEGListener.AssignEngineConnected(new Action(EngineConnected));
         }
 
         private void sendCommand(String str)
@@ -95,89 +91,8 @@ namespace GUI_Namespace
 
         }
 
-        //save cloud profile
-        private void save()
-        {
-            int getNumberProfile = EmotivCloudClient.EC_GetAllProfileName(userCloudID);
 
-            int profileID = -1;
-            EmotivCloudClient.EC_GetProfileId(userCloudID, profileName, ref profileID);
-
-            if (profileID >= 0)
-            {
-                engineStatusLabel.Text = "Saving profile..."; // Saving...
-                if (EmotivCloudClient.EC_UpdateUserProfile(userCloudID, 0, profileID) == EdkDll.EDK_OK)
-                    engineStatusLabel.Text = "Profile saved"; // Saving finished
-                else
-                    engineStatusLabel.Text = "Saving failed"; // Saving failed
-            }
-            else
-            {
-                // a new profile gets created
-                engineStatusLabel.Text = "Saving profile..."; // Saving...
-
-                if (EmotivCloudClient.EC_SaveUserProfile(userCloudID, (int)0, profileName,
-                EmotivCloudClient.profileFileType.TRAINING) == EdkDll.EDK_OK)
-                    engineStatusLabel.Text = "Profile saved"; // Saving finished
-                else
-                    engineStatusLabel.Text = "Saving failed"; // Saving failed
-            }
-
-            return;
-        }
-
-        //load cloud profile
-        private void load()
-        {
-            int getNumberProfile = EmotivCloudClient.EC_GetAllProfileName(userCloudID);
-
-            if (getNumberProfile > 0)
-            {
-                engineStatusLabel.Text = "Loading profile..."; // Loading...
-
-                int profileID = -1;
-                EmotivCloudClient.EC_GetProfileId(userCloudID, profileName, ref profileID);
-
-                if (EmotivCloudClient.EC_LoadUserProfile(userCloudID, 0, profileID, version) == EdkDll.EDK_OK)
-                    engineStatusLabel.Text = "Profile loaded"; // Loading finished
-                else
-                    engineStatusLabel.Text = "Loading failed"; // Loading failed
-            }
-            return;
-        }
-
-        //event handlers for the engine
-        public void engine_EmoEngineConnected(object sender, EmoEngineEventArgs e)
-        {
-            engineStatusLabel.Text = "EEG connected";
-        }
-
-        public void engine_EmoEngineDisconnected(object sender, EmoEngineEventArgs e)
-        {
-            engineStatusLabel.Text = "EEG disconnected";
-        }
-
-        public void engine_MentalCommandTrainingStartedEvent(object sender, EmoEngineEventArgs e)
-        {
-            engineStatusLabel.Text = "Training started";
-        }
-
-        public void engine_MentalCommandTrainingSucceeded(object sender, EmoEngineEventArgs e)
-        {
-            new acceptTraining.acceptTrainingDialog(); // opens dialog
-        }
-
-        public void engine_MentalCommandTrainingFailed(object sender, EmoEngineEventArgs e)
-        {
-            engineStatusLabel.Text = "Training failed";
-        }
-
-        public void engine_MentalCommandTrainingCompleted(object sender, EmoEngineEventArgs e)
-        {
-            engineStatusLabel.Text = "Training completed";
-        }
-
-        public void engine_MentalCommandEmoStateUpdated(object sender, EmoStateUpdatedEventArgs e)
+        /*public void engine_MentalCommandEmoStateUpdated(object sender, EmoStateUpdatedEventArgs e)
         {
             EmoState es = e.emoState;
             currentAction = es.MentalCommandGetCurrentAction();
@@ -186,12 +101,13 @@ namespace GUI_Namespace
             {
                 sendCommand(currentCommand);
             }
-        }
+        }*/
+
 
         //returns the command to send to the bot
         private String currentActionToString()
         {
-            switch(currentAction)
+            switch(EEG.getCurrentAction())
             {
                 case EdkDll.IEE_MentalCommandAction_t.MC_NEUTRAL: return "stop";
                 case EdkDll.IEE_MentalCommandAction_t.MC_LEFT: return "left";
@@ -205,45 +121,83 @@ namespace GUI_Namespace
         private void resetProfileButton_Click(object sender, EventArgs e)
         {
             // reset
-            EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_NEUTRAL);
-            EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_ERASE);
-            EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_PUSH);
-            EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_ERASE);
-            EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_PULL);
-            EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_ERASE);
-            EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_LEFT);
-            EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_ERASE);
-            EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_RIGHT);
-            EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_ERASE);
+            // EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_NEUTRAL);
+            // EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_ERASE);
         }
 
         private void trainActionButton_Click(object sender, EventArgs e)
-        {             
-            switch (trainActionSelectionComboBox.Text)
-            {
-                case "Stop":
-                    EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_NEUTRAL);
-                    EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START);
-                    break;
-                case "Forward":
-                    EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_PUSH);
-                    EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START);
-                    break;
-                case "backward":
-                    EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_PULL);
-                    EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START);
-                    break;
-                case "Left":
-                    EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_LEFT);
-                    EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START);
-                    break;
-                case "Right":
-                    EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_RIGHT);
-                    EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START);
-                    break;
-                default:
-                    break;
-            }
+        {         
+            EEG.TrainSkill(trainActionSelectionComboBox.Text);
         }
+
+        /*public event EventHandler TrainingStarted = delegate { };
+        public event EventHandler TrainingSucceeded = delegate { };
+        public event EventHandler TrainingCompleted = delegate { };
+        public event EventHandler TrainingRejected = delegate { };
+        public event EventHandler CommandNeutral = delegate { };
+        public event EventHandler CommandLeft = delegate { };
+        public event EventHandler CommandRight = delegate { };
+        public event EventHandler CommandForward = delegate { };
+        public event EventHandler CommandBackward = delegate { };
+        public event EventHandler DongleConnected = delegate { };
+        public event EventHandler DongleDisconnected = delegate { };
+        public event EventHandler EngineConnected = delegate { };
+        public event EventHandler EngineDisconnected = delegate { };
+        */
+
+        #region rubbish functions for listbox-output
+        void TrainingStarted()
+        {
+            mainLB.Items.Add("TrainingStarted");
+        }
+        void TrainingSucceeded()
+        {
+            mainLB.Items.Add("TrainingSucceeded");
+        }
+        void TrainingCompleted()
+        {
+            mainLB.Items.Add("TrainingCompleted");
+        }
+        void TrainingRejected()
+        {
+            mainLB.Items.Add("TrainingRejected");
+        }
+        void CommandNeutral()
+        {
+            mainLB.Items.Add("CommandNeutral");
+        }
+        void CommandLeft()
+        {
+            mainLB.Items.Add("CommandLeft");
+        }
+        void CommandRight()
+        {
+            mainLB.Items.Add("CommandRight");
+        }
+        void CommandForward()
+        {
+            mainLB.Items.Add("CommandForward");
+        }
+        void CommandBackward()
+        {
+            mainLB.Items.Add("CommandBackward");
+        }
+        void DongleConnected()
+        {
+            mainLB.Items.Add("DongleConnected");
+        }
+        void DongleDisconnected()
+        {
+            mainLB.Items.Add("DongleDisconnected");
+        }
+        void EngineConnected()
+        {
+            mainLB.Items.Add("EngineConnected");
+        }
+        void EngineDisconnected()
+        {
+            mainLB.Items.Add("EngineDisconnected");
+        }
+        #endregion
     }
 }

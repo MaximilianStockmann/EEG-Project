@@ -58,6 +58,8 @@
       <DependentUpon>DrivingOverlay.cs</DependentUpon>
     </Compile>
     <Compile Include="EEG.cs" />
+    <Compile Include="EEG_EventSubscriber.cs" />
+    <Compile Include="EEG_EventThrower.cs" />
     <Compile Include="NewProfileDialog.cs">
       <SubType>Form</SubType>
     </Compile>
