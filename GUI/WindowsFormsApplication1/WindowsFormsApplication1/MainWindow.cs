@@ -37,7 +37,7 @@ namespace GUI_Namespace
         public event EventHandler EngineConnected = delegate { };
         public event EventHandler EngineDisconnected = delegate { };
         */
-
+            timer1.Enabled = true;
             mainLB.Items.Add("Stuff is starting.");
             EEGListener.AssignTrainingStarted(new Action(TrainingStarted));
             EEGListener.AssignTrainingSucceeded(new Action(TrainingSucceeded));
@@ -126,8 +126,25 @@ namespace GUI_Namespace
         }
 
         private void trainActionButton_Click(object sender, EventArgs e)
-        {         
-            EEG.TrainSkill(trainActionSelectionComboBox.Text);
+        {
+            if (EEG.EngineWorking())
+            {
+                mainLB.Items.Add("Engine Working.");
+            }
+            else
+            {
+                mainLB.Items.Add("Engine not Working.");
+            }
+
+            if (EEG.userIsConnected())
+            {
+                mainLB.Items.Add("User found.");
+            }
+            else
+            {
+                mainLB.Items.Add("User not found.");
+            }
+            //EEG.TrainSkill(trainActionSelectionComboBox.Text);
         }
 
         /*public event EventHandler TrainingStarted = delegate { };
@@ -199,5 +216,10 @@ namespace GUI_Namespace
             mainLB.Items.Add("EngineDisconnected");
         }
         #endregion
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            EEG.Execute();
+        }
     }
 }

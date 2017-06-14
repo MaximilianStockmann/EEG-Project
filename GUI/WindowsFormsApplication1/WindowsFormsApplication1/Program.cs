@@ -14,7 +14,7 @@ namespace GUI_Namespace
         [STAThread]
         static void Main()
         {
-            EEG.Build(0);
+            EEG.Build(1);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainWindow());

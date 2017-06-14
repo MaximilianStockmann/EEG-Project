@@ -10,17 +10,18 @@ static class EEG
     private static EEG_EventThrower thrower = new EEG_EventThrower();
 
     #region Attributes, Cloud-Profile-Management
-    private static string userName = "";
-    private static string password = "";
+    private static string userName = "dhbw";
+    private static string password = "tinf16itns";
     private static int userCloudID = 0;
     private static int version = -1;
     #endregion
 
-    private static string profileName = ""; // name of the current-Profile
+    private static string profileName = "Stefan Doing Stuff"; // name of the current-Profile
     private static int allowedTime = 50; // max number of ms for processing EmoengineEvents
     private static bool initialized = false;
     private static bool trainingInProgress = false;
     private static bool drivingAllowed = false;
+    private static bool userConnected = false;
 
     private static EdkDll.IEE_MentalCommandAction_t currentAction;
     private static Dictionary<string, EdkDll.IEE_MentalCommandAction_t> skillDictionary =
@@ -38,6 +39,7 @@ static class EEG
     {
         if (!initialized)
         {
+            AssignHandlers();
             engine.Connect();
             switch (mode)
             {
@@ -45,7 +47,6 @@ static class EEG
                 case 1: initialized = CloudConnectWorked(); break;
                 default: break;
             }
-            AssignHandlers();
         }
         else
         {
@@ -88,11 +89,11 @@ static class EEG
         initialized = false;
     }
 
-    private static void Execute() // voll wayne
+    public static void Execute() // voll wayne
     {
         try
         {
-            engine.ProcessEvents(allowedTime);
+            engine.ProcessEvents();
         }
         catch (EmoEngineException e)
         {
@@ -122,12 +123,14 @@ static class EEG
 
     static void engine_UserAdded(object sender, EmoEngineEventArgs e)
     {
-        thrower.TriggerEvent("DongleConnected");
+        userConnected = true;
+        //thrower.TriggerEvent("DongleConnected");
     }
 
     static void engine_UserRemoved(object sender, EmoEngineEventArgs e)
     {
-        thrower.TriggerEvent("DongleDisConnected");
+        userConnected = false;
+        //thrower.TriggerEvent("DongleDisConnected");
     }
 
     static void engine_EmoStateUpdated(object sender, EmoStateUpdatedEventArgs e)
@@ -156,7 +159,7 @@ static class EEG
         Single power = es.MentalCommandGetCurrentActionPower();
         Boolean isActive = es.MentalCommandIsActive();
 
-        // TO DO: Throw the neccessary stuff via the thrower
+        // TO DO: Throw the neccessary stuff via thrower
         if (isActive)
         {
             currentAction = cogAction;
@@ -289,6 +292,16 @@ static class EEG
     public static EdkDll.IEE_MentalCommandAction_t getCurrentAction()
     {
         return currentAction;
+    }
+
+    public static bool EngineWorking()
+    {
+        return initialized;
+    }
+
+    public static bool userIsConnected()
+    {
+        return userConnected;
     }
 
     public static void SetSens(int dest)

@@ -1,0 +1,6 @@
+C:\Users\Stefan\Documents\GitHub\EEG-Project\bin\win64\MentalCommandWithCloudProfile.exe.config
+C:\Users\Stefan\Documents\GitHub\EEG-Project\bin\win64\MentalCommandWithCloudProfile.exe
+C:\Users\Stefan\Documents\GitHub\EEG-Project\bin\win64\MentalCommandWithCloudProfile.pdb
+C:\Users\Stefan\Documents\GitHub\EEG-Project\examples_basic\C#\MentalCommandWithCloudProfile\obj\x64\Debug\MentalCommandWithCloudProfile.csprojResolveAssemblyReference.cache
+C:\Users\Stefan\Documents\GitHub\EEG-Project\examples_basic\C#\MentalCommandWithCloudProfile\obj\x64\Debug\MentalCommandWithCloudProfile.exe
+C:\Users\Stefan\Documents\GitHub\EEG-Project\examples_basic\C#\MentalCommandWithCloudProfile\obj\x64\Debug\MentalCommandWithCloudProfile.pdb

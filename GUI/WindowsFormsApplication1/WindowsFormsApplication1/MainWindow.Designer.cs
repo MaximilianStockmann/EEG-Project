@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.loadProfileButton = new System.Windows.Forms.Button();
             this.profileSelectionComboBox = new System.Windows.Forms.ComboBox();
             this.resetProfileButton = new System.Windows.Forms.Button();
@@ -43,6 +44,7 @@
             this.newProfileButton = new System.Windows.Forms.Button();
             this.saveProfileButton = new System.Windows.Forms.Button();
             this.mainLB = new System.Windows.Forms.ListBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // loadProfileButton
@@ -191,6 +193,10 @@
             this.mainLB.Size = new System.Drawing.Size(121, 212);
             this.mainLB.TabIndex = 14;
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -236,6 +242,7 @@
         private System.Windows.Forms.Button newProfileButton;
         private System.Windows.Forms.Button saveProfileButton;
         private System.Windows.Forms.ListBox mainLB;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

@@ -20,9 +20,9 @@ namespace MentalCommandWithCloudProfile
         static System.IO.StreamWriter cogLog = new System.IO.StreamWriter("MentalCommand.log"); // sinnloser Log
 
         static int userCloudID = 0;
-        static string userName = "Your account name";
-        static string password = "Your password";        
-        static string profileName = "Profile_1";
+        static string userName = "dhbw";
+        static string password = "tinf12itns";        
+        static string profileName = "Stefan Doing Stuff";
         static int version = -1; // Lastest version
         // static EdkDll.IEE_MentalCommandAction_t currentAction = "MC_neutral....";
         // static EmoEngine engine = EmoEngine.Instance;
@@ -264,14 +264,14 @@ namespace MentalCommandWithCloudProfile
             if (EmotivCloudClient.EC_Connect() != EdkDll.EDK_OK)
             {
                 Console.WriteLine("Cannot connect to Emotiv Cloud.");
-                Thread.Sleep(2000);
+                //Thread.Sleep(2000);
                 return;
             }
 
             if (EmotivCloudClient.EC_Login(userName, password) != EdkDll.EDK_OK)
             {
                 Console.WriteLine("Your login attempt has failed. The username or password may be incorrect");
-                Thread.Sleep(2000);
+                //Thread.Sleep(2000);
                 return;
             }
 
