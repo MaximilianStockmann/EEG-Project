@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.loadProfileButton = new System.Windows.Forms.Button();
             this.profileSelectionComboBox = new System.Windows.Forms.ComboBox();
             this.resetProfileButton = new System.Windows.Forms.Button();
@@ -41,6 +42,8 @@
             this.ipLabel = new System.Windows.Forms.Label();
             this.newProfileButton = new System.Windows.Forms.Button();
             this.saveProfileButton = new System.Windows.Forms.Button();
+            this.eegTicker = new System.Windows.Forms.Timer(this.components);
+            this.eegStatusLB = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // loadProfileButton
@@ -177,11 +180,24 @@
             this.saveProfileButton.Text = "Speichern";
             this.saveProfileButton.UseVisualStyleBackColor = true;
             // 
+            // eegTicker
+            // 
+            this.eegTicker.Tick += new System.EventHandler(this.eegTicker_Tick);
+            // 
+            // eegStatusLB
+            // 
+            this.eegStatusLB.FormattingEnabled = true;
+            this.eegStatusLB.Location = new System.Drawing.Point(10, 197);
+            this.eegStatusLB.Name = "eegStatusLB";
+            this.eegStatusLB.Size = new System.Drawing.Size(300, 160);
+            this.eegStatusLB.TabIndex = 17;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(314, 192);
+            this.ClientSize = new System.Drawing.Size(326, 413);
+            this.Controls.Add(this.eegStatusLB);
             this.Controls.Add(this.saveProfileButton);
             this.Controls.Add(this.newProfileButton);
             this.Controls.Add(this.ipLabel);
@@ -219,6 +235,8 @@
         private System.Windows.Forms.Label ipLabel;
         private System.Windows.Forms.Button newProfileButton;
         private System.Windows.Forms.Button saveProfileButton;
+        private System.Windows.Forms.Timer eegTicker;
+        private System.Windows.Forms.ListBox eegStatusLB;
     }
 }
 

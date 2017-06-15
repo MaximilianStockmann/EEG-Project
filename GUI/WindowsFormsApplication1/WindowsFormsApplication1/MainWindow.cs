@@ -9,7 +9,7 @@ namespace GUI_Namespace
 {
     public partial class MainWindow : Form
     {
-        // Creating SDK-Instance
+        // Getting SDK-Instance (EmoEngine is a Singleton)
         static EmoEngine engine = EmoEngine.Instance;
 
         // driving related information
@@ -19,8 +19,8 @@ namespace GUI_Namespace
 
         // Cloud-Profile related information
         static int userCloudID = 0;
-        static string userName = "";
-        static string password = "";
+        static string userName = "dhbw";
+        static string password = "tinf12itns";
         static string profileName = "Stefan Doing Stuff";
         static int version = -1; // Lastest version
 
@@ -37,6 +37,44 @@ namespace GUI_Namespace
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
+            //passing event handlers to the engine
+            engine.EmoEngineConnected +=
+                new EmoEngine.EmoEngineConnectedEventHandler(engine_EmoEngineConnected);
+            engine.EmoEngineDisconnected +=
+                new EmoEngine.EmoEngineDisconnectedEventHandler(engine_EmoEngineDisconnected);
+            engine.UserAdded +=
+                new EmoEngine.UserAddedEventHandler(engine_UserAdded);
+            engine.UserRemoved +=
+                new EmoEngine.UserRemovedEventHandler(engine_UserRemoved);
+            engine.MentalCommandTrainingStarted +=
+                new EmoEngine.MentalCommandTrainingStartedEventEventHandler(engine_MentalCommandTrainingStartedEvent);
+            engine.MentalCommandTrainingSucceeded +=
+                new EmoEngine.MentalCommandTrainingSucceededEventHandler(engine_MentalCommandTrainingSucceeded);
+            engine.MentalCommandTrainingFailed +=
+                new EmoEngine.MentalCommandTrainingFailedEventHandler(engine_MentalCommandTrainingFailed);
+            engine.MentalCommandTrainingCompleted +=
+                new EmoEngine.MentalCommandTrainingCompletedEventHandler(engine_MentalCommandTrainingCompleted);
+            engine.MentalCommandEmoStateUpdated +=
+                new EmoEngine.MentalCommandEmoStateUpdatedEventHandler(engine_MentalCommandEmoStateUpdated);
+
+            engine.Connect();
+            eegStatusLB.Items.Add("engineConnect aufgerufen.");
+
+            if (EmotivCloudClient.EC_Connect() != EdkDll.EDK_OK)
+            {
+                eegStatusLB.Items.Add("Cannot connect to Emotiv Cloud.");
+            }
+
+            if (EmotivCloudClient.EC_Login(userName, password) != EdkDll.EDK_OK)
+            {
+                eegStatusLB.Items.Add("Your login attempt has failed. The username or password may be incorrect");
+            }
+
+            eegStatusLB.Items.Add("Logged in as " + userName);
+
+            if (EmotivCloudClient.EC_GetUserDetail(ref userCloudID) != EdkDll.EDK_OK)
+                eegStatusLB.Items.Add("Unknown stuff destroying shit.");
+
             // setting mentalCommandActive actions for new user profile
             ulong action1 = (ulong)EdkDll.IEE_MentalCommandAction_t.MC_LEFT;
             ulong action2 = (ulong)EdkDll.IEE_MentalCommandAction_t.MC_RIGHT;
@@ -45,24 +83,10 @@ namespace GUI_Namespace
             ulong listAction = action1 | action2 | action3 | action4;
             EmoEngine.Instance.MentalCommandSetActiveActions(0, listAction);
 
-            //passing event handlers to the engine
-            engine.EmoEngineConnected += 
-                new EmoEngine.EmoEngineConnectedEventHandler(engine_EmoEngineConnected);
-            engine.EmoEngineDisconnected += 
-                new EmoEngine.EmoEngineDisconnectedEventHandler(engine_EmoEngineDisconnected);
-            engine.MentalCommandTrainingStarted += 
-                new EmoEngine.MentalCommandTrainingStartedEventEventHandler(engine_MentalCommandTrainingStartedEvent);
-            engine.MentalCommandTrainingSucceeded += 
-                new EmoEngine.MentalCommandTrainingSucceededEventHandler(engine_MentalCommandTrainingSucceeded);
-            engine.MentalCommandTrainingFailed += 
-                new EmoEngine.MentalCommandTrainingFailedEventHandler(engine_MentalCommandTrainingFailed);
-            engine.MentalCommandTrainingCompleted += 
-                new EmoEngine.MentalCommandTrainingCompletedEventHandler(engine_MentalCommandTrainingCompleted);
-            engine.MentalCommandEmoStateUpdated += 
-                new EmoEngine.MentalCommandEmoStateUpdatedEventHandler(engine_MentalCommandEmoStateUpdated);
-
             TCP.setServerLostCallBack(serverLostCallBack);
             ipLabel.Text = "IP: "+host;
+
+            eegTicker.Enabled = true;
         }
 
         private void sendCommand(String str)
@@ -173,12 +197,22 @@ namespace GUI_Namespace
         //event handlers for the engine
         public void engine_EmoEngineConnected(object sender, EmoEngineEventArgs e)
         {
-            engineStatusLabel.Text = "EEG connected";
+            eegStatusLB.Items.Add("Engine Connected");
         }
 
         public void engine_EmoEngineDisconnected(object sender, EmoEngineEventArgs e)
         {
-            engineStatusLabel.Text = "EEG disconnected";
+            eegStatusLB.Items.Add("Engine Disconnected");
+        }
+
+        public void engine_UserAdded(object sender, EmoEngineEventArgs e)
+        {
+            eegStatusLB.Items.Add("User added");
+        }
+
+        public void engine_UserRemoved(object sender, EmoEngineEventArgs e)
+        {
+            eegStatusLB.Items.Add("User removed");
         }
 
         public void engine_MentalCommandTrainingStartedEvent(object sender, EmoEngineEventArgs e)
@@ -308,6 +342,11 @@ namespace GUI_Namespace
         private void connectionLabel_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void eegTicker_Tick(object sender, EventArgs e)
+        {
+            engine.ProcessEvents();
         }
     }
 }
