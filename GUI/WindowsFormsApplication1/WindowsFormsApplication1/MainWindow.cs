@@ -103,7 +103,6 @@ namespace GUI_Namespace
             }
         }*/
 
-
         //returns the command to send to the bot
         private String currentActionToString()
         {

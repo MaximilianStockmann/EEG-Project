@@ -6,7 +6,7 @@ using System.Threading;
 
 static class EEG
 {
-    private static EmoEngine engine = EmoEngine.Instance;
+    public static EmoEngine engine = EmoEngine.Instance;
     private static EEG_EventThrower thrower = new EEG_EventThrower();
 
     #region Attributes, Cloud-Profile-Management
@@ -89,7 +89,7 @@ static class EEG
         initialized = false;
     }
 
-    public static void Execute() // voll wayne
+    public static void Execute() // link this one to timer.tick
     {
         try
         {
@@ -259,7 +259,6 @@ static class EEG
         EmoEngine.Instance.MentalCommandSetTrainingAction(0, skillDictionary[skillString]);
         EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START);
         trainingInProgress = true;
-        Execute();
     }
     
     public static void AcceptTraining(bool judgement)
@@ -275,7 +274,6 @@ static class EEG
                 EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_REJECT);
             }
             trainingInProgress = false;
-            Execute();
         }
     }
 
@@ -309,7 +307,6 @@ static class EEG
         if (dest > 0 && dest <= 10)
         {
             EmoEngine.Instance.MentalCommandSetActivationLevel(0, dest);
-            Execute();
         }
     }
 
