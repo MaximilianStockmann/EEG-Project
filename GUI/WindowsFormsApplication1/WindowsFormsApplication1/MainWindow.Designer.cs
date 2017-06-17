@@ -48,12 +48,14 @@
             // 
             // loadProfileButton
             // 
-            this.loadProfileButton.Location = new System.Drawing.Point(138, 51);
+            this.loadProfileButton.Location = new System.Drawing.Point(297, 63);
+            this.loadProfileButton.Margin = new System.Windows.Forms.Padding(4);
             this.loadProfileButton.Name = "loadProfileButton";
-            this.loadProfileButton.Size = new System.Drawing.Size(83, 21);
+            this.loadProfileButton.Size = new System.Drawing.Size(111, 26);
             this.loadProfileButton.TabIndex = 0;
             this.loadProfileButton.Text = "Laden";
             this.loadProfileButton.UseVisualStyleBackColor = true;
+            this.loadProfileButton.Click += new System.EventHandler(this.loadProfileButton_Click);
             // 
             // profileSelectionComboBox
             // 
@@ -61,42 +63,49 @@
             this.profileSelectionComboBox.FormattingEnabled = true;
             this.profileSelectionComboBox.Items.AddRange(new object[] {
             "Testprofil 1",
-            "Testprofil 2"});
-            this.profileSelectionComboBox.Location = new System.Drawing.Point(11, 51);
+            "Testprofil 2",
+            "Stefan Doing Stuff"});
+            this.profileSelectionComboBox.Location = new System.Drawing.Point(15, 63);
+            this.profileSelectionComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.profileSelectionComboBox.Name = "profileSelectionComboBox";
-            this.profileSelectionComboBox.Size = new System.Drawing.Size(121, 21);
+            this.profileSelectionComboBox.Size = new System.Drawing.Size(160, 24);
             this.profileSelectionComboBox.TabIndex = 1;
+            this.profileSelectionComboBox.SelectedIndexChanged += new System.EventHandler(this.profileSelectionComboBox_SelectedIndexChanged);
             // 
             // resetProfileButton
             // 
-            this.resetProfileButton.Location = new System.Drawing.Point(227, 78);
+            this.resetProfileButton.Location = new System.Drawing.Point(411, 97);
+            this.resetProfileButton.Margin = new System.Windows.Forms.Padding(4);
             this.resetProfileButton.Name = "resetProfileButton";
-            this.resetProfileButton.Size = new System.Drawing.Size(83, 21);
+            this.resetProfileButton.Size = new System.Drawing.Size(111, 26);
             this.resetProfileButton.TabIndex = 2;
             this.resetProfileButton.Text = "Zurücksetzen";
             this.resetProfileButton.UseVisualStyleBackColor = true;
-            this.resetProfileButton.Click += new System.EventHandler(this.resetProfileButton_Click_1);
+            this.resetProfileButton.Click += new System.EventHandler(this.resetProfileButton_Click);
             // 
             // trainActionSelectionComboBox
             // 
             this.trainActionSelectionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.trainActionSelectionComboBox.FormattingEnabled = true;
             this.trainActionSelectionComboBox.Items.AddRange(new object[] {
-            "Stop",
-            "Forward",
-            "Left",
-            "Backward",
-            "Right"});
-            this.trainActionSelectionComboBox.Location = new System.Drawing.Point(10, 104);
+            "stop",
+            "forward",
+            "backward",
+            "left",
+            "right"});
+            this.trainActionSelectionComboBox.Location = new System.Drawing.Point(15, 99);
+            this.trainActionSelectionComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.trainActionSelectionComboBox.Name = "trainActionSelectionComboBox";
-            this.trainActionSelectionComboBox.Size = new System.Drawing.Size(121, 21);
+            this.trainActionSelectionComboBox.Size = new System.Drawing.Size(160, 24);
             this.trainActionSelectionComboBox.TabIndex = 3;
+            this.trainActionSelectionComboBox.SelectedIndexChanged += new System.EventHandler(this.trainActionSelectionComboBox_SelectedIndexChanged);
             // 
             // trainActionButton
             // 
-            this.trainActionButton.Location = new System.Drawing.Point(137, 104);
+            this.trainActionButton.Location = new System.Drawing.Point(183, 97);
+            this.trainActionButton.Margin = new System.Windows.Forms.Padding(4);
             this.trainActionButton.Name = "trainActionButton";
-            this.trainActionButton.Size = new System.Drawing.Size(173, 21);
+            this.trainActionButton.Size = new System.Drawing.Size(225, 26);
             this.trainActionButton.TabIndex = 4;
             this.trainActionButton.Text = "Trainieren";
             this.trainActionButton.UseVisualStyleBackColor = true;
@@ -104,9 +113,10 @@
             // 
             // driveButton
             // 
-            this.driveButton.Location = new System.Drawing.Point(10, 131);
+            this.driveButton.Location = new System.Drawing.Point(15, 131);
+            this.driveButton.Margin = new System.Windows.Forms.Padding(4);
             this.driveButton.Name = "driveButton";
-            this.driveButton.Size = new System.Drawing.Size(300, 51);
+            this.driveButton.Size = new System.Drawing.Size(507, 63);
             this.driveButton.TabIndex = 5;
             this.driveButton.Text = "Fahren";
             this.driveButton.UseVisualStyleBackColor = true;
@@ -115,19 +125,19 @@
             // ctBotStatusLabel
             // 
             this.ctBotStatusLabel.AutoSize = true;
-            this.ctBotStatusLabel.Location = new System.Drawing.Point(72, 9);
+            this.ctBotStatusLabel.Location = new System.Drawing.Point(96, 11);
+            this.ctBotStatusLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.ctBotStatusLabel.Name = "ctBotStatusLabel";
-            this.ctBotStatusLabel.Size = new System.Drawing.Size(33, 13);
+            this.ctBotStatusLabel.Size = new System.Drawing.Size(40, 17);
             this.ctBotStatusLabel.TabIndex = 6;
             this.ctBotStatusLabel.Text = "NEIN";
             // 
             // engineStatusLabel
             // 
             this.engineStatusLabel.AutoSize = true;
-            this.engineStatusLabel.Location = new System.Drawing.Point(12, 22);
-            this.engineStatusLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.engineStatusLabel.Location = new System.Drawing.Point(16, 27);
             this.engineStatusLabel.Name = "engineStatusLabel";
-            this.engineStatusLabel.Size = new System.Drawing.Size(69, 13);
+            this.engineStatusLabel.Size = new System.Drawing.Size(91, 17);
             this.engineStatusLabel.TabIndex = 11;
             this.engineStatusLabel.Text = "engineStatus";
             // 
@@ -135,37 +145,40 @@
             // 
             this.Company.AutoSize = true;
             this.Company.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Company.Location = new System.Drawing.Point(133, 1);
+            this.Company.Location = new System.Drawing.Point(177, 1);
+            this.Company.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Company.Name = "Company";
-            this.Company.Size = new System.Drawing.Size(124, 24);
+            this.Company.Size = new System.Drawing.Size(158, 29);
             this.Company.TabIndex = 12;
             this.Company.Text = "EEG-Projekt";
             // 
             // connectionLabel
             // 
             this.connectionLabel.AutoSize = true;
-            this.connectionLabel.Location = new System.Drawing.Point(11, 9);
+            this.connectionLabel.Location = new System.Drawing.Point(15, 11);
+            this.connectionLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.connectionLabel.Name = "connectionLabel";
-            this.connectionLabel.Size = new System.Drawing.Size(64, 13);
+            this.connectionLabel.Size = new System.Drawing.Size(83, 17);
             this.connectionLabel.TabIndex = 13;
             this.connectionLabel.Text = "Connection:";
-            this.connectionLabel.Click += new System.EventHandler(this.connectionLabel_Click);
             // 
             // ipLabel
             // 
             this.ipLabel.AutoSize = true;
-            this.ipLabel.Location = new System.Drawing.Point(135, 25);
+            this.ipLabel.Location = new System.Drawing.Point(180, 31);
+            this.ipLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.ipLabel.Name = "ipLabel";
-            this.ipLabel.Size = new System.Drawing.Size(68, 13);
+            this.ipLabel.Size = new System.Drawing.Size(88, 17);
             this.ipLabel.TabIndex = 14;
             this.ipLabel.Text = "IP: 127.0.0.1";
             this.ipLabel.Click += new System.EventHandler(this.ipLabel_Click);
             // 
             // newProfileButton
             // 
-            this.newProfileButton.Location = new System.Drawing.Point(138, 78);
+            this.newProfileButton.Location = new System.Drawing.Point(182, 63);
+            this.newProfileButton.Margin = new System.Windows.Forms.Padding(4);
             this.newProfileButton.Name = "newProfileButton";
-            this.newProfileButton.Size = new System.Drawing.Size(83, 21);
+            this.newProfileButton.Size = new System.Drawing.Size(111, 26);
             this.newProfileButton.TabIndex = 15;
             this.newProfileButton.Text = "Neues Profil";
             this.newProfileButton.UseVisualStyleBackColor = true;
@@ -173,12 +186,14 @@
             // 
             // saveProfileButton
             // 
-            this.saveProfileButton.Location = new System.Drawing.Point(227, 50);
+            this.saveProfileButton.Location = new System.Drawing.Point(411, 63);
+            this.saveProfileButton.Margin = new System.Windows.Forms.Padding(4);
             this.saveProfileButton.Name = "saveProfileButton";
-            this.saveProfileButton.Size = new System.Drawing.Size(83, 21);
+            this.saveProfileButton.Size = new System.Drawing.Size(111, 26);
             this.saveProfileButton.TabIndex = 16;
             this.saveProfileButton.Text = "Speichern";
             this.saveProfileButton.UseVisualStyleBackColor = true;
+            this.saveProfileButton.Click += new System.EventHandler(this.saveProfileButton_Click);
             // 
             // eegTicker
             // 
@@ -187,16 +202,18 @@
             // eegStatusLB
             // 
             this.eegStatusLB.FormattingEnabled = true;
-            this.eegStatusLB.Location = new System.Drawing.Point(10, 197);
+            this.eegStatusLB.ItemHeight = 16;
+            this.eegStatusLB.Location = new System.Drawing.Point(15, 211);
+            this.eegStatusLB.Margin = new System.Windows.Forms.Padding(4);
             this.eegStatusLB.Name = "eegStatusLB";
-            this.eegStatusLB.Size = new System.Drawing.Size(300, 160);
+            this.eegStatusLB.Size = new System.Drawing.Size(278, 196);
             this.eegStatusLB.TabIndex = 17;
             // 
             // MainWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(326, 413);
+            this.ClientSize = new System.Drawing.Size(555, 460);
             this.Controls.Add(this.eegStatusLB);
             this.Controls.Add(this.saveProfileButton);
             this.Controls.Add(this.newProfileButton);
@@ -212,8 +229,10 @@
             this.Controls.Add(this.profileSelectionComboBox);
             this.Controls.Add(this.loadProfileButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainWindow";
             this.Text = "Emotiv";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainWindow_FormClosed);
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

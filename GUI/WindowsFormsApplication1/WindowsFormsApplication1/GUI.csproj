@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DotNetEmotivSDK, Version=0.8.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\examples_basic\C#\DotNetEmotivSDK\DotNetEmotivSDK\Debug\DotNetEmotivSDK.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -115,12 +119,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\examples_basic\C#\DotNetEmotivSDK\DotNetEmotivSDK.csproj">
-      <Project>{d3337309-9682-425e-8edc-2ecfacf79565}</Project>
-      <Name>DotNetEmotivSDK</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="img\down.png" />
