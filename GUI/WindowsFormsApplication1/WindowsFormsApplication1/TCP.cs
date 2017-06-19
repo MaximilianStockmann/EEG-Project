@@ -19,11 +19,11 @@ public class TCP
             sendCommand("stop");
             return true;
         }
-        catch (ArgumentNullException ex)
+        catch (ArgumentNullException)
         {
             return false;
         }
-        catch (SocketException ex)
+        catch (SocketException)
         {
             return false;
         }
@@ -37,8 +37,15 @@ public class TCP
         String responseData = String.Empty;
         // Read the first batch of the TcpServer response bytes.
         // TODO: Try block rumdrum
-        Int32 bytes = clientStream.Read(data, 0, data.Length);
-
+        Int32 bytes;
+        try
+        {
+            bytes = clientStream.Read(data, 0, data.Length);
+        }
+        catch (Exception)
+        {
+            return "ERROR";
+        }
         return System.Text.Encoding.ASCII.GetString(data, 0, bytes);
     }
 

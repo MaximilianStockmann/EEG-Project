@@ -3,7 +3,7 @@ using System;
 using System.Windows.Forms;
 using acceptTraining;
 using runningWindow;
-
+using System.IO;
 
 namespace GUI_Namespace
 {
@@ -28,7 +28,10 @@ namespace GUI_Namespace
         static Int32 port = 13337;
         static public String host = "192.168.1.1";
 
+        // Window when driving bot, manuel driving
         static startRunningWindow runWin;
+
+        private static String profileSavingPath = "profiles.dat";
 
         public MainWindow()
         {
@@ -61,8 +64,63 @@ namespace GUI_Namespace
             engine.MentalCommandEmoStateUpdated += 
                 new EmoEngine.MentalCommandEmoStateUpdatedEventHandler(engine_MentalCommandEmoStateUpdated);
 
+            // init TCP stuff
             TCP.setServerLostCallBack(serverLostCallBack);
             ipLabel.Text = "IP: "+host;
+            
+            
+
+            // init File Stream for saving profiles and read profiles
+            readProfiles();
+
+            // select first ComboBox entrys
+            trainActionSelectionComboBox.SelectedIndex = 0;
+            profileSelectionComboBox.SelectedIndex = 0;
+
+            
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            writeProfiles();
+        }
+
+        private void readProfiles()
+        {
+            try
+            {
+                StreamReader SR = new StreamReader(profileSavingPath);
+                while (SR.Peek() >= 0)
+                {
+                    profileSelectionComboBox.Items.Add(SR.ReadLine());
+                }
+                SR.Close();
+
+            }
+            catch(Exception)
+            { }
+        }
+
+        private void writeProfiles()
+        {
+            
+            try
+            {
+                if (File.Exists(profileSavingPath))
+                {
+                    File.Delete(profileSavingPath);
+                }
+                var items = profileSelectionComboBox.Items;
+                StreamWriter SW = new StreamWriter(profileSavingPath);
+                
+                foreach(var item in profileSelectionComboBox.Items)
+                {
+                    SW.WriteLine(item.ToString());
+                }
+                SW.Close();
+            }
+            catch (Exception)
+            { }
         }
 
         private void sendCommand(String str)
@@ -88,6 +146,7 @@ namespace GUI_Namespace
 
         private void driveButton_Click(object sender, EventArgs e)
         {
+            
             //ctBotStatusLabel.Text = "Test";
             if (driveButton.Text == "Fahren")
             {
@@ -102,8 +161,9 @@ namespace GUI_Namespace
                 }
                 else
                 {
-                    ctBotStatusLabel.Text = "Kein Server!";
+                    ctBotStatusLabel.Text = "Kein c't Bot!";
                     drivingAllowed = false;
+                    System.Windows.Forms.MessageBox.Show("Kein c't Bot gefunden!");
                      // has to be in the if-branch
                 }
                 
@@ -129,22 +189,22 @@ namespace GUI_Namespace
 
             if (profileID >= 0)
             {
-                engineStatusLabel.Text = "Saving profile..."; // Saving...
+                engineStatusLabel.Text = "Speichere Profil..."; // Saving...
                 if (EmotivCloudClient.EC_UpdateUserProfile(userCloudID, 0, profileID) == EdkDll.EDK_OK)
-                    engineStatusLabel.Text = "Profile saved"; // Saving finished
+                    engineStatusLabel.Text = "Profil gespeichert"; // Saving finished
                 else
-                    engineStatusLabel.Text = "Saving failed"; // Saving failed
+                    engineStatusLabel.Text = "Speichern gescheitert"; // Saving failed
             }
             else
             {
                 // a new profile gets created
-                engineStatusLabel.Text = "Saving profile..."; // Saving...
+                engineStatusLabel.Text = "Speichere Profil..."; // Saving...
 
                 if (EmotivCloudClient.EC_SaveUserProfile(userCloudID, (int)0, profileName,
                 EmotivCloudClient.profileFileType.TRAINING) == EdkDll.EDK_OK)
-                    engineStatusLabel.Text = "Profile saved"; // Saving finished
+                    engineStatusLabel.Text = "Profil gespeichert"; // Saving finished
                 else
-                    engineStatusLabel.Text = "Saving failed"; // Saving failed
+                    engineStatusLabel.Text = "Speichern gescheitert"; // Saving failed
             }
 
             return;
@@ -157,15 +217,15 @@ namespace GUI_Namespace
 
             if (getNumberProfile > 0)
             {
-                engineStatusLabel.Text = "Loading profile..."; // Loading...
+                engineStatusLabel.Text = "Lade Profil..."; // Loading...
 
                 int profileID = -1;
                 EmotivCloudClient.EC_GetProfileId(userCloudID, profileName, ref profileID);
 
                 if (EmotivCloudClient.EC_LoadUserProfile(userCloudID, 0, profileID, version) == EdkDll.EDK_OK)
-                    engineStatusLabel.Text = "Profile loaded"; // Loading finished
+                    engineStatusLabel.Text = "Profil geladen"; // Loading finished
                 else
-                    engineStatusLabel.Text = "Loading failed"; // Loading failed
+                    engineStatusLabel.Text = "Laden gescheitert"; // Loading failed
             }
             return;
         }
@@ -173,32 +233,32 @@ namespace GUI_Namespace
         //event handlers for the engine
         public void engine_EmoEngineConnected(object sender, EmoEngineEventArgs e)
         {
-            engineStatusLabel.Text = "EEG connected";
+            engineStatusLabel.Text = "EEG verbunden";
         }
 
         public void engine_EmoEngineDisconnected(object sender, EmoEngineEventArgs e)
         {
-            engineStatusLabel.Text = "EEG disconnected";
+            engineStatusLabel.Text = "EEG getrennt";
         }
 
         public void engine_MentalCommandTrainingStartedEvent(object sender, EmoEngineEventArgs e)
         {
-            engineStatusLabel.Text = "Training started";
+            engineStatusLabel.Text = "Training gestartet";
         }
 
         public void engine_MentalCommandTrainingSucceeded(object sender, EmoEngineEventArgs e)
         {
-            new acceptTraining.acceptTrainingDialog(); // opens dialog
+            new acceptTraining.acceptTrainingDialog().ShowDialog(); // opens dialog
         }
 
         public void engine_MentalCommandTrainingFailed(object sender, EmoEngineEventArgs e)
         {
-            engineStatusLabel.Text = "Training failed";
+            engineStatusLabel.Text = "Training gescheitert";
         }
 
         public void engine_MentalCommandTrainingCompleted(object sender, EmoEngineEventArgs e)
         {
-            engineStatusLabel.Text = "Training completed";
+            engineStatusLabel.Text = "Training fertig";
         }
 
         public void engine_MentalCommandEmoStateUpdated(object sender, EmoStateUpdatedEventArgs e)
@@ -242,26 +302,26 @@ namespace GUI_Namespace
         }
 
         private void trainActionButton_Click(object sender, EventArgs e)
-        {             
+        {
             switch (trainActionSelectionComboBox.Text)
             {
-                case "Stop":
+                case "Stop / Neutral":
                     EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_NEUTRAL);
                     EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START);
                     break;
-                case "Forward":
+                case "Vorwärts":
                     EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_PUSH);
                     EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START);
                     break;
-                case "backward":
+                case "Rückwärts":
                     EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_PULL);
                     EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START);
                     break;
-                case "Left":
+                case "Links":
                     EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_LEFT);
                     EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START);
                     break;
-                case "Right":
+                case "Rechts":
                     EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_RIGHT);
                     EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START);
                     break;
@@ -283,7 +343,7 @@ namespace GUI_Namespace
             ipLabel.Text = s;
         }
 
-        private void resetProfileButton_Click_1(object sender, EventArgs e)
+        private void resetActionButton_Click(object sender, EventArgs e)
         {
 
         }
@@ -298,6 +358,7 @@ namespace GUI_Namespace
             if (!profileSelectionComboBox.Items.Contains(s) && (s != ""))
             {
                 profileSelectionComboBox.Items.Add(s);
+                profileSelectionComboBox.SelectedItem = s;
                 return true;
             }
             else
@@ -305,9 +366,5 @@ namespace GUI_Namespace
 
         }
 
-        private void connectionLabel_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

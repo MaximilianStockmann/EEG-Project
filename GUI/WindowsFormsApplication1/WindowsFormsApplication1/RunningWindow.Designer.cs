@@ -35,12 +35,16 @@
             this.pictureBoxMid = new System.Windows.Forms.PictureBox();
             this.pictureBoxUp = new System.Windows.Forms.PictureBox();
             this.trackBarSpeed = new System.Windows.Forms.TrackBar();
+            this.speedLabel = new System.Windows.Forms.Label();
+            this.levelLabel = new System.Windows.Forms.Label();
+            this.trackBarLevel = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxUp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSpeed)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarLevel)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBoxRight
@@ -106,7 +110,7 @@
             // trackBarSpeed
             // 
             this.trackBarSpeed.CausesValidation = false;
-            this.trackBarSpeed.Location = new System.Drawing.Point(17, 164);
+            this.trackBarSpeed.Location = new System.Drawing.Point(17, 190);
             this.trackBarSpeed.Maximum = 100;
             this.trackBarSpeed.Name = "trackBarSpeed";
             this.trackBarSpeed.Size = new System.Drawing.Size(150, 45);
@@ -114,11 +118,44 @@
             this.trackBarSpeed.Value = 20;
             this.trackBarSpeed.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trackBarSpeed_MouseUp);
             // 
+            // speedLabel
+            // 
+            this.speedLabel.AutoSize = true;
+            this.speedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.speedLabel.Location = new System.Drawing.Point(14, 174);
+            this.speedLabel.Name = "speedLabel";
+            this.speedLabel.Size = new System.Drawing.Size(121, 13);
+            this.speedLabel.TabIndex = 11;
+            this.speedLabel.Text = "c\'t Bot Geschwindigkeit:";
+            // 
+            // levelLabel
+            // 
+            this.levelLabel.AutoSize = true;
+            this.levelLabel.Location = new System.Drawing.Point(17, 228);
+            this.levelLabel.Name = "levelLabel";
+            this.levelLabel.Size = new System.Drawing.Size(106, 13);
+            this.levelLabel.TabIndex = 12;
+            this.levelLabel.Text = "EEG-Empfindlichkeit:";
+            // 
+            // trackBarLevel
+            // 
+            this.trackBarLevel.Location = new System.Drawing.Point(17, 244);
+            this.trackBarLevel.Maximum = 9;
+            this.trackBarLevel.Minimum = 1;
+            this.trackBarLevel.Name = "trackBarLevel";
+            this.trackBarLevel.Size = new System.Drawing.Size(150, 45);
+            this.trackBarLevel.TabIndex = 13;
+            this.trackBarLevel.Value = 5;
+            this.trackBarLevel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trackBarLevel_MouseUp);
+            // 
             // startRunningWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(184, 211);
+            this.ClientSize = new System.Drawing.Size(184, 286);
+            this.Controls.Add(this.trackBarLevel);
+            this.Controls.Add(this.levelLabel);
+            this.Controls.Add(this.speedLabel);
             this.Controls.Add(this.trackBarSpeed);
             this.Controls.Add(this.pictureBoxRight);
             this.Controls.Add(this.pictureBoxDown);
@@ -126,6 +163,7 @@
             this.Controls.Add(this.pictureBoxMid);
             this.Controls.Add(this.pictureBoxUp);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "startRunningWindow";
             this.Text = "Steuerung";
             this.Load += new System.EventHandler(this.startRunningWindow_Load);
@@ -135,6 +173,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxUp)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSpeed)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarLevel)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -148,5 +187,8 @@
         private System.Windows.Forms.PictureBox pictureBoxDown;
         private System.Windows.Forms.PictureBox pictureBoxRight;
         private System.Windows.Forms.TrackBar trackBarSpeed;
+        private System.Windows.Forms.Label speedLabel;
+        private System.Windows.Forms.Label levelLabel;
+        private System.Windows.Forms.TrackBar trackBarLevel;
     }
 }

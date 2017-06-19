@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(startChangeIPWindow));
             this.textBoxIP = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -57,6 +58,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxIP);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "startChangeIPWindow";
             this.Text = "Neu IP";
             this.Load += new System.EventHandler(this.startChangeIPWindow_Load);

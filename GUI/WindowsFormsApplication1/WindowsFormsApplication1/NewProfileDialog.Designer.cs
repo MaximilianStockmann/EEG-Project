@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewProfileDialog));
             this.confirmNewProfileButton = new System.Windows.Forms.Button();
             this.stashNewProfile = new System.Windows.Forms.Button();
             this.profileNameTextBox = new System.Windows.Forms.TextBox();
@@ -64,6 +65,7 @@
             this.profileNameTextBox.Name = "profileNameTextBox";
             this.profileNameTextBox.Size = new System.Drawing.Size(224, 26);
             this.profileNameTextBox.TabIndex = 2;
+            this.profileNameTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.profileNameTextBox_KeyDown);
             // 
             // elaborationLabel
             // 
@@ -85,6 +87,7 @@
             this.Controls.Add(this.stashNewProfile);
             this.Controls.Add(this.confirmNewProfileButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "NewProfileDialog";
             this.Text = "Neues Profil";

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Emotiv;
 
 namespace runningWindow
 {
@@ -20,6 +21,7 @@ namespace runningWindow
         private void startRunningWindow_Load(object sender, EventArgs e)
         {
             TCP.sendCommand("speed " + trackBarSpeed.Value);
+            trackBarLevel.Value = EmoEngine.Instance.MentalCommandGetActivationLevel(0);
         }
 
         private void pictureBoxUp_MouseDown(object sender, System.EventArgs e)
@@ -82,6 +84,11 @@ namespace runningWindow
             base.OnFormClosing(e);
             GUI_Namespace.Program.mainWindow.closeRunning();
             
+        }
+
+        private void trackBarLevel_MouseUp(object sender, MouseEventArgs e)
+        {
+            EmoEngine.Instance.MentalCommandSetActivationLevel(0, trackBarLevel.Value);
         }
     }
 }

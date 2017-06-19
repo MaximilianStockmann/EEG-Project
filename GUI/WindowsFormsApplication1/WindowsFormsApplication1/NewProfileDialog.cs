@@ -15,6 +15,7 @@ namespace NewProfileDialog
         public NewProfileDialog()
         {
             InitializeComponent();
+            this.ActiveControl = profileNameTextBox;
         }
 
 
@@ -35,6 +36,15 @@ namespace NewProfileDialog
                 this.Close();
             else
                 System.Windows.Forms.MessageBox.Show("Der Eintrag ist bereits vorhanden oder es wurde kein Name eingegeben!");
+        }
+        
+        private void profileNameTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                confirmNewProfileButton.PerformClick();
+                this.Close();
+            }
         }
     }
 }
