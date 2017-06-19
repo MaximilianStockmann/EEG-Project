@@ -25,7 +25,8 @@ PWMs = []
 
 SPEED = 20.0
 ROTATE_FACTOR = 0.5
-STRIAGHT_FACTOR = 0.92
+STRIAGHT_FACTOR = 0.85
+
 
 def init():
 
@@ -44,7 +45,7 @@ def init():
         PWMs[k].start(0.0)
 
     print "Open Server:"
-    S.openServer()
+    return S.openServer()
 
 
 def exit(a = 0,b = 0):
@@ -97,7 +98,9 @@ def driveBackward():
 
 if __name__ == '__main__':
 
-    init()
+    if not init():
+        # init failed
+        exit()
     while 1:
         c = S.waitForCommand()
         #print c

@@ -35,8 +35,11 @@ def openServer():
         s.bind((TCP_IP, TCP_PORT))
         s.listen(1)
     except Exception as e:
+        # Adress is already in use :'(
         print e
+        return False
     searchForClient()
+    return True
 
 def searchForClient():
     global conn
