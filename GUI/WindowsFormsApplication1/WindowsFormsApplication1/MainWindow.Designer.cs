@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
+            this.components = new System.ComponentModel.Container();
             this.loadProfileButton = new System.Windows.Forms.Button();
             this.profileSelectionComboBox = new System.Windows.Forms.ComboBox();
             this.resetActionButton = new System.Windows.Forms.Button();
@@ -43,6 +44,7 @@
             this.newProfileButton = new System.Windows.Forms.Button();
             this.saveProfileButton = new System.Windows.Forms.Button();
             this.engineLabel = new System.Windows.Forms.Label();
+            this.eegTicker = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // loadProfileButton
@@ -53,6 +55,7 @@
             this.loadProfileButton.TabIndex = 0;
             this.loadProfileButton.Text = "Laden";
             this.loadProfileButton.UseVisualStyleBackColor = true;
+            this.loadProfileButton.Click += new System.EventHandler(this.loadProfileButton_Click);
             // 
             // profileSelectionComboBox
             // 
@@ -87,9 +90,11 @@
             this.trainActionSelectionComboBox.Name = "trainActionSelectionComboBox";
             this.trainActionSelectionComboBox.Size = new System.Drawing.Size(122, 21);
             this.trainActionSelectionComboBox.TabIndex = 3;
+            this.trainActionSelectionComboBox.SelectedIndexChanged += new System.EventHandler(this.trainActionSelectionComboBox_SelectedIndexChanged);
             // 
             // trainActionButton
             // 
+            this.trainActionButton.Enabled = false;
             this.trainActionButton.Location = new System.Drawing.Point(139, 78);
             this.trainActionButton.Name = "trainActionButton";
             this.trainActionButton.Size = new System.Drawing.Size(142, 21);
@@ -175,6 +180,11 @@
             this.saveProfileButton.TabIndex = 16;
             this.saveProfileButton.Text = "Speichern";
             this.saveProfileButton.UseVisualStyleBackColor = true;
+            this.saveProfileButton.Click += new System.EventHandler(this.saveProfileButton_Click);
+            // 
+            // eegTicker
+            // 
+            this.eegTicker.Tick += new System.EventHandler(this.eegTicker_Tick);
             // 
             // engineLabel
             // 
@@ -231,6 +241,7 @@
         private System.Windows.Forms.Button newProfileButton;
         private System.Windows.Forms.Button saveProfileButton;
         private System.Windows.Forms.Label engineLabel;
+        private System.Windows.Forms.Timer eegTicker;
     }
 }
 

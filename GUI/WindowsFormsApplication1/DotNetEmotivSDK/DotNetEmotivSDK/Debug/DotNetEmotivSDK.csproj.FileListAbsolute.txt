@@ -8,3 +8,8 @@ C:\Users\jonat\workspace\ProjektAI\EEG-Project\examples_basic\C#\build\Debug\Dot
 C:\Users\jonat\workspace\ProjektAI\EEG-Project\examples_basic\C#\DotNetEmotivSDK\DotNetEmotivSDK\Debug\DotNetEmotivSDK.csprojResolveAssemblyReference.cache
 C:\Users\jonat\workspace\ProjektAI\EEG-Project\examples_basic\C#\DotNetEmotivSDK\DotNetEmotivSDK\Debug\DotNetEmotivSDK.dll
 C:\Users\jonat\workspace\ProjektAI\EEG-Project\examples_basic\C#\DotNetEmotivSDK\DotNetEmotivSDK\Debug\DotNetEmotivSDK.pdb
+C:\Users\Marcel\Documents\EEG-Project\GUI\WindowsFormsApplication1\build\Debug\DotNetEmotivSDK.dll
+C:\Users\Marcel\Documents\EEG-Project\GUI\WindowsFormsApplication1\build\Debug\DotNetEmotivSDK.pdb
+C:\Users\Marcel\Documents\EEG-Project\GUI\WindowsFormsApplication1\DotNetEmotivSDK\DotNetEmotivSDK\Debug\DotNetEmotivSDK.csprojResolveAssemblyReference.cache
+C:\Users\Marcel\Documents\EEG-Project\GUI\WindowsFormsApplication1\DotNetEmotivSDK\DotNetEmotivSDK\Debug\DotNetEmotivSDK.dll
+C:\Users\Marcel\Documents\EEG-Project\GUI\WindowsFormsApplication1\DotNetEmotivSDK\DotNetEmotivSDK\Debug\DotNetEmotivSDK.pdb
