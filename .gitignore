@@ -3,3 +3,5 @@ doc/html/
 *.db
 *.cache
 *.Cache
+*.pyc
+*.log
