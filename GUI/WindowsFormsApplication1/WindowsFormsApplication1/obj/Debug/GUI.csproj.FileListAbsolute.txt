@@ -49,7 +49,3 @@ C:\Users\Marcel\Documents\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsA
 C:\Users\Marcel\Documents\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\runningWindow.startRunningWindow.resources
 C:\Users\Marcel\Documents\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\changeIPWindow.startChangeIPWindow.resources
 C:\Users\Marcel\Documents\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\NewProfileDialog.NewProfileDialog.resources
-C:\Users\Stefan\Documents\GitHub\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\acceptTraining.acceptTrainingDialog.resources
-C:\Users\Stefan\Documents\GitHub\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\changeIPWindow.startChangeIPWindow.resources
-C:\Users\Stefan\Documents\GitHub\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\NewProfileDialog.NewProfileDialog.resources
-C:\Users\Stefan\Documents\GitHub\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\runningWindow.startRunningWindow.resources

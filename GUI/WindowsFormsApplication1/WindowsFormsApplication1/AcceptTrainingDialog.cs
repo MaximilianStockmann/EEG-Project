@@ -13,8 +13,6 @@ namespace acceptTraining
 {
     public partial class acceptTrainingDialog : Form
     {
-        public EmoEngine engine = EmoEngine.Instance;
-
         public acceptTrainingDialog()
         {
             InitializeComponent();
@@ -27,15 +25,13 @@ namespace acceptTraining
 
         private void acceptButton_Click(object sender, EventArgs e)
         {
-            engine.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_ACCEPT);
-            engine.ProcessEvents(5);
+            EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_ACCEPT);
             this.Close();
         }
 
         private void delineButton_Click(object sender, EventArgs e)
         {
-            engine.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_REJECT);
-            engine.ProcessEvents(5);
+            EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_REJECT);
             this.Close();
         }
     }
