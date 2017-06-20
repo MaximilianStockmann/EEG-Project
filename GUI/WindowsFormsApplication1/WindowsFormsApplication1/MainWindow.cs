@@ -9,7 +9,9 @@ namespace GUI_Namespace
 {
     public partial class MainWindow : Form
     {
-        public EmoEngine engine = EmoEngine.Instance;
+        private EmoEngine engine;
+        private static System.IO.StreamWriter laggendeLogger = new System.IO.StreamWriter("MentalCommand.log");
+        private int connectedUsers = 0;
 
         // driving related information
         public static EdkDll.IEE_MentalCommandAction_t currentAction;
@@ -23,9 +25,10 @@ namespace GUI_Namespace
         private static string selectedProfile;
 
         // Cloud-Profile related information
+        private static bool enableCloudProfile = false;
         private static int userCloudID = 0;
-        private static string userName = "";
-        private static string password = "";
+        private static string userName;
+        private static string password;
         private static int version = -1; // Lastest version
 
         // TCP infos
@@ -41,7 +44,8 @@ namespace GUI_Namespace
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            // passing event handlers to the engine
+            engine = EmoEngine.Instance;
+
             engine.EmoEngineConnected +=
                 new EmoEngine.EmoEngineConnectedEventHandler(engine_EmoEngineConnected);
             engine.EmoEngineDisconnected +=
@@ -50,41 +54,28 @@ namespace GUI_Namespace
                 new EmoEngine.UserAddedEventHandler(engine_UserAdded);
             engine.UserRemoved +=
                 new EmoEngine.UserRemovedEventHandler(engine_UserRemoved);
-            engine.EmoStateUpdated +=
-                new EmoEngine.EmoStateUpdatedEventHandler(engine_EmoStateUpdated);
-            engine.EmoEngineEmoStateUpdated +=
-                new EmoEngine.EmoEngineEmoStateUpdatedEventHandler(engine_EmoEngineEmoStateUpdated);
-            engine.MentalCommandTrainingStarted +=
-                new EmoEngine.MentalCommandTrainingStartedEventEventHandler(engine_MentalCommandTrainingStartedEvent);
-            engine.MentalCommandTrainingSucceeded +=
-                new EmoEngine.MentalCommandTrainingSucceededEventHandler(engine_MentalCommandTrainingSucceeded);
-            engine.MentalCommandTrainingFailed +=
-                new EmoEngine.MentalCommandTrainingFailedEventHandler(engine_MentalCommandTrainingFailed);
-            engine.MentalCommandTrainingCompleted +=
-                new EmoEngine.MentalCommandTrainingCompletedEventHandler(engine_MentalCommandTrainingCompleted);
+            //engine.EmoStateUpdated +=
+            //    new EmoEngine.EmoStateUpdatedEventHandler(engine_EmoStateUpdated);
+            //engine.EmoEngineEmoStateUpdated +=
+            //    new EmoEngine.EmoEngineEmoStateUpdatedEventHandler(engine_EmoEngineEmoStateUpdated);
             engine.MentalCommandEmoStateUpdated +=
                 new EmoEngine.MentalCommandEmoStateUpdatedEventHandler(engine_MentalCommandEmoStateUpdated);
+            engine.MentalCommandTrainingStarted +=
+                new EmoEngine.MentalCommandTrainingStartedEventEventHandler(engine_MentalCommandTrainingStarted);
+            engine.MentalCommandTrainingSucceeded +=
+                new EmoEngine.MentalCommandTrainingSucceededEventHandler(engine_MentalCommandTrainingSucceeded);
+            engine.MentalCommandTrainingCompleted +=
+                new EmoEngine.MentalCommandTrainingCompletedEventHandler(engine_MentalCommandTrainingCompleted);
+            engine.MentalCommandTrainingRejected +=
+                new EmoEngine.MentalCommandTrainingRejectedEventHandler(engine_MentalCommandTrainingRejected);
 
             // connecting the engine
             engine.Connect();
+            laggendeLogger.WriteLine("Engine wird connected.");
 
-            // give Feedback in case of not working CloudProfiling
-            eegStatusLB.Items.Add("engineConnect aufgerufen.");
-
-            if (EmotivCloudClient.EC_Connect() != EdkDll.EDK_OK)
-            {
-                eegStatusLB.Items.Add("Cannot connect to Emotiv Cloud.");
-            }
-
-            if (EmotivCloudClient.EC_Login(userName, password) != EdkDll.EDK_OK)
-            {
-                eegStatusLB.Items.Add("Your login attempt has failed. The username or password may be incorrect");
-            }
-
-            eegStatusLB.Items.Add("Logged in as " + userName);
-
-            if (EmotivCloudClient.EC_GetUserDetail(ref userCloudID) != EdkDll.EDK_OK)
-                eegStatusLB.Items.Add("Unknown stuff destroying shit.");
+            // enable Ticker
+            eegTicker.Enabled = true;
+            laggendeLogger.WriteLine("Ticker wird aktiviert.");
 
             // setting mentalCommandActive actions for new user profile
             ulong action1 = (ulong)EdkDll.IEE_MentalCommandAction_t.MC_LEFT;
@@ -93,14 +84,42 @@ namespace GUI_Namespace
             ulong action4 = (ulong)EdkDll.IEE_MentalCommandAction_t.MC_PULL;
             ulong listAction = action1 | action2 | action3 | action4;
             //EmoEngine.Instance.MentalCommandSetActiveActions(0, listAction);
-            engine.MentalCommandSetActiveActions(0, listAction);
-            engine.ProcessEvents(5);
+            EmoEngine.Instance.MentalCommandSetActiveActions(0, listAction);
+
+            laggendeLogger.WriteLine("Setting Actions Processing called.");
 
             TCP.setServerLostCallBack(serverLostCallBack);
-            ipLabel.Text = "IP: "+host;
+            ipLabel.Text = "IP: " + host;
 
-            // eegTicker.Enabled = true;
+        }
 
+        private void CloudProfileConnect()
+        {
+            bool cloudConnection()
+            {
+                if (EmotivCloudClient.EC_Connect() != EdkDll.EDK_OK)
+                {
+                    laggendeLogger.WriteLine("Kann keine Verbindung zur Emotiv-Cloud herstellen.");
+                    return false;
+                }
+
+                if (EmotivCloudClient.EC_Login(userName, password) != EdkDll.EDK_OK)
+                {
+                    laggendeLogger.WriteLine("Login fehlgeschlagen, falscher Benutzername oder falsches Passwort.");
+                    return false;
+                }
+
+                if (EmotivCloudClient.EC_GetUserDetail(ref userCloudID) != EdkDll.EDK_OK)
+                {
+                    laggendeLogger.WriteLine("Userdetail verursacht Probleme.");
+                    return false;
+                }
+
+                laggendeLogger.WriteLine("Verbunden mit Emotiv-Cloud. BN: " + userName);
+                return true;
+            }
+
+            enableCloudProfile = cloudConnection();            
         }
 
         private void sendCommand(String str)
@@ -161,22 +180,33 @@ namespace GUI_Namespace
         //event handlers for the engine
         public void engine_EmoEngineConnected(object sender, EmoEngineEventArgs e)
         {
-            eegStatusLB.Items.Add("Engine Connected");
+            laggendeLogger.WriteLine("Engine ist jetzt connected.");
         }
 
         public void engine_EmoEngineDisconnected(object sender, EmoEngineEventArgs e)
         {
-            eegStatusLB.Items.Add("Engine Disconnected");
+            laggendeLogger.WriteLine("Engine ist jetzt disconnected.");
+        }
+
+        public void enableTrainingButtons(bool mode)
+        {
+            trainActionButton.Enabled = mode;
+            resetActionButton.Enabled = mode;
         }
 
         public void engine_UserAdded(object sender, EmoEngineEventArgs e)
         {
-            eegStatusLB.Items.Add("User added");
+            if (++connectedUsers == 1)
+                enableTrainingButtons(true);
+            laggendeLogger.WriteLine("User added. {0} User(s) found.", connectedUsers);
+
         }
 
         public void engine_UserRemoved(object sender, EmoEngineEventArgs e)
         {
-            eegStatusLB.Items.Add("User removed");
+            if (--connectedUsers == 0)
+                enableTrainingButtons(false);
+            laggendeLogger.WriteLine("User removed. {0} User(s) found.", connectedUsers);
         }
 
         public void engine_EmoStateUpdated(object sender, EmoStateUpdatedEventArgs e)
@@ -185,66 +215,90 @@ namespace GUI_Namespace
             Single timeFromStart = es.GetTimeFromStart();
         }
 
-        static void engine_EmoEngineEmoStateUpdated(object sender, EmoStateUpdatedEventArgs e)
+        public void engine_EmoEngineEmoStateUpdated(object sender, EmoStateUpdatedEventArgs e)
         {
             EmoState es = e.emoState;
-
             Single timeFromStart = es.GetTimeFromStart();
-
             Int32 headsetOn = es.GetHeadsetOn();
-
             EdkDll.IEE_SignalStrength_t signalStrength = es.GetWirelessSignalStatus();
             Int32 chargeLevel = 0;
             Int32 maxChargeLevel = 0;
             es.GetBatteryChargeLevel(out chargeLevel, out maxChargeLevel);
         }
 
-        public void engine_MentalCommandTrainingStartedEvent(object sender, EmoEngineEventArgs e)
+        public void engine_MentalCommandTrainingStarted(object sender, EmoEngineEventArgs e)
         {
-            eegStatusLB.Items.Add("Training started");
+            laggendeLogger.WriteLine("Training begonnen.");
+            engineStatusLabel.Text = "Training läuft, bitte konzentrieren!";
         }
 
         public void engine_MentalCommandTrainingSucceeded(object sender, EmoEngineEventArgs e)
         {
-            new acceptTraining.acceptTrainingDialog(); // opens dialog
+            laggendeLogger.WriteLine("Training fertig.");
+            engineStatusLabel.Text = "Training abgeschlossen, annehmen?";
+            //new acceptTraining.acceptTrainingDialog(); // opens dialog
+
+            DialogResult dialogResult = MessageBox.Show("Accept Training", "Using Training Data", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_ACCEPT);
+                //do something
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_REJECT);
+                //do something else
+            }
         }
 
         public void engine_MentalCommandTrainingFailed(object sender, EmoEngineEventArgs e)
         {
-            eegStatusLB.Items.Add("Training failed");
+            laggendeLogger.WriteLine("Training fehlgeschlagen.");
         }
 
         public void engine_MentalCommandTrainingCompleted(object sender, EmoEngineEventArgs e)
         {
-            eegStatusLB.Items.Add("Training completed");
+            laggendeLogger.WriteLine("Training wurde angenommen. Training abgeschlossen.");
+            engineStatusLabel.Text = "Training wurde verarbeitet!";
+        }
+
+        public void engine_MentalCommandTrainingRejected(object sender, EmoEngineEventArgs e)
+        {
+            laggendeLogger.WriteLine("Training wurde abgelehnt. Training abgeschlossen.");
+            engineStatusLabel.Text = "Training wurde abgelehnt!";
         }
 
         public void engine_MentalCommandEmoStateUpdated(object sender, EmoStateUpdatedEventArgs e)
         {
             EmoState es = e.emoState;
-            currentAction = es.MentalCommandGetCurrentAction();
-            currentCommand = currentActionToString();
-            if (drivingAllowed)
+            EdkDll.IEE_MentalCommandAction_t nextAction = es.MentalCommandGetCurrentAction();
+            if (nextAction != currentAction)
             {
-                sendCommand(currentCommand);
+                currentAction = nextAction;
+                currentCommand = currentActionToString();
+                currentActionLabel.Text = currentCommand;
+                if (drivingAllowed)
+                {
+                    sendCommand(currentCommand);
+                }
             }
         }
 
-        private bool SavingLoadingFunction(int mode)
+        private bool CloudSavingLoadingFunction(int mode)
         {
             int getNumberProfile = EmotivCloudClient.EC_GetAllProfileName(userCloudID);
-            if (mode == 0)
+            if (mode == 0) // save
             {
                 int profileID = -1;
                 EmotivCloudClient.EC_GetProfileId(userCloudID, selectedProfile, ref profileID);
 
-                if (profileID >= 0)
-                    return (EmotivCloudClient.EC_UpdateUserProfile(userCloudID, 0, profileID) == EdkDll.EDK_OK);
+                if (profileID >= 0) // true -> profile exists -> update
+                    return (EmotivCloudClient.EC_UpdateUserProfile(userCloudID, 0, profileID) == EdkDll.EDK_OK); 
                 else
                     return (EmotivCloudClient.EC_SaveUserProfile(userCloudID, (int)0, selectedProfile,
                         EmotivCloudClient.profileFileType.TRAINING) == EdkDll.EDK_OK);
             }
-            else if (mode == 1)
+            else if (mode == 1) // load
             {
                 if (getNumberProfile > 0)
                 {
@@ -257,14 +311,27 @@ namespace GUI_Namespace
             else return false;
         }
 
+        static bool LocalSavingLoadingFunction(int mode) // Split up, if possible, but not necc.
+        {
+            if (mode == 0) // save
+            {
+                EdkDll.IEE_SaveUserProfile((uint)userCloudID, selectedProfile);
+            }
+            else if (mode == 1) // load
+            {
+                EdkDll.IEE_LoadUserProfile((uint)userCloudID, selectedProfile);
+            }
+            return true;
+        }
+
         private bool SaveProfile()
         {
-            return SavingLoadingFunction(0);
+            return (enableCloudProfile ? CloudSavingLoadingFunction(0) : LocalSavingLoadingFunction(0));
         }
 
         private bool LoadProfile()
         {
-            return SavingLoadingFunction(1);
+            return (enableCloudProfile ? CloudSavingLoadingFunction(1) : LocalSavingLoadingFunction(1));
         }
 
 
@@ -283,19 +350,20 @@ namespace GUI_Namespace
 
         private void resetProfileButton_Click(object sender, EventArgs e)
         {
-            /*EmoEngine.Instance.MentalCommandSetTrainingAction(0, selectedAction);
-            EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_ERASE);*/
+            laggendeLogger.WriteLine("Lösche Training für " + selectedActionString + ".");
 
-            engine.MentalCommandSetTrainingAction(0, selectedAction);
-            engine.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_ERASE);
-            engine.ProcessEvents(5);
+            EmoEngine.Instance.MentalCommandSetTrainingAction(0, selectedAction);
+            EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_ERASE);
+            engine.ProcessEvents();
         }
 
         private void trainActionButton_Click(object sender, EventArgs e)
-        {             
+        {
+            laggendeLogger.WriteLine("Versuche " + selectedActionString + " zu trainieren.");
+
             EmoEngine.Instance.MentalCommandSetTrainingAction(0, selectedAction);
             EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START);
-            engine.ProcessEvents(5);
+            engine.ProcessEvents();
         }
 
         private void ipLabel_Click(object sender, EventArgs e)
@@ -327,20 +395,24 @@ namespace GUI_Namespace
 
         private void eegTicker_Tick(object sender, EventArgs e)
         {
+            engine.ProcessEvents();
         }
 
         private void loadProfileButton_Click(object sender, EventArgs e)
         {
-            eegStatusLB.Items.Add(LoadProfile() ? "Laden hat funktioniert" : "Laden hat nicht funktioniert");
+            laggendeLogger.WriteLine("Ladenvorgang angefragt.");
+            engineStatusLabel.Text = (LoadProfile() ? "Ladenvorgang läuft." : "Laden hat nicht funktioniert.");
         }
 
         private void saveProfileButton_Click(object sender, EventArgs e)
         {
-            eegStatusLB.Items.Add(SaveProfile() ? "Speichern hat funktioniert" : "Speichern hat nicht funktioniert");
+            laggendeLogger.WriteLine("Speichervorgang angefragt.");
+            engineStatusLabel.Text = (SaveProfile() ? "Speichervorgang läuft." : "Speichern hat nicht funktioniert.");
         }
 
         private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
+            laggendeLogger.WriteLine("Engine wird disconnected.");
             engine.Disconnect();
         }
 
