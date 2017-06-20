@@ -68,6 +68,7 @@
             // 
             // resetActionButton
             // 
+            this.resetActionButton.Enabled = false;
             this.resetActionButton.Location = new System.Drawing.Point(287, 78);
             this.resetActionButton.Name = "resetActionButton";
             this.resetActionButton.Size = new System.Drawing.Size(83, 21);
