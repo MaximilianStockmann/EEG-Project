@@ -112,7 +112,6 @@ namespace GUI_Namespace
             writeProfiles();
             laggendeLogger.WriteLine("Engine wird disconnected.");
             engine.Disconnect();
-
             base.OnFormClosing(e);
         }
 

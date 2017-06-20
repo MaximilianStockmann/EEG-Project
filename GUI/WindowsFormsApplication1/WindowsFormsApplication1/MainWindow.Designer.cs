@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.loadProfileButton = new System.Windows.Forms.Button();
             this.profileSelectionComboBox = new System.Windows.Forms.ComboBox();
             this.resetActionButton = new System.Windows.Forms.Button();
@@ -137,7 +137,7 @@
             // 
             this.Company.AutoSize = true;
             this.Company.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Company.Location = new System.Drawing.Point(209, 1);
+            this.Company.Location = new System.Drawing.Point(246, 1);
             this.Company.Name = "Company";
             this.Company.Size = new System.Drawing.Size(124, 24);
             this.Company.TabIndex = 12;
@@ -156,11 +156,14 @@
             // ipLabel
             // 
             this.ipLabel.AutoSize = true;
-            this.ipLabel.Location = new System.Drawing.Point(210, 25);
+            this.ipLabel.Location = new System.Drawing.Point(220, 25);
+            this.ipLabel.MaximumSize = new System.Drawing.Size(300, 0);
+            this.ipLabel.MinimumSize = new System.Drawing.Size(150, 0);
             this.ipLabel.Name = "ipLabel";
-            this.ipLabel.Size = new System.Drawing.Size(68, 13);
+            this.ipLabel.Size = new System.Drawing.Size(150, 13);
             this.ipLabel.TabIndex = 14;
             this.ipLabel.Text = "IP: 127.0.0.1";
+            this.ipLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.ipLabel.Click += new System.EventHandler(this.ipLabel_Click);
             // 
             // newProfileButton
@@ -183,10 +186,6 @@
             this.saveProfileButton.UseVisualStyleBackColor = true;
             this.saveProfileButton.Click += new System.EventHandler(this.saveProfileButton_Click);
             // 
-            // eegTicker
-            // 
-            this.eegTicker.Tick += new System.EventHandler(this.eegTicker_Tick);
-            // 
             // engineLabel
             // 
             this.engineLabel.AutoSize = true;
@@ -197,11 +196,16 @@
             this.engineLabel.TabIndex = 17;
             this.engineLabel.Text = "EEG Status:";
             // 
+            // eegTicker
+            // 
+            this.eegTicker.Tick += new System.EventHandler(this.eegTicker_Tick);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(377, 172);
+            this.Controls.Add(this.engineStatusLabel);
             this.Controls.Add(this.engineLabel);
             this.Controls.Add(this.saveProfileButton);
             this.Controls.Add(this.newProfileButton);
@@ -209,7 +213,6 @@
             this.Controls.Add(this.ctBotStatusLabel);
             this.Controls.Add(this.connectionLabel);
             this.Controls.Add(this.Company);
-            this.Controls.Add(this.engineStatusLabel);
             this.Controls.Add(this.driveButton);
             this.Controls.Add(this.trainActionButton);
             this.Controls.Add(this.trainActionSelectionComboBox);
