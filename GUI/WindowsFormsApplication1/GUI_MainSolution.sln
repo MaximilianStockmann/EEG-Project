@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "WindowsFormsApplication1\GUI.csproj", "{A5DF463A-B624-4889-962B-33EE63EDA1DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetEmotivSDK", "..\..\examples_basic\C#\DotNetEmotivSDK\DotNetEmotivSDK.csproj", "{D3337309-9682-425E-8EDC-2ECFACF79565}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetEmotivSDK", "DotNetEmotivSDK\DotNetEmotivSDK.csproj", "{D3337309-9682-425E-8EDC-2ECFACF79565}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

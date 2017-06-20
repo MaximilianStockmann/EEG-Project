@@ -1,0 +1,5 @@
+C:\Users\jonat\workspace\ProjektAI\EEG-Project\bin\win32\DotNetEmotivSDK.dll
+C:\Users\jonat\workspace\ProjektAI\EEG-Project\bin\win32\DotNetEmotivSDK.pdb
+C:\Users\jonat\workspace\ProjektAI\EEG-Project\examples_basic\C#\DotNetEmotivSDK\obj\x86\Debug\DotNetEmotivSDK.csprojResolveAssemblyReference.cache
+C:\Users\jonat\workspace\ProjektAI\EEG-Project\examples_basic\C#\DotNetEmotivSDK\obj\x86\Debug\DotNetEmotivSDK.dll
+C:\Users\jonat\workspace\ProjektAI\EEG-Project\examples_basic\C#\DotNetEmotivSDK\obj\x86\Debug\DotNetEmotivSDK.pdb
