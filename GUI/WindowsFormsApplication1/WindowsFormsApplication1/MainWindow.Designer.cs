@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
+            this.components = new System.ComponentModel.Container();
             this.loadProfileButton = new System.Windows.Forms.Button();
             this.profileSelectionComboBox = new System.Windows.Forms.ComboBox();
             this.resetActionButton = new System.Windows.Forms.Button();
@@ -42,17 +42,20 @@
             this.ipLabel = new System.Windows.Forms.Label();
             this.newProfileButton = new System.Windows.Forms.Button();
             this.saveProfileButton = new System.Windows.Forms.Button();
-            this.engineLabel = new System.Windows.Forms.Label();
+            this.eegTicker = new System.Windows.Forms.Timer(this.components);
+            this.eegStatusLB = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // loadProfileButton
             // 
-            this.loadProfileButton.Location = new System.Drawing.Point(138, 51);
+            this.loadProfileButton.Location = new System.Drawing.Point(297, 63);
+            this.loadProfileButton.Margin = new System.Windows.Forms.Padding(4);
             this.loadProfileButton.Name = "loadProfileButton";
             this.loadProfileButton.Size = new System.Drawing.Size(69, 21);
             this.loadProfileButton.TabIndex = 0;
             this.loadProfileButton.Text = "Laden";
             this.loadProfileButton.UseVisualStyleBackColor = true;
+            this.loadProfileButton.Click += new System.EventHandler(this.loadProfileButton_Click);
             // 
             // profileSelectionComboBox
             // 
@@ -60,8 +63,9 @@
             this.profileSelectionComboBox.FormattingEnabled = true;
             this.profileSelectionComboBox.Location = new System.Drawing.Point(11, 51);
             this.profileSelectionComboBox.Name = "profileSelectionComboBox";
-            this.profileSelectionComboBox.Size = new System.Drawing.Size(121, 21);
+            this.profileSelectionComboBox.Size = new System.Drawing.Size(160, 24);
             this.profileSelectionComboBox.TabIndex = 1;
+            this.profileSelectionComboBox.SelectedIndexChanged += new System.EventHandler(this.profileSelectionComboBox_SelectedIndexChanged);
             // 
             // resetActionButton
             // 
@@ -87,6 +91,7 @@
             this.trainActionSelectionComboBox.Name = "trainActionSelectionComboBox";
             this.trainActionSelectionComboBox.Size = new System.Drawing.Size(122, 21);
             this.trainActionSelectionComboBox.TabIndex = 3;
+            this.trainActionSelectionComboBox.SelectedIndexChanged += new System.EventHandler(this.trainActionSelectionComboBox_SelectedIndexChanged);
             // 
             // trainActionButton
             // 
@@ -113,7 +118,7 @@
             this.ctBotStatusLabel.AutoSize = true;
             this.ctBotStatusLabel.Location = new System.Drawing.Point(129, 9);
             this.ctBotStatusLabel.Name = "ctBotStatusLabel";
-            this.ctBotStatusLabel.Size = new System.Drawing.Size(33, 13);
+            this.ctBotStatusLabel.Size = new System.Drawing.Size(40, 17);
             this.ctBotStatusLabel.TabIndex = 6;
             this.ctBotStatusLabel.Text = "NEIN";
             // 
@@ -123,7 +128,7 @@
             this.engineStatusLabel.Location = new System.Drawing.Point(129, 22);
             this.engineStatusLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.engineStatusLabel.Name = "engineStatusLabel";
-            this.engineStatusLabel.Size = new System.Drawing.Size(69, 13);
+            this.engineStatusLabel.Size = new System.Drawing.Size(91, 17);
             this.engineStatusLabel.TabIndex = 11;
             this.engineStatusLabel.Text = "engineStatus";
             // 
@@ -133,7 +138,7 @@
             this.Company.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Company.Location = new System.Drawing.Point(209, 1);
             this.Company.Name = "Company";
-            this.Company.Size = new System.Drawing.Size(124, 24);
+            this.Company.Size = new System.Drawing.Size(158, 29);
             this.Company.TabIndex = 12;
             this.Company.Text = "EEG-Projekt";
             // 
@@ -152,7 +157,7 @@
             this.ipLabel.AutoSize = true;
             this.ipLabel.Location = new System.Drawing.Point(210, 25);
             this.ipLabel.Name = "ipLabel";
-            this.ipLabel.Size = new System.Drawing.Size(68, 13);
+            this.ipLabel.Size = new System.Drawing.Size(88, 17);
             this.ipLabel.TabIndex = 14;
             this.ipLabel.Text = "IP: 127.0.0.1";
             this.ipLabel.Click += new System.EventHandler(this.ipLabel_Click);
@@ -161,7 +166,7 @@
             // 
             this.newProfileButton.Location = new System.Drawing.Point(287, 51);
             this.newProfileButton.Name = "newProfileButton";
-            this.newProfileButton.Size = new System.Drawing.Size(83, 21);
+            this.newProfileButton.Size = new System.Drawing.Size(111, 26);
             this.newProfileButton.TabIndex = 15;
             this.newProfileButton.Text = "Neues Profil";
             this.newProfileButton.UseVisualStyleBackColor = true;
@@ -175,6 +180,7 @@
             this.saveProfileButton.TabIndex = 16;
             this.saveProfileButton.Text = "Speichern";
             this.saveProfileButton.UseVisualStyleBackColor = true;
+            this.saveProfileButton.Click += new System.EventHandler(this.saveProfileButton_Click);
             // 
             // engineLabel
             // 
@@ -188,7 +194,7 @@
             // 
             // MainWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(377, 172);
             this.Controls.Add(this.engineLabel);
@@ -209,6 +215,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWindow";
             this.Text = "EEG-Projekt";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainWindow_FormClosed);
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
