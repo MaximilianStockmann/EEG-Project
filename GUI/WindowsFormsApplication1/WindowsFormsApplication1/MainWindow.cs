@@ -102,7 +102,8 @@ namespace GUI_Namespace
 
             // select first ComboBox entrys
             trainActionSelectionComboBox.SelectedIndex = 0;
-            profileSelectionComboBox.SelectedIndex = 0;
+            if(profileSelectionComboBox.Items.Count > 0)
+                profileSelectionComboBox.SelectedIndex = 0;
 
             
         }

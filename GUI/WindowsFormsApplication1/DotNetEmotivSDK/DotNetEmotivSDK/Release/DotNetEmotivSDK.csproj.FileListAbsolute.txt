@@ -1,0 +1,5 @@
+C:\Users\Marcel\Documents\EEG-Project\GUI\WindowsFormsApplication1\build\Release\DotNetEmotivSDK.dll
+C:\Users\Marcel\Documents\EEG-Project\GUI\WindowsFormsApplication1\build\Release\DotNetEmotivSDK.pdb
+C:\Users\Marcel\Documents\EEG-Project\GUI\WindowsFormsApplication1\DotNetEmotivSDK\DotNetEmotivSDK\Release\DotNetEmotivSDK.csprojResolveAssemblyReference.cache
+C:\Users\Marcel\Documents\EEG-Project\GUI\WindowsFormsApplication1\DotNetEmotivSDK\DotNetEmotivSDK\Release\DotNetEmotivSDK.dll
+C:\Users\Marcel\Documents\EEG-Project\GUI\WindowsFormsApplication1\DotNetEmotivSDK\DotNetEmotivSDK\Release\DotNetEmotivSDK.pdb
