@@ -361,6 +361,11 @@ namespace GUI_Namespace
                 if (drivingAllowed)
                 {
                     sendCommand(currentCommand);
+                    laggendeLogger.WriteLine("Send: " + currentCommand);
+                }
+                else
+                {
+                    laggendeLogger.WriteLine("GET: " + currentCommand);
                 }
             }
         }
@@ -500,6 +505,7 @@ namespace GUI_Namespace
 
         private void trainActionSelectionComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //SetActiveActions(); // maybe better with it ?
             string selAct = trainActionSelectionComboBox.SelectedItem.ToString();
             switch (selAct)
             {
@@ -524,6 +530,18 @@ namespace GUI_Namespace
                     selectedAction = EdkDll.IEE_MentalCommandAction_t.MC_LEFT;
                     break;
             }
+        }
+
+        private void SetActiveActions()
+        {
+            laggendeLogger.WriteLine("Steuerbefehle auffrischen.");
+            ulong action1 = (ulong)EdkDll.IEE_MentalCommandAction_t.MC_LEFT;
+            ulong action2 = (ulong)EdkDll.IEE_MentalCommandAction_t.MC_RIGHT;
+            ulong action3 = (ulong)EdkDll.IEE_MentalCommandAction_t.MC_PUSH;
+            ulong action4 = (ulong)EdkDll.IEE_MentalCommandAction_t.MC_PULL;
+            ulong listAction = action1 | action2 | action3 | action4;
+            EmoEngine.Instance.MentalCommandSetActiveActions(0, listAction);
+            engine.ProcessEvents();
         }
 
         private void profileSelectionComboBox_SelectedIndexChanged(object sender, EventArgs e)
