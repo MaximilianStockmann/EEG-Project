@@ -79,6 +79,15 @@ namespace GUI_Namespace
             engine.Connect();
             laggendeLogger.WriteLine("Engine wird connected.");
 
+            //# we don't know why, but without this it dosen't work ...
+
+            EmotivCloudClient.EC_Connect();
+            //EmotivCloudClient.EC_Login(userName, password);
+            //EmotivCloudClient.EC_GetUserDetail(ref userCloudID);
+
+            //# end of we don't know why
+
+
             // enable Ticker
             laggendeLogger.WriteLine("Ticker wird aktiviert.");
 
