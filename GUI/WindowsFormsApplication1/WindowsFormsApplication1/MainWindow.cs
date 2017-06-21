@@ -155,34 +155,35 @@ namespace GUI_Namespace
             { }
         }
 
-        private void CloudProfileConnect()
-        {
-            bool cloudConnection()
-            {
-                if (EmotivCloudClient.EC_Connect() != EdkDll.EDK_OK)
-                {
-                    laggendeLogger.WriteLine("Kann keine Verbindung zur Emotiv-Cloud herstellen.");
-                    return false;
-                }
+        //private void CloudProfileConnect()
+        //{
+        //    // func in func ... WTF dosen't work in VS 13
+        //    bool cloudConnection()
+        //    {
+        //        if (EmotivCloudClient.EC_Connect() != EdkDll.EDK_OK)
+        //        {
+        //            laggendeLogger.WriteLine("Kann keine Verbindung zur Emotiv-Cloud herstellen.");
+        //            return false;
+        //        }
 
-                if (EmotivCloudClient.EC_Login(userName, password) != EdkDll.EDK_OK)
-                {
-                    laggendeLogger.WriteLine("Login fehlgeschlagen, falscher Benutzername oder falsches Passwort.");
-                    return false;
-                }
+        //        if (EmotivCloudClient.EC_Login(userName, password) != EdkDll.EDK_OK)
+        //        {
+        //            laggendeLogger.WriteLine("Login fehlgeschlagen, falscher Benutzername oder falsches Passwort.");
+        //            return false;
+        //        }
 
-                if (EmotivCloudClient.EC_GetUserDetail(ref userCloudID) != EdkDll.EDK_OK)
-                {
-                    laggendeLogger.WriteLine("Userdetail verursacht Probleme.");
-                    return false;
-                }
+        //        if (EmotivCloudClient.EC_GetUserDetail(ref userCloudID) != EdkDll.EDK_OK)
+        //        {
+        //            laggendeLogger.WriteLine("Userdetail verursacht Probleme.");
+        //            return false;
+        //        }
 
-                laggendeLogger.WriteLine("Verbunden mit Emotiv-Cloud. BN: " + userName);
-                return true;
-            }
+        //        laggendeLogger.WriteLine("Verbunden mit Emotiv-Cloud. BN: " + userName);
+        //        return true;
+        //    }
 
-            enableCloudProfile = cloudConnection();
-        }
+        //    enableCloudProfile = cloudConnection();
+        //}
         #endregion
 
         #region TCP Communication with Bot
