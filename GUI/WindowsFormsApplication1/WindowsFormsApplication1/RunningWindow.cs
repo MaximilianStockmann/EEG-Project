@@ -14,7 +14,16 @@ namespace runningWindow
         private void startRunningWindow_Load(object sender, EventArgs e)
         {
             TCP.sendCommand("speed " + trackBarSpeed.Value);
-            trackBarLevel.Value = EmoEngine.Instance.MentalCommandGetActivationLevel(0);
+            int actLvl = EmoEngine.Instance.MentalCommandGetActivationLevel(0);
+            if (actLvl >= 1 && actLvl <= 9)
+            {
+                trackBarLevel.Value = actLvl;
+            }
+            else
+            {
+                trackBarLevel.Value = 5;
+            }
+            
         }
 
         private void pictureBoxUp_MouseDown(object sender, System.EventArgs e)
