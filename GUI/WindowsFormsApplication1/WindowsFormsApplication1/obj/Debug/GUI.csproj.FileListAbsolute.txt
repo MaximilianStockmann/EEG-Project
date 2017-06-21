@@ -43,9 +43,10 @@ C:\Users\jonat\workspace\ProjektAI\EEG-Project\GUI\WindowsFormsApplication1\Wind
 C:\Users\jonat\workspace\ProjektAI\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\DotNetEmotivSDK.dll
 C:\Users\jonat\workspace\ProjektAI\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\DotNetEmotivSDK.pdb
 D:\Users\MaximilianStockmann\Desktop\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\acceptTraining.acceptTrainingDialog.resources
-D:\Users\MaximilianStockmann\Desktop\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.NewProfileDialog.resources
 D:\Users\MaximilianStockmann\Desktop\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\runningWindow.startRunningWindow.resources
 C:\Users\Marcel\Documents\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\acceptTraining.acceptTrainingDialog.resources
 C:\Users\Marcel\Documents\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\runningWindow.startRunningWindow.resources
 C:\Users\Marcel\Documents\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\changeIPWindow.startChangeIPWindow.resources
 C:\Users\Marcel\Documents\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\NewProfileDialog.NewProfileDialog.resources
+D:\Users\MaximilianStockmann\Desktop\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\changeIPWindow.startChangeIPWindow.resources
+D:\Users\MaximilianStockmann\Desktop\EEG-Project\GUI\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\NewProfileDialog.NewProfileDialog.resources

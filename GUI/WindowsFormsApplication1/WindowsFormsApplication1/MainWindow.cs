@@ -10,7 +10,7 @@ namespace GUI_Namespace
     public partial class MainWindow : Form
     {
         // Creating SDK-Instance
-        private EmoEngine engine;
+        public EmoEngine engine = EmoEngine.Instance;
         private System.IO.StreamWriter laggendeLogger;
         private int connectedUsers = 0;
 
@@ -50,8 +50,6 @@ namespace GUI_Namespace
         {
             laggendeLogger = new System.IO.StreamWriter("MentalCommand.log");
 
-            engine = EmoEngine.Instance;
-
             engine.EmoEngineConnected +=
                 new EmoEngine.EmoEngineConnectedEventHandler(engine_EmoEngineConnected);
             engine.EmoEngineDisconnected +=
@@ -60,10 +58,10 @@ namespace GUI_Namespace
                 new EmoEngine.UserAddedEventHandler(engine_UserAdded);
             engine.UserRemoved +=
                 new EmoEngine.UserRemovedEventHandler(engine_UserRemoved);
-            //engine.EmoStateUpdated +=
-            //    new EmoEngine.EmoStateUpdatedEventHandler(engine_EmoStateUpdated);
-            //engine.EmoEngineEmoStateUpdated +=
-            //    new EmoEngine.EmoEngineEmoStateUpdatedEventHandler(engine_EmoEngineEmoStateUpdated);
+            engine.EmoStateUpdated +=
+                new EmoEngine.EmoStateUpdatedEventHandler(engine_EmoStateUpdated);
+            engine.EmoEngineEmoStateUpdated +=
+                new EmoEngine.EmoEngineEmoStateUpdatedEventHandler(engine_EmoEngineEmoStateUpdated);
             engine.MentalCommandEmoStateUpdated +=
                 new EmoEngine.MentalCommandEmoStateUpdatedEventHandler(engine_MentalCommandEmoStateUpdated);
             engine.MentalCommandTrainingStarted +=
@@ -74,13 +72,14 @@ namespace GUI_Namespace
                 new EmoEngine.MentalCommandTrainingCompletedEventHandler(engine_MentalCommandTrainingCompleted);
             engine.MentalCommandTrainingRejected +=
                 new EmoEngine.MentalCommandTrainingRejectedEventHandler(engine_MentalCommandTrainingRejected);
+            engine.MentalCommandTrainingFailed +=
+                new EmoEngine.MentalCommandTrainingFailedEventHandler(engine_MentalCommandTrainingFailed);
 
             // connecting the engine
             engine.Connect();
             laggendeLogger.WriteLine("Engine wird connected.");
 
             // enable Ticker
-            eegTicker.Enabled = true;
             laggendeLogger.WriteLine("Ticker wird aktiviert.");
 
             // setting mentalCommandActive actions for new user profile
@@ -90,7 +89,8 @@ namespace GUI_Namespace
             ulong action4 = (ulong)EdkDll.IEE_MentalCommandAction_t.MC_PULL;
             ulong listAction = action1 | action2 | action3 | action4;
             //EmoEngine.Instance.MentalCommandSetActiveActions(0, listAction);
-            EmoEngine.Instance.MentalCommandSetActiveActions(0, listAction);
+            engine.MentalCommandSetActiveActions(0, listAction);
+            engine.ProcessEvents(5);
 
             laggendeLogger.WriteLine("Setting Actions Processing called.");
             // init TCP stuff
@@ -107,7 +107,7 @@ namespace GUI_Namespace
             if(profileSelectionComboBox.Items.Count > 0)
                 profileSelectionComboBox.SelectedIndex = 0;
 
-            
+            eegTicker.Enabled = true;
 
         }
 
@@ -310,7 +310,7 @@ namespace GUI_Namespace
             engineStatusLabel.Text = "Training abgeschlossen, annehmen?";
             //new acceptTraining.acceptTrainingDialog(); // opens dialog
 
-            DialogResult dialogResult = MessageBox.Show("Accept Training", "Using Training Data", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("Training akzeptieren?", "Trainingsdaten benutzen?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
                 EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_ACCEPT);
@@ -326,6 +326,7 @@ namespace GUI_Namespace
         public void engine_MentalCommandTrainingFailed(object sender, EmoEngineEventArgs e)
         {
             laggendeLogger.WriteLine("Training fehlgeschlagen.");
+            engineStatusLabel.Text = "Training fehlgeschlagen.";
         }
 
         public void engine_MentalCommandTrainingCompleted(object sender, EmoEngineEventArgs e)
