@@ -115,6 +115,7 @@ namespace GUI_Namespace
             base.OnFormClosing(e);
         }
 
+        #region List of Local Profiles
         private void readProfiles()
         {
             try
@@ -181,7 +182,9 @@ namespace GUI_Namespace
 
             enableCloudProfile = cloudConnection();
         }
+        #endregion
 
+        #region TCP Communication with Bot
         private void sendCommand(String str)
         {
             if (TCP.sendCommand(str))
@@ -237,8 +240,9 @@ namespace GUI_Namespace
             }
 
         }
+        #endregion
 
-        //event handlers for the engine
+        #region Event-Handlers for engine
         public void engine_EmoEngineConnected(object sender, EmoEngineEventArgs e)
         {
             laggendeLogger.WriteLine("Engine ist jetzt connected.");
@@ -343,7 +347,9 @@ namespace GUI_Namespace
                 }
             }
         }
+        #endregion
 
+        #region Saving and Loading profile data from both cloud or local file
         private bool CloudSavingLoadingFunction(int mode)
         {
             int getNumberProfile = EmotivCloudClient.EC_GetAllProfileName(userCloudID);
@@ -371,7 +377,7 @@ namespace GUI_Namespace
             else return false;
         }
 
-        static bool LocalSavingLoadingFunction(int mode) // Split up, if possible, but not necc.
+        private bool LocalSavingLoadingFunction(int mode)
         {
             if (mode == 0) // save
             {
@@ -394,7 +400,20 @@ namespace GUI_Namespace
             return (enableCloudProfile ? CloudSavingLoadingFunction(1) : LocalSavingLoadingFunction(1));
         }
 
-        //returns the command to send to the bot
+        private void loadProfileButton_Click(object sender, EventArgs e)
+        {
+            laggendeLogger.WriteLine("Ladenvorgang angefragt.");
+            engineStatusLabel.Text = (LoadProfile() ? "Ladenvorgang läuft." : "Laden hat nicht funktioniert.");
+        }
+
+        private void saveProfileButton_Click(object sender, EventArgs e)
+        {
+            laggendeLogger.WriteLine("Speichervorgang angefragt.");
+            engineStatusLabel.Text = (SaveProfile() ? "Speichervorgang läuft." : "Speichern hat nicht funktioniert.");
+        }
+        #endregion
+
+        // returns the command to send to the bot
         private String currentActionToString()
         {
             switch(currentAction)
@@ -408,46 +427,7 @@ namespace GUI_Namespace
             }
         }
 
-        //private void resetProfileButton_Click(object sender, EventArgs e)
-        //{
-        //    laggendeLogger.WriteLine("Lösche Training für " + selectedActionString + ".");
-
-        //    EmoEngine.Instance.MentalCommandSetTrainingAction(0, selectedAction);
-        //    EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_ERASE);
-        //    engine.ProcessEvents();
-        //}
-
-        //private void trainActionButton_Click(object sender, EventArgs e)
-        //{
-        //    switch (trainActionSelectionComboBox.Text)
-        //    {
-        //        case "Stop / Neutral":
-        //            EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_NEUTRAL);
-        //            EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START);
-        //            break;
-        //        case "Vorwärts":
-        //            EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_PUSH);
-        //            EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START);
-        //            break;
-        //        case "Rückwärts":
-        //            EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_PULL);
-        //            EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START);
-        //            break;
-        //        case "Links":
-        //            EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_LEFT);
-        //            EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START);
-        //            break;
-        //        case "Rechts":
-        //            EmoEngine.Instance.MentalCommandSetTrainingAction(0, EdkDll.IEE_MentalCommandAction_t.MC_RIGHT);
-        //            EmoEngine.Instance.MentalCommandSetTrainingControl(0, EdkDll.IEE_MentalCommandTrainingControl_t.MC_START);
-        //            break;
-        //        default:
-        //            break;
-        //    }
-
-
-        //}
-
+        // unsorted ClickEvent-Handler
         private void trainActionButton_Click(object sender, EventArgs e)
         {
             laggendeLogger.WriteLine("Versuche " + selectedActionString + " zu trainieren.");
@@ -499,18 +479,6 @@ namespace GUI_Namespace
         private void eegTicker_Tick(object sender, EventArgs e)
         {
             engine.ProcessEvents();
-        }
-
-        private void loadProfileButton_Click(object sender, EventArgs e)
-        {
-            laggendeLogger.WriteLine("Ladenvorgang angefragt.");
-            engineStatusLabel.Text = (LoadProfile() ? "Ladenvorgang läuft." : "Laden hat nicht funktioniert.");
-        }
-
-        private void saveProfileButton_Click(object sender, EventArgs e)
-        {
-            laggendeLogger.WriteLine("Speichervorgang angefragt.");
-            engineStatusLabel.Text = (SaveProfile() ? "Speichervorgang läuft." : "Speichern hat nicht funktioniert.");
         }
 
         private void trainActionSelectionComboBox_SelectedIndexChanged(object sender, EventArgs e)
