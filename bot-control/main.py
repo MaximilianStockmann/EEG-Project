@@ -25,7 +25,10 @@ PWMs = []
 
 SPEED = 20.0
 ROTATE_FACTOR = 0.5
-STRIAGHT_FACTOR = 0.85
+#STRAIGHT_FACTOR_LEFT = 1.0
+#STRAIGHT_FACTOR_RIGHT = 0.96
+STRAIGHT_LEFT = 0;
+STRAIGHT_RIGHT = 0;
 
 
 def init():
@@ -77,8 +80,8 @@ def driveStop():
 
 def driveForward():
     driveStop()
-    PWMs[RF].ChangeDutyCycle(SPEED)
-    PWMs[LF].ChangeDutyCycle(SPEED*STRIAGHT_FACTOR)
+    PWMs[RF].ChangeDutyCycle(SPEED - STRAIGHT_RIGHT*SPEED/100)
+    PWMs[LF].ChangeDutyCycle(SPEED - STRAIGHT_LEFT*SPEED/100)
 
 def driveLeft():
     driveStop()
@@ -92,8 +95,8 @@ def driveRight():
 
 def driveBackward():
     driveStop()
-    PWMs[RB].ChangeDutyCycle(SPEED)
-    PWMs[LB].ChangeDutyCycle(SPEED*STRIAGHT_FACTOR)
+    PWMs[RB].ChangeDutyCycle(SPEED - STRAIGHT_RIGHT*SPEED/100)
+    PWMs[LB].ChangeDutyCycle(SPEED - STRAIGHT_LEFT*SPEED/100)
 
 
 if __name__ == '__main__':
