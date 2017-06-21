@@ -45,11 +45,12 @@
             this.saveProfileButton = new System.Windows.Forms.Button();
             this.engineLabel = new System.Windows.Forms.Label();
             this.eegTicker = new System.Windows.Forms.Timer(this.components);
+            this.label_for_ip = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // loadProfileButton
             // 
-            this.loadProfileButton.Location = new System.Drawing.Point(138, 51);
+            this.loadProfileButton.Location = new System.Drawing.Point(138, 64);
             this.loadProfileButton.Name = "loadProfileButton";
             this.loadProfileButton.Size = new System.Drawing.Size(69, 21);
             this.loadProfileButton.TabIndex = 0;
@@ -61,7 +62,7 @@
             // 
             this.profileSelectionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.profileSelectionComboBox.FormattingEnabled = true;
-            this.profileSelectionComboBox.Location = new System.Drawing.Point(11, 51);
+            this.profileSelectionComboBox.Location = new System.Drawing.Point(11, 64);
             this.profileSelectionComboBox.Name = "profileSelectionComboBox";
             this.profileSelectionComboBox.Size = new System.Drawing.Size(121, 21);
             this.profileSelectionComboBox.TabIndex = 1;
@@ -69,7 +70,7 @@
             // resetActionButton
             // 
             this.resetActionButton.Enabled = false;
-            this.resetActionButton.Location = new System.Drawing.Point(287, 78);
+            this.resetActionButton.Location = new System.Drawing.Point(287, 91);
             this.resetActionButton.Name = "resetActionButton";
             this.resetActionButton.Size = new System.Drawing.Size(83, 21);
             this.resetActionButton.TabIndex = 2;
@@ -87,7 +88,7 @@
             "Links",
             "Rückwärts",
             "Rechts"});
-            this.trainActionSelectionComboBox.Location = new System.Drawing.Point(11, 78);
+            this.trainActionSelectionComboBox.Location = new System.Drawing.Point(11, 91);
             this.trainActionSelectionComboBox.Name = "trainActionSelectionComboBox";
             this.trainActionSelectionComboBox.Size = new System.Drawing.Size(122, 21);
             this.trainActionSelectionComboBox.TabIndex = 3;
@@ -96,7 +97,7 @@
             // trainActionButton
             // 
             this.trainActionButton.Enabled = false;
-            this.trainActionButton.Location = new System.Drawing.Point(139, 78);
+            this.trainActionButton.Location = new System.Drawing.Point(139, 91);
             this.trainActionButton.Name = "trainActionButton";
             this.trainActionButton.Size = new System.Drawing.Size(142, 21);
             this.trainActionButton.TabIndex = 4;
@@ -106,7 +107,7 @@
             // 
             // driveButton
             // 
-            this.driveButton.Location = new System.Drawing.Point(10, 109);
+            this.driveButton.Location = new System.Drawing.Point(10, 122);
             this.driveButton.Name = "driveButton";
             this.driveButton.Size = new System.Drawing.Size(360, 51);
             this.driveButton.TabIndex = 5;
@@ -156,19 +157,17 @@
             // ipLabel
             // 
             this.ipLabel.AutoSize = true;
-            this.ipLabel.Location = new System.Drawing.Point(220, 25);
-            this.ipLabel.MaximumSize = new System.Drawing.Size(300, 0);
-            this.ipLabel.MinimumSize = new System.Drawing.Size(150, 0);
+            this.ipLabel.Location = new System.Drawing.Point(129, 38);
             this.ipLabel.Name = "ipLabel";
-            this.ipLabel.Size = new System.Drawing.Size(150, 13);
+            this.ipLabel.Size = new System.Drawing.Size(52, 13);
             this.ipLabel.TabIndex = 14;
-            this.ipLabel.Text = "IP: 127.0.0.1";
+            this.ipLabel.Text = "127.0.0.1";
             this.ipLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.ipLabel.Click += new System.EventHandler(this.ipLabel_Click);
             // 
             // newProfileButton
             // 
-            this.newProfileButton.Location = new System.Drawing.Point(287, 51);
+            this.newProfileButton.Location = new System.Drawing.Point(287, 64);
             this.newProfileButton.Name = "newProfileButton";
             this.newProfileButton.Size = new System.Drawing.Size(83, 21);
             this.newProfileButton.TabIndex = 15;
@@ -178,7 +177,7 @@
             // 
             // saveProfileButton
             // 
-            this.saveProfileButton.Location = new System.Drawing.Point(213, 51);
+            this.saveProfileButton.Location = new System.Drawing.Point(213, 64);
             this.saveProfileButton.Name = "saveProfileButton";
             this.saveProfileButton.Size = new System.Drawing.Size(68, 21);
             this.saveProfileButton.TabIndex = 16;
@@ -200,11 +199,22 @@
             // 
             this.eegTicker.Tick += new System.EventHandler(this.eegTicker_Tick);
             // 
+            // label_for_ip
+            // 
+            this.label_for_ip.AutoSize = true;
+            this.label_for_ip.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_for_ip.Location = new System.Drawing.Point(100, 38);
+            this.label_for_ip.Name = "label_for_ip";
+            this.label_for_ip.Size = new System.Drawing.Size(23, 13);
+            this.label_for_ip.TabIndex = 18;
+            this.label_for_ip.Text = "IP:";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(377, 172);
+            this.ClientSize = new System.Drawing.Size(381, 185);
+            this.Controls.Add(this.label_for_ip);
             this.Controls.Add(this.engineStatusLabel);
             this.Controls.Add(this.engineLabel);
             this.Controls.Add(this.saveProfileButton);
@@ -223,6 +233,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWindow";
             this.Text = "EEG-Projekt";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -246,6 +257,7 @@
         private System.Windows.Forms.Button saveProfileButton;
         private System.Windows.Forms.Label engineLabel;
         private System.Windows.Forms.Timer eegTicker;
+        private System.Windows.Forms.Label label_for_ip;
     }
 }
 

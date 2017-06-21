@@ -27,11 +27,9 @@ namespace changeIPWindow
             if (e.KeyCode == Keys.Enter)
             {
                 GUI_Namespace.MainWindow.host = this.textBoxIP.Text;
-                GUI_Namespace.Program.mainWindow.setIPLabel("IP: "+this.textBoxIP.Text);
+                GUI_Namespace.Program.mainWindow.setIPLabel(this.textBoxIP.Text);
                 this.Close();
             }
         }
-
-       
     }
 }

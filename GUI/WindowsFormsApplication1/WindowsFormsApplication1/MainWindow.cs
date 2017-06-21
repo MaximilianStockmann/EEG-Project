@@ -11,7 +11,7 @@ namespace GUI_Namespace
     {
         // Creating SDK-Instance
         private EmoEngine engine;
-        private static System.IO.StreamWriter laggendeLogger = new System.IO.StreamWriter("MentalCommand.log");
+        private System.IO.StreamWriter laggendeLogger;
         private int connectedUsers = 0;
 
         // driving related information
@@ -48,6 +48,8 @@ namespace GUI_Namespace
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
+            laggendeLogger = new System.IO.StreamWriter("MentalCommand.log");
+
             engine = EmoEngine.Instance;
 
             engine.EmoEngineConnected +=
@@ -93,7 +95,7 @@ namespace GUI_Namespace
             laggendeLogger.WriteLine("Setting Actions Processing called.");
             // init TCP stuff
             TCP.setServerLostCallBack(serverLostCallBack);
-            ipLabel.Text = "IP: "+host;
+            ipLabel.Text = host;
             
             
 
@@ -106,14 +108,16 @@ namespace GUI_Namespace
                 profileSelectionComboBox.SelectedIndex = 0;
 
             
+
         }
 
-        protected override void OnFormClosing(FormClosingEventArgs e)
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             writeProfiles();
             laggendeLogger.WriteLine("Engine wird disconnected.");
             engine.Disconnect();
-            base.OnFormClosing(e);
+            laggendeLogger.Flush();
+            laggendeLogger.Close();
         }
 
         #region List of Local Profiles
@@ -135,7 +139,6 @@ namespace GUI_Namespace
 
         private void writeProfiles()
         {
-            
             try
             {
                 if (File.Exists(profileSavingPath))
@@ -149,10 +152,12 @@ namespace GUI_Namespace
                 {
                     SW.WriteLine(item.ToString());
                 }
+                SW.Flush();
                 SW.Close();
             }
             catch (Exception)
             { }
+
         }
 
         //private void CloudProfileConnect()
